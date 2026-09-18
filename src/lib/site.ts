@@ -1,0 +1,45 @@
+// Site-wide constants: routes, nav, contact. Content that belongs to the brochure lives in src/data.
+
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://jrew.co.in";
+
+export const navLinks = [
+  { label: "Products", href: "/products" },
+  { label: "Capabilities", href: "/capabilities" },
+  { label: "Quality", href: "/quality" },
+  { label: "Facilities", href: "/facilities" },
+  { label: "About", href: "/about" },
+  { label: "Contact", href: "/contact" },
+] as const;
+
+export const rfqHref = "/contact#rfq";
+
+/** Every indexable route, used by sitemap.ts and the verify harness. */
+export const routes = [
+  "/",
+  "/products",
+  "/products/attachments",
+  "/stakon",
+  "/capabilities",
+  "/quality",
+  "/facilities",
+  "/about",
+  "/contact",
+  "/careers",
+  "/privacy",
+] as const;
+
+export const contact = {
+  email: "enquiry@jrew.co.in", // Spread 12-left
+  careersEmail: "careers@jrew.co.in", // existing API default
+  web: "jrew.co.in", // Spread 12-left
+  /** Live-site value, not in the brochure. Confirm with Raghav before production. */
+  phone: "+91 97 3334 3338",
+  phoneHref: "tel:+919733343338",
+  /** Live-site value, not in the brochure. Confirm with Raghav before production. */
+  linkedin: "https://www.linkedin.com/company/jrew-engineering",
+  /** Both prior repos link here. Confirm with Raghav before production. */
+  stakonUrl: "https://stakon.in",
+  /** From jrew-forge site.ts. Confirm with Raghav before production. */
+  cin: "CIN U29219PB1994PLC039807",
+  legalName: "JREW Engineering Limited",
+};

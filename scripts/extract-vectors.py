@@ -53,6 +53,7 @@ def export(page_index, name, cell, subdir, pad=4, mode="inside", skip_wide=True)
         if not ok: continue
         if skip_wide and r.width > 0.9 * cell.width and r.height < 2: continue
         if r.width < 0.3 and r.height < 0.3: continue
+        if mode == "intersect" and r.width > 0.6 * cell.width and all(it[0] in ("re", "qu") for it in d["items"]): continue  # card fills
         fill = d.get("fill"); stroke = d.get("color"); typ = d.get("type", "")
         attrs = []
         if "f" in typ and fill is not None:
@@ -94,7 +95,7 @@ names = [["jcb", "caterpillar", "kion", "hyster-yale"], ["godrej", "ace", "leebo
 for ri, (ry0, ry1) in enumerate(rows):
     for ci, (cx0, cx1) in enumerate(cols):
         export(10, names[ri][ci], (cx0, ry0, cx1, ry1), "logos")
-for name, cell in [("excavator", (940, 228, 1260, 374)), ("forklift", (940, 380, 1260, 530)),
+for name, cell in [("excavator", (940, 214, 1260, 376)), ("forklift", (940, 380, 1260, 530)),
                    ("combine-harvester", (940, 532, 1260, 688)), ("locomotive", (940, 690, 1260, 845))]:
     export(1, name, cell, "lineart", pad=3, mode="intersect", skip_wide=False)
 for name, cell in [("jrew-wordmark-panel", (95, 770, 205, 830)), ("icema", (222, 770, 306, 830)), ("make-in-india", (312, 770, 396, 830)),

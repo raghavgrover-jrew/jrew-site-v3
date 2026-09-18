@@ -1,26 +1,207 @@
 @import "tailwindcss";
 
+/* JREW v3 tokens. Direction A: light-first paper with black chapter panels.
+   Rule: marigold is a fill on paper and type only on ink. */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --paper: oklch(1 0 0);
+  --card-warm: oklch(0.965 0.005 80);
+  --card-cool: oklch(0.955 0.006 240);
+  --line: oklch(0.9 0.004 80);
+  --line-strong: oklch(0.8 0.004 80);
+  --ink: oklch(0.22 0 0); /* print #1A1A1A */
+  --ink-2: oklch(0.42 0 0);
+  --ink-3: oklch(0.53 0 0);
+  --ink-panel: oklch(0.21 0 0);
+  --ink-panel-2: oklch(0.27 0 0);
+  --ink-line: oklch(0.36 0 0);
+  --on-ink: oklch(0.97 0.004 80);
+  --on-ink-2: oklch(0.8 0.004 80);
+  --on-ink-3: oklch(0.66 0.004 80);
+  --marigold: oklch(0.83 0.16 81); /* print #FBBA2D */
+  --marigold-deep: oklch(0.7 0.15 75);
+  --marigold-soft: oklch(0.95 0.06 85);
+
+  --z-nav: 40;
+  --z-dialog: 60;
+  --z-skip: 100;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --shell: 85rem;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-paper: var(--paper);
+  --color-card-warm: var(--card-warm);
+  --color-card-cool: var(--card-cool);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-ink-panel: var(--ink-panel);
+  --color-ink-panel-2: var(--ink-panel-2);
+  --color-ink-line: var(--ink-line);
+  --color-on-ink: var(--on-ink);
+  --color-on-ink-2: var(--on-ink-2);
+  --color-on-ink-3: var(--on-ink-3);
+  --color-marigold: var(--marigold);
+  --color-marigold-deep: var(--marigold-deep);
+  --color-marigold-soft: var(--marigold-soft);
+
+  --font-display: var(--font-poppins), "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-source-sans), "Source Sans 3", ui-sans-serif, system-ui, sans-serif;
+
+  --ease-out-expo: var(--ease-out);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: auto; /* Lenis owns smoothing; native under reduced motion */
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  font-feature-settings: "kern";
+}
+
+[id] {
+  scroll-margin-top: 5rem;
+}
+
+h1, h2, h3 {
+  text-wrap: balance;
+}
+p {
+  text-wrap: pretty;
+}
+
+/* Display type: the brochure's heavy geometric grotesque, all caps, tight */
+.display {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 1.02;
+}
+.display-md {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+
+/* Eyebrow: small letterspaced grey label above a chapter headline. Rationed. */
+.eyebrow {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.on-ink .eyebrow {
+  color: var(--on-ink-3);
+}
+
+.tnum {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* The marker stroke: line two of a headline on paper. Background-size animates so it follows wraps. */
+.hl {
+  background-image: linear-gradient(var(--marigold), var(--marigold));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 100%;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  padding: 0.02em 0.14em;
+  margin-left: -0.14em;
+}
+
+/* Brochure card grammar: left bar */
+.bar {
+  position: relative;
+  padding-left: 1.25rem;
+}
+.bar::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.15rem;
+  bottom: 0.15rem;
+  width: 4px;
+  background: var(--ink);
+}
+.bar-marigold::before {
+  background: var(--marigold);
+}
+
+.hairline {
+  border-top: 1px solid var(--line);
+}
+.on-ink .hairline {
+  border-color: var(--ink-line);
+}
+
+.shell {
+  width: 100%;
+  max-width: var(--shell);
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4vw, 3.5rem);
+}
+
+.section {
+  padding-block: clamp(4rem, 8vw, 7.5rem);
+}
+
+/* Focus: ink ring on paper, marigold ring on ink */
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+.on-ink :focus-visible,
+.on-ink:focus-visible {
+  outline-color: var(--marigold);
+}
+
+.skip-link {
+  position: fixed;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: var(--z-skip);
+  background: var(--marigold);
+  color: var(--ink);
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  transition: top 0.2s;
+}
+.skip-link:focus {
+  top: 0;
+}
+
+@media (pointer: coarse) {
+  button, a, [role="button"], input, select, textarea, summary {
+    min-height: 44px;
+  }
+}
+
+::selection {
+  background: var(--marigold);
+  color: var(--ink);
+}
+
+/* Reduced motion: collapse everything; JS never constructs Lenis or pins under this query */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
