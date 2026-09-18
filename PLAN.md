@@ -1,3 +1,9 @@
+---
+title: PLAN
+type: note
+permalink: home/desktop/jrew/code/jrew-site-v3/plan
+---
+
 # PLAN - jrew.co.in v3
 
 Date: 2026-09-19. Phase 3 deliverable of `JREW_WEBSITE_V3_PROMPT.md`. Inputs: `docs/INGEST-FINDINGS.md`, `BENCHMARK.md`, `PRODUCT.md`. Numbers in brackets like [B-5] cite finding 5 in BENCHMARK.md section 3; "Spread NN" cites `05_Brochure_2026_Visual_Extraction.md`.
