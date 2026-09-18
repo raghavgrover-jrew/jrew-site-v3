@@ -1,6 +1,6 @@
 {
   "base": "http://localhost:3201",
-  "at": "2026-09-18T19:53:44.947Z",
+  "at": "2026-09-18T20:07:05.903Z",
   "results": [
     {
       "ok": true,
@@ -57,10 +57,10 @@
       "detail": "https://jrew.co.in/opengraph-image?7da9648c6ccca044"
     },
     {
-      "ok": false,
+      "ok": true,
       "gate": "G12",
       "label": "og:image resolves",
-      "detail": "404 text/html; charset=UTF-8"
+      "detail": "200 image/png"
     },
     {
       "ok": true,
@@ -75,16 +75,16 @@
       "detail": "https://stakon.in"
     },
     {
-      "ok": false,
+      "ok": true,
       "gate": "G14",
       "label": "eyebrow budget on /",
-      "detail": "5 of ceil(10/3)=4"
+      "detail": "4 of ceil(10/3)=4"
     },
     {
-      "ok": false,
+      "ok": true,
       "gate": "G14",
       "label": "no marigold type on paper on /",
-      "detail": "13"
+      "detail": "0"
     },
     {
       "ok": true,
@@ -183,10 +183,10 @@
       "detail": "3 of ceil(8/3)=3"
     },
     {
-      "ok": false,
+      "ok": true,
       "gate": "G14",
       "label": "no marigold type on paper on /products",
-      "detail": "8"
+      "detail": "0"
     },
     {
       "ok": true,
@@ -423,10 +423,10 @@
       "detail": 200
     },
     {
-      "ok": false,
+      "ok": true,
       "gate": "G7",
       "label": "axe serious/critical on /capabilities",
-      "detail": "color-contrast(13)"
+      "detail": ""
     },
     {
       "ok": true,
@@ -777,10 +777,10 @@
       "detail": "2 of ceil(6/3)=2"
     },
     {
-      "ok": false,
+      "ok": true,
       "gate": "G14",
       "label": "no marigold type on paper on /about",
-      "detail": "5"
+      "detail": "0"
     },
     {
       "ok": true,
@@ -867,10 +867,10 @@
       "detail": "https://stakon.in"
     },
     {
-      "ok": false,
+      "ok": true,
       "gate": "G14",
       "label": "eyebrow budget on /contact",
-      "detail": "2 of ceil(3/3)=1"
+      "detail": "0 of ceil(3/3)=1"
     },
     {
       "ok": true,
@@ -1380,7 +1380,7 @@
       "ok": false,
       "gate": "G7",
       "label": "touch targets >= 44px on /quality",
-      "detail": "enquiry@jrew.co.in(117x20) | enquiry@jrew.co.in(125x23) | Products(56x21) | Capabilities(74x21)"
+      "detail": "enquiry@jrew.co.in(125x23) | Products(56x21) | Capabilities(74x21) | Quality(45x21)"
     },
     {
       "ok": true,
@@ -1416,7 +1416,7 @@
       "ok": false,
       "gate": "G7",
       "label": "touch targets >= 44px on /contact",
-      "detail": "enquiry@jrew.co.in(134x22) | +91 97 3334 3338(106x21) | enquiry@jrew.co.in(125x23) | Products(56x21)"
+      "detail": "enquiry@jrew.co.in(125x23) | Products(56x21) | Capabilities(74x21) | Quality(45x21)"
     },
     {
       "ok": true,
@@ -1440,7 +1440,7 @@
       "ok": false,
       "gate": "G7",
       "label": "touch targets >= 44px on /privacy",
-      "detail": "enquiry@jrew.co.in(134x22) | enquiry@jrew.co.in(125x23) | Products(56x21) | Capabilities(74x21)"
+      "detail": "enquiry@jrew.co.in(125x23) | Products(56x21) | Capabilities(74x21) | Quality(45x21)"
     },
     {
       "ok": true,

@@ -4,8 +4,6 @@
 // per-field errors, distinct submitting / success / failure states; entries survive a failed submit.
 
 import { useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { usePrefersReducedMotion } from "@/lib/hooks";
 import { cn } from "@/lib/utils";
 import { contact } from "@/lib/site";
 import { validateRfqStep, buildContactPayload, rfqFamilies, rfqQuantityBands, rfqDrawingStatus, rfqTimelines, type RfqDraft, type RfqErrors } from "@/lib/rfq";
@@ -14,15 +12,14 @@ import { Button } from "@/components/ui/Button";
 
 const STEPS = ["Enquiry", "Requirements", "Contact", "Review"] as const;
 const EMPTY: RfqDraft = { family: "", quantityBand: "", grade: "", drawingStatus: "", timeline: "", name: "", company: "", email: "", phone: "", notes: "" };
-const EASE = [0.16, 1, 0.3, 1] as const;
 
 export function RfqFlow({ idPrefix = "rfq" }: { idPrefix?: string }) {
   const [step, setStep] = useState(0);
+  const [moved, setMoved] = useState(false);
   const [draft, setDraft] = useState<RfqDraft>(EMPTY);
   const [errors, setErrors] = useState<RfqErrors>({});
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const panelRef = useRef<HTMLDivElement>(null);
-  const reduced = usePrefersReducedMotion();
   const id = (k: string) => `${idPrefix}-${k}`;
 
   const set = (k: keyof RfqDraft) => (v: string) => {
@@ -31,6 +28,7 @@ export function RfqFlow({ idPrefix = "rfq" }: { idPrefix?: string }) {
   };
   const goto = (n: number) => {
     setStep(n);
+    setMoved(true);
     requestAnimationFrame(() => panelRef.current?.focus({ preventScroll: true }));
   };
   const advance = () => {
@@ -84,8 +82,8 @@ export function RfqFlow({ idPrefix = "rfq" }: { idPrefix?: string }) {
       </ol>
 
       <div ref={panelRef} tabIndex={-1} className="mt-7 outline-none">
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.div key={step} initial={reduced ? false : { opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={reduced ? undefined : { opacity: 0, y: -6 }} transition={{ duration: 0.28, ease: EASE }}>
+        {/* keyed by step so each panel mounts fresh; the entrance keyframe runs only after the first move */}
+        <div key={step} className={moved ? "anim-rise" : undefined}>
             {step === 0 ? (
               <Field label="What is the enquiry about?" error={errors.family}>
                 <RadioGrid name="Enquiry" options={rfqFamilies} value={draft.family} onChange={set("family")} />
@@ -166,8 +164,7 @@ export function RfqFlow({ idPrefix = "rfq" }: { idPrefix?: string }) {
                 {status === "error" ? <div className="mt-5"><StatusBanner>The RFQ did not send. Your entries are intact. Retry, or email {contact.email} directly.</StatusBanner></div> : null}
               </div>
             ) : null}
-          </motion.div>
-        </AnimatePresence>
+        </div>
       </div>
 
       <div className="mt-8 flex items-center justify-between gap-4">

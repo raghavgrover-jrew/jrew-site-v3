@@ -1,5 +1,6 @@
 """Copy brochure photography into public/images with subject names, downsized to at most 2400 px, JPEG q82.
-Transparent PNGs keep their alpha. Source: extracted-assets/images (70 files). Mapping verified against the spread renders."""
+Transparent PNGs keep their alpha. Source: extracted-assets/images (70 files). Mapping verified against the spread renders.
+STAKON cutouts are not here: their extracted JPEGs lost the soft mask, so extract-stakon-alpha.py pulls them from the PDF."""
 import os
 from PIL import Image
 SRC = "/Users/raghavgrover/Desktop/JREW/Business Development/Brochure and Content/extracted-assets/images"
@@ -43,11 +44,6 @@ MAP = {
   "forged/special-steel-profiles.jpg": ("p06_x54_806x604.jpeg", 900),
   "forged/forging-shop-panorama.jpg": ("p06_x63_2425x838.jpeg", 2400),
   # STAKON (spread 06 right)
-  "stakon/stacker-hero.png": ("p06_x56_1527x1678.png", 1400),
-  "stakon/fe-series.jpg": ("p06_x58_865x865.jpeg", 900),
-  "stakon/se-series.jpg": ("p06_x65_743x818.jpeg", 900),
-  "stakon/fept-2000.jpg": ("p06_x60_403x361.jpeg", 900),
-  "stakon/fept-2000-alt.jpg": ("p06_x62_462x449.jpeg", 900),
   # facilities (spread 07)
   "facilities/moh-1.jpg": ("p07_x69_811x609.jpeg", 1200),
   "facilities/fbd-1.jpg": ("p07_x70_799x600.jpeg", 1200),
