@@ -26,7 +26,7 @@ const SSR = {
   "/stakon": ["STAKON FE Series", "STAKON SE Series", "STAKON FEPT 2000", "6.3 m", "2,000 kg"],
   "/capabilities": ["Cutting", "Forming", "Fabrication and welding", "Machining", "Forging", "Surface treatment", "Assembly", "Heat treatment", "Packaging and dispatch", "0.05 mm", "side-shifter carriage"],
   "/quality": ["ISO 9001:2015", "ISO 14001:2015", "ISO 45001:2018", "EN ISO 3834-2", "CII GreenCo", "TUV Rheinland", "FARO"],
-  "/facilities": ["MOH 1", "FBD 1", "FBD 2", "MOH 2", "6,00,000", "2027"],
+  "/facilities": ["MOH 1", "FBD 1", "FBD 2", "MOH 2", "600,000", "2027"],
   "/about": ["Ram Ratan Agarwal", "1973", "2027", "ICARE", "UPLIFT", "JREW Foundation", "Public limited since 1994"],
   "/contact": ["Start with", "enquiry@jrew.co.in"],
   "/careers": ["Open application"],
@@ -188,6 +188,31 @@ const browser = await chromium.launch();
   await page.keyboard.press("ArrowRight");
   const selected = await page.evaluate(() => [...document.querySelectorAll('[role=tab][aria-selected="true"]')].map((t) => t.textContent)[0]);
   note(selected === "Skid steers", "G7", "by-machine tabs move with ArrowRight", String(selected));
+  const focusedTab = await page.evaluate(() => document.activeElement?.textContent?.trim());
+  note(focusedTab === "Skid steers", "G7", "by-machine tab focus follows selection", String(focusedTab));
+
+  // RFQ radios: the visible label must show keyboard focus (the input itself is sr-only)
+  await page.goto(BASE + "/contact", { waitUntil: "networkidle" });
+  await page.locator('input[type="radio"]').first().focus();
+  await page.keyboard.press("ArrowRight");
+  const radioFocus = await page.evaluate(() => {
+    const l = document.activeElement?.closest("label");
+    if (!l) return "no-label";
+    const cs = getComputedStyle(l);
+    return `${cs.outlineStyle} ${cs.outlineWidth}`;
+  });
+  note(/solid|auto/.test(radioFocus) && !/0px/.test(radioFocus), "G7", "RFQ radio focus is visible on the label", radioFocus);
+  const describedBy = await page.evaluate(() => document.querySelectorAll('input[aria-describedby], textarea[aria-describedby], [role="radiogroup"][aria-labelledby]').length);
+  note(describedBy > 0, "G7", "form controls carry aria-describedby or aria-labelledby", String(describedBy));
+
+  // Home hero pins for 55% of the viewport; the nav must stay on ink until the hero has actually left
+  await page.goto(BASE + "/", { waitUntil: "networkidle" });
+  await page.waitForTimeout(500);
+  await page.mouse.move(700, 450);
+  for (let i = 0; i < 6; i++) { await page.mouse.wheel(0, 150); await page.waitForTimeout(120); }
+  await page.waitForTimeout(900);
+  const navState = await page.evaluate(() => ({ y: Math.round(window.scrollY), onInk: document.querySelector("header")?.classList.contains("on-ink"), heroBottom: Math.round(document.getElementById("hero")?.getBoundingClientRect().bottom ?? 0) }));
+  note(navState.y > 300 && (navState.heroBottom <= 72 || navState.onInk === true), "G7", "nav stays on ink while the pinned hero is on screen", JSON.stringify(navState));
 
   const realConsole = consoleIssues.filter((c) => !/React DevTools|GL Driver|GPU stall|SwiftShader|\[HMR\]|Fast Refresh/i.test(c));
   note(realConsole.length === 0, "G4", "console clean across routes", realConsole.slice(0, 3).join(" || "));

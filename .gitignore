@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# QA: per-run Lighthouse reports churn; the summary is the record
+screenshots/lighthouse/*.json
+!screenshots/lighthouse/summary.json

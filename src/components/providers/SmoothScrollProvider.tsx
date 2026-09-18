@@ -11,18 +11,11 @@ import Lenis from "lenis";
 
 gsap.registerPlugin(ScrollTrigger);
 
-let activeLenis: Lenis | null = null;
-
-export function getLenis(): Lenis | null {
-  return activeLenis;
-}
-
 export function SmoothScrollProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const lenis = new Lenis({ autoRaf: false, lerp: 0.1, anchors: { offset: -80 } });
-    activeLenis = lenis;
     document.documentElement.classList.add("lenis-on");
 
     lenis.on("scroll", ScrollTrigger.update);
@@ -35,7 +28,6 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
     return () => {
       gsap.ticker.remove(update);
       lenis.destroy();
-      activeLenis = null;
       document.documentElement.classList.remove("lenis-on");
     };
   }, []);

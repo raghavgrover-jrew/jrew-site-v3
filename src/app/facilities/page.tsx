@@ -34,7 +34,7 @@ export default function FacilitiesPage() {
                     <span className="tnum">{f.code}</span>
                   </h2>
                   <p className="tnum text-[13px] font-semibold uppercase tracking-[0.06em] text-ink-3">
-                    Est. {f.established} | {f.sqft.toLocaleString("en-IN")} sq ft
+                    Est. {f.established} | {f.sqft.toLocaleString("en-US")} sq ft
                   </p>
                 </div>
                 <p className="display-md mt-1 text-lg text-ink-2">
@@ -68,7 +68,7 @@ export default function FacilitiesPage() {
               ))}
             </dl>
             <p className="tnum mt-6 text-[14px] text-on-ink-3">
-              Rajpura, Punjab: {rajpura.sqft.toLocaleString("en-IN")} sq ft campus. Phase 1 begins operations in {rajpura.year}.
+              Rajpura, Punjab: {rajpura.sqft.toLocaleString("en-US")} sq ft campus. Phase 1 begins operations in {rajpura.year}.
             </p>
           </div>
           <IndiaMap />

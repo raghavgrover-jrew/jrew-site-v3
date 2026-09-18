@@ -85,16 +85,16 @@ export function RfqFlow({ idPrefix = "rfq" }: { idPrefix?: string }) {
         {/* keyed by step so each panel mounts fresh; the entrance keyframe runs only after the first move */}
         <div key={step} className={moved ? "anim-rise" : undefined}>
             {step === 0 ? (
-              <Field label="What is the enquiry about?" error={errors.family}>
+              <Field group label="What is the enquiry about?" error={errors.family}>
                 <RadioGrid name="Enquiry" options={rfqFamilies} value={draft.family} onChange={set("family")} />
               </Field>
             ) : null}
             {step === 1 ? (
               <div className="space-y-6">
-                <Field label="Annual quantity" error={errors.quantityBand}>
+                <Field group label="Annual quantity" error={errors.quantityBand}>
                   <RadioGrid name="Annual quantity" options={rfqQuantityBands} value={draft.quantityBand} onChange={set("quantityBand")} columns={3} />
                 </Field>
-                <Field label="Sourcing timeline" error={errors.timeline}>
+                <Field group label="Sourcing timeline" error={errors.timeline}>
                   <RadioGrid name="Sourcing timeline" options={rfqTimelines} value={draft.timeline} onChange={set("timeline")} />
                 </Field>
                 <div className="grid gap-5 sm:grid-cols-2">

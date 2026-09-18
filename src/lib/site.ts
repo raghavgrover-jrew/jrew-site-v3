@@ -1,6 +1,8 @@
 // Site-wide constants: routes, nav, contact. Content that belongs to the brochure lives in src/data.
 
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://jrew.co.in";
+const rawSiteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://jrew.co.in").trim();
+/** Absolute origin without a trailing slash; a bare host gets https. */
+export const SITE_URL = (/^https?:\/\//.test(rawSiteUrl) ? rawSiteUrl : `https://${rawSiteUrl}`).replace(/\/+$/, "");
 
 export const navLinks = [
   { label: "Products", href: "/products" },

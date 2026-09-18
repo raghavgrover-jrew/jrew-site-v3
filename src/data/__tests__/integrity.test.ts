@@ -84,7 +84,7 @@ describe("sources and images", () => {
 
 describe("content rails", () => {
   const files = walk(path.join(ROOT, "src"));
-  const banned = [/Crown Equipment/i, /\bJLG\b/, /\bSany\b/, /Toyota Material/i, /\bHAMM\b/, /\bGenie\b/, /Trion/i, /Quadron/i, /\bHR-7\b/, /Lyfton/i, /Bhaskaran/i, /OHSAS/i, /of Revenue/i, /\[Year\]/, /\bTBD\b/, /lorem ipsum/i, /EBITDA/i, /120,000 sq ?ft/i, /210,000/, /200,000\+? ?sq/i];
+  const banned = [/\bCrown\b/, /\bJLG\b/, /\bEQI\b/, /acquisition/i, /\bSany\b/, /Toyota Material/i, /\bHAMM\b/, /\bGenie\b/, /Trion/i, /Quadron/i, /\bHR-7\b/, /Lyfton/i, /Bhaskaran/i, /OHSAS/i, /of Revenue/i, /\[Year\]/, /\bTBD\b/, /lorem ipsum/i, /EBITDA/i, /120,000 sq ?ft/i, /210,000/, /200,000\+? ?sq/i];
   it("no em or en dashes in source", () => {
     const hits = files.filter((f) => /[—–]/.test(fs.readFileSync(f, "utf8")));
     expect(hits.map((h) => path.relative(ROOT, h))).toEqual([]);

@@ -3,10 +3,10 @@
 import { useState } from "react";
 import { contact } from "@/lib/site";
 import { cn } from "@/lib/utils";
-import { Field, StatusBanner, inputCls } from "@/components/ui/forms";
+import { Field, Honeypot, StatusBanner, inputCls } from "@/components/ui/forms";
+import { EMAIL_RE } from "@/lib/validate";
 import { Button } from "@/components/ui/Button";
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 export function EnquiryForm() {
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
@@ -22,6 +22,7 @@ export function EnquiryForm() {
       email: String(fd.get("email") || "").trim(),
       subject: String(fd.get("subject") || "").trim() || "General enquiry",
       message: String(fd.get("message") || "").trim(),
+      website: String(fd.get("website") || ""),
     };
     const errs: Record<string, string> = {};
     if (!data.name) errs.name = "Your name is required.";
@@ -51,7 +52,8 @@ export function EnquiryForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} noValidate className="border border-line-strong bg-paper p-6 sm:p-7">
+    <form onSubmit={onSubmit} noValidate className="relative border border-line-strong bg-paper p-6 sm:p-7">
+      <Honeypot />
       <div className="grid gap-5 sm:grid-cols-2">
         <Field label="Name" htmlFor="en-name" error={errors.name}>
           <input id="en-name" name="name" autoComplete="name" className={inputCls} aria-invalid={!!errors.name} />

@@ -31,7 +31,8 @@ export const rfqQuantityBands = ["Prototype / under 50", "50-500 a year", "500-5
 export const rfqDrawingStatus = ["2D and 3D available", "2D drawings only", "Sample part only", "Co-development needed"] as const;
 export const rfqTimelines = ["Immediate requirement", "Within 3 months", "3-6 months", "Exploratory"] as const;
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+import { EMAIL_RE } from "@/lib/validate";
+
 const filled = (v?: string) => Boolean(v && v.trim().length > 0);
 
 export function validateRfqStep(step: 1 | 2 | 3, d: Partial<RfqDraft>): RfqErrors {

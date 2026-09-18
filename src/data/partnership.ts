@@ -24,7 +24,7 @@ export const proof = {
   rows: [
     { title: "Sole-source axle programme", body: "Dedicated assembly/paint line, 40,000+ direct-on-line JIT assemblies/year across 10+ variants; sole supplier for 20+ years to multiple customers." },
     { title: "In-house design adopted by OEMs", body: "Universal 2WD backhoe-loader steering axle, designed and validated in-house, standard fitment at Doosan Bobcat India and Preet Agro." },
-    { title: "Complete mast-system engineering", body: "Billet casting through hot-rolling, machining, fabrication, coating, assembly and testing, 1.5-5 t, lift to 6.3 m." },
+    { title: "Complete mast-system engineering", body: "Billet casting through hot-rolling, machining, fabrication, coating, assembly and testing, under one roof." },
     { title: "Attachments at scale", body: "100+ varieties across customer and JREW designs, packaged and container-stuffed on JREW premises for North America and Europe." },
   ],
   panel: [

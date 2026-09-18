@@ -2,6 +2,7 @@
 
 // Browse by machine: the buyer knows their machine, not JREW's families. Tabs with a select fallback
 // under 640 px. All panels are in the HTML; inactive ones carry the hidden attribute.
+// Keyboard: ArrowLeft/ArrowRight cycle, Home/End jump; focus follows selection (WAI-ARIA tabs pattern).
 
 import { useId, useState } from "react";
 import Link from "next/link";
@@ -11,6 +12,25 @@ import { cn } from "@/lib/utils";
 export function ByMachineTabs() {
   const [active, setActive] = useState(byMachine[0].id);
   const base = useId();
+  const tabId = (id: string) => `${base}-tab-${id}`;
+
+  const select = (id: string) => {
+    setActive(id);
+    document.getElementById(tabId(id))?.focus();
+  };
+  const onKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
+    const idx = byMachine.findIndex((x) => x.id === active);
+    const n = byMachine.length;
+    let next: number | null = null;
+    if (e.key === "ArrowRight") next = (idx + 1) % n;
+    else if (e.key === "ArrowLeft") next = (idx - 1 + n) % n;
+    else if (e.key === "Home") next = 0;
+    else if (e.key === "End") next = n - 1;
+    if (next === null) return;
+    e.preventDefault();
+    select(byMachine[next].id);
+  };
+
   return (
     <div>
       <label htmlFor={`${base}-select`} className="sr-only">
@@ -28,16 +48,12 @@ export function ByMachineTabs() {
           <button
             key={m.id}
             role="tab"
-            id={`${base}-tab-${m.id}`}
+            id={tabId(m.id)}
             aria-selected={active === m.id}
             aria-controls={`${base}-panel-${m.id}`}
             tabIndex={active === m.id ? 0 : -1}
             onClick={() => setActive(m.id)}
-            onKeyDown={(e) => {
-              const idx = byMachine.findIndex((x) => x.id === active);
-              if (e.key === "ArrowRight") setActive(byMachine[(idx + 1) % byMachine.length].id);
-              if (e.key === "ArrowLeft") setActive(byMachine[(idx - 1 + byMachine.length) % byMachine.length].id);
-            }}
+            onKeyDown={onKeyDown}
             className={cn("min-h-[44px] border px-4 text-[14.5px] font-semibold transition-colors", active === m.id ? "border-ink bg-ink text-on-ink" : "border-line-strong bg-paper text-ink-2 hover:border-ink hover:text-ink")}
           >
             {m.label}
@@ -45,7 +61,7 @@ export function ByMachineTabs() {
         ))}
       </div>
       {byMachine.map((m) => (
-        <div key={m.id} role="tabpanel" id={`${base}-panel-${m.id}`} aria-labelledby={`${base}-tab-${m.id}`} hidden={active !== m.id} className="mt-5 bg-card-warm p-6 sm:p-8">
+        <div key={m.id} role="tabpanel" id={`${base}-panel-${m.id}`} aria-labelledby={tabId(m.id)} hidden={active !== m.id} className="mt-5 bg-card-warm p-6 sm:p-8">
           <h3 className="display-md text-xl">What JREW supplies for {m.label.toLowerCase()}</h3>
           <ul className="mt-4 divide-y divide-line">
             {m.items.map((it) => (

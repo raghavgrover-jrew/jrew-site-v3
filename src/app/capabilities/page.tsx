@@ -23,7 +23,7 @@ export default function CapabilitiesPage() {
   return (
     <>
       <JsonLd data={breadcrumbSchema([{ name: "Capabilities", path: "/capabilities" }])} />
-      <PageHeader eyebrow={processIntro.eyebrow} lead={processIntro.headline.lead} mark={processIntro.headline.mark} lede="Every process that touches the part is ours. Tolerances are held across operations rather than negotiated between vendors, which is why the parts arrive ready to fit, not ready to rework." />
+      <PageHeader eyebrow={processIntro.eyebrow} lead={processIntro.headline.lead} mark={processIntro.headline.mark} lede={processIntro.lede} />
 
       <SectionShell ariaLabel="Plate to product table" className="pt-4">
         <ProcessTable />

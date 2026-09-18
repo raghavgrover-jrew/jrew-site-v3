@@ -1,18 +1,42 @@
-// POST /api/contact: JSON { name, email, message, company?, phone?, subject? }.
-// Sends via nodemailer when SMTP_HOST, SMTP_USER and SMTP_PASS are set; otherwise logs to the server console
-// and still returns success so the form never fails silently in preview.
+// POST /api/contact: JSON { name, email, message, company?, phone?, subject?, website? (honeypot) }.
+// Every field is bounded and header-safe (src/lib/validate.ts). Sends via nodemailer when SMTP_HOST,
+// SMTP_USER and SMTP_PASS are set. Without SMTP: previews and local log the submission and return
+// success (so the form path can be exercised); production returns 500 so a misconfiguration is never silent.
 import { NextResponse } from "next/server";
-import nodemailer from "nodemailer";
-
-const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c] as string);
+import { checkField, emailProblem } from "@/lib/validate";
+import { esc, smtpConfigured, isProduction, transport, clientIp, rateLimited } from "@/lib/mail";
 
 export async function POST(request: Request) {
   try {
-    const body = (await request.json()) as Record<string, unknown>;
-    const get = (k: string) => (typeof body[k] === "string" ? (body[k] as string).trim() : "");
-    const name = get("name"), company = get("company"), email = get("email"), phone = get("phone"), subject = get("subject") || "General enquiry", message = get("message");
+    if (rateLimited(`contact:${clientIp(request)}`)) return NextResponse.json({ error: "Too many submissions. Please try again later." }, { status: 429 });
+
+    let body: Record<string, unknown>;
+    try {
+      const parsed: unknown = await request.json();
+      body = parsed && typeof parsed === "object" ? (parsed as Record<string, unknown>) : {};
+    } catch {
+      return NextResponse.json({ error: "Malformed request." }, { status: 400 });
+    }
+
+    // Honeypot: a field no human sees. Filled means a bot; accept quietly and drop it.
+    if (typeof body.website === "string" && body.website.trim()) return NextResponse.json({ success: true, delivered: "discarded" });
+
+    const fields = {
+      name: checkField("name", body.name),
+      company: checkField("company", body.company),
+      email: checkField("email", body.email),
+      phone: checkField("phone", body.phone),
+      subject: checkField("subject", body.subject),
+      message: checkField("message", body.message),
+    };
+    const tooLong = Object.values(fields).find((f) => f.error);
+    if (tooLong?.error) return NextResponse.json({ error: tooLong.error }, { status: 400 });
+
+    const name = fields.name.value, company = fields.company.value, email = fields.email.value, phone = fields.phone.value, message = fields.message.value;
+    const subject = fields.subject.value || "General enquiry";
     if (!name || !email || !message) return NextResponse.json({ error: "Name, email and message are required." }, { status: 400 });
-    if (message.length > 10000) return NextResponse.json({ error: "Message is too long." }, { status: 400 });
+    const emailErr = emailProblem(email);
+    if (emailErr) return NextResponse.json({ error: emailErr }, { status: 400 });
 
     const html = `<div style="font-family:Arial,sans-serif;max-width:640px;color:#1a1a1a">
       <h2 style="border-bottom:3px solid #fbba2d;padding-bottom:8px">New enquiry via jrew.co.in</h2>
@@ -25,15 +49,8 @@ export async function POST(request: Request) {
       </table>
       <p style="margin-top:14px;white-space:pre-line;line-height:1.6">${esc(message)}</p></div>`;
 
-    const configured = process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS;
-    if (configured) {
-      const transporter = nodemailer.createTransport({
-        host: process.env.SMTP_HOST,
-        port: parseInt(process.env.SMTP_PORT || "587", 10),
-        secure: process.env.SMTP_PORT === "465",
-        auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
-      });
-      await transporter.sendMail({
+    if (smtpConfigured()) {
+      await transport().sendMail({
         from: `"JREW website" <${process.env.SMTP_USER}>`,
         replyTo: email,
         to: process.env.ENQUIRY_EMAIL || "enquiry@jrew.co.in",
@@ -41,6 +58,10 @@ export async function POST(request: Request) {
         html,
       });
       return NextResponse.json({ success: true, delivered: "smtp" });
+    }
+    if (isProduction()) {
+      console.error("[CONTACT] SMTP is not configured in production; submission refused.");
+      return NextResponse.json({ error: "Mail is not configured. Please email enquiry@jrew.co.in directly." }, { status: 500 });
     }
     console.log("[CONTACT] SMTP not configured; submission logged:", { name, company, email, phone, subject, message });
     return NextResponse.json({ success: true, delivered: "console" });

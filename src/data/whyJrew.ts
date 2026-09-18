@@ -19,6 +19,8 @@ export const closingCta = {
 export const cover = {
   headline: { mark: "Precision", lead: "engineering for tomorrow's machinery" },
   strapline: "Engineering-led manufacturing · Since 1973",
+  /** hero lede: the cover's positioning line and the four sectors of Spread 02, in one sentence */
+  lede: "Fabricated and precision-machined components, sub-assemblies and engineered attachments for OEMs in construction, material handling, agriculture and railways. Since 1973.",
   tagline: "Empowering machines",
   source: "Spread 12",
 } as const;

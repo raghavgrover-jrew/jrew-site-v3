@@ -3,11 +3,11 @@
 import { useState } from "react";
 import { contact } from "@/lib/site";
 import { cn } from "@/lib/utils";
-import { Field, StatusBanner, inputCls } from "@/components/ui/forms";
+import { Field, Honeypot, StatusBanner, inputCls } from "@/components/ui/forms";
+import { EMAIL_RE, RESUME_HINT, resumeProblem } from "@/lib/validate";
 import { Button } from "@/components/ui/Button";
 
 const AREAS = ["Design and manufacturing engineering", "Quality and metrology", "CNC machining and shop floor", "Welding and fabrication", "Supply chain and planning", "Sales and business development", "STAKON engineering, service or sales", "Other"];
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 export function CareerForm() {
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
@@ -23,8 +23,8 @@ export function CareerForm() {
     if (!email) errs.email = "Email is required.";
     else if (!EMAIL_RE.test(email)) errs.email = "Enter a valid email address.";
     const resume = fd.get("resume") as File | null;
-    if (!resume || resume.size === 0) errs.resume = "Attach a resume, PDF preferred.";
-    else if (resume.size > 5 * 1024 * 1024) errs.resume = "Keep the file under 5 MB.";
+    const resumeErr = resumeProblem(resume);
+    if (resumeErr) errs.resume = resumeErr;
     setErrors(errs);
     if (Object.keys(errs).length) return;
     setStatus("submitting");
@@ -48,7 +48,8 @@ export function CareerForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} noValidate className="border border-line-strong bg-paper p-6 sm:p-8">
+    <form onSubmit={onSubmit} noValidate className="relative border border-line-strong bg-paper p-6 sm:p-8">
+      <Honeypot />
       <div className="grid gap-5 sm:grid-cols-2">
         <Field label="Name" htmlFor="ca-name" error={errors.name}>
           <input id="ca-name" name="name" autoComplete="name" className={inputCls} aria-invalid={!!errors.name} />
@@ -69,7 +70,7 @@ export function CareerForm() {
         <Field label="Experience" htmlFor="ca-exp" optional>
           <input id="ca-exp" name="experience" placeholder="e.g. 6 years, fabrication QA" className={inputCls} />
         </Field>
-        <Field label="Resume" htmlFor="ca-resume" error={errors.resume} hint="PDF, DOC or DOCX, under 5 MB.">
+        <Field label="Resume" htmlFor="ca-resume" error={errors.resume} hint={RESUME_HINT}>
           <input id="ca-resume" name="resume" type="file" accept=".pdf,.doc,.docx" className={cn(inputCls, "file:mr-4 file:border-0 file:bg-card-warm file:px-3 file:py-1 file:font-semibold")} aria-invalid={!!errors.resume} />
         </Field>
       </div>

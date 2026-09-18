@@ -28,7 +28,7 @@ export function FacilityStrip() {
                 <span className="tnum">{f.code}</span> <span className="text-ink-3">{f.city}</span>
               </p>
               <p className="tnum mt-1 text-[13px] font-semibold uppercase tracking-[0.06em] text-ink-3">
-                Est. {f.established} | {f.sqft.toLocaleString("en-IN")} sq ft
+                Est. {f.established} | {f.sqft.toLocaleString("en-US")} sq ft
               </p>
               <p className="mt-3 text-[14.5px] leading-relaxed text-ink-2">{f.role}</p>
             </div>

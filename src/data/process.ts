@@ -5,7 +5,12 @@ export interface ProcessStage {
   source: "Spread 07";
 }
 
-export const processIntro = { eyebrow: "Plate to product", headline: { lead: "Every stage engineered", mark: "for repeatability" }, source: "Spread 07" } as const;
+export const processIntro = {
+  eyebrow: "Plate to product",
+  headline: { lead: "Every stage engineered", mark: "for repeatability" },
+  lede: "Every process that touches the part is ours. Tolerances are held across operations rather than negotiated between vendors, which is why the parts arrive ready to fit, not ready to rework.",
+  source: "Spread 07",
+} as const;
 
 export const processStages: ProcessStage[] = [
   { stage: "Cutting", capability: "CNC laser to 25 mm, HD plasma to 40 mm, oxy-fuel to 200 mm across 4 centres (Max Elite ProArc 12 kW and 6 kW; Kjellberg ProArc 300 A)", source: "Spread 07" },

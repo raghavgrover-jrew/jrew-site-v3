@@ -1,21 +1,48 @@
-// POST /api/careers: multipart FormData with name, email, phone?, position?, experience?, message?, resume (File).
+// POST /api/careers: multipart FormData with name, email, resume (File, required), phone?, position?,
+// experience?, message?, website? (honeypot). Fields are bounded and header-safe; the resume must be a
+// PDF, DOC or DOCX by extension, declared type and file signature, under 4 MB. Nothing is written to disk.
+// SMTP policy matches /api/contact: preview and local log, production refuses when unconfigured.
 import { NextResponse } from "next/server";
-import nodemailer from "nodemailer";
-
-const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c] as string);
-const MAX_RESUME = 5 * 1024 * 1024;
+import { checkField, emailProblem, resumeProblem } from "@/lib/validate";
+import { esc, smtpConfigured, isProduction, transport, clientIp, rateLimited } from "@/lib/mail";
 
 export async function POST(request: Request) {
   try {
-    const fd = await request.formData();
-    const get = (k: string) => {
+    if (rateLimited(`careers:${clientIp(request)}`)) return NextResponse.json({ error: "Too many submissions. Please try again later." }, { status: 429 });
+
+    let fd: FormData;
+    try {
+      fd = await request.formData();
+    } catch {
+      return NextResponse.json({ error: "Malformed request." }, { status: 400 });
+    }
+    const raw = (k: string) => {
       const v = fd.get(k);
-      return typeof v === "string" ? v.trim() : "";
+      return typeof v === "string" ? v : "";
     };
-    const name = get("name"), email = get("email"), phone = get("phone"), position = get("position"), experience = get("experience"), message = get("message");
-    const resume = fd.get("resume");
+    if (raw("website").trim()) return NextResponse.json({ success: true, delivered: "discarded" });
+
+    const fields = {
+      name: checkField("name", raw("name")),
+      email: checkField("email", raw("email")),
+      phone: checkField("phone", raw("phone")),
+      position: checkField("position", raw("position")),
+      experience: checkField("experience", raw("experience")),
+      message: checkField("message", raw("message")),
+    };
+    const tooLong = Object.values(fields).find((f) => f.error);
+    if (tooLong?.error) return NextResponse.json({ error: tooLong.error }, { status: 400 });
+    const name = fields.name.value, email = fields.email.value, phone = fields.phone.value, position = fields.position.value, experience = fields.experience.value, message = fields.message.value;
     if (!name || !email) return NextResponse.json({ error: "Name and email are required." }, { status: 400 });
-    if (resume instanceof File && resume.size > MAX_RESUME) return NextResponse.json({ error: "Resume must be under 5 MB." }, { status: 400 });
+    const emailErr = emailProblem(email);
+    if (emailErr) return NextResponse.json({ error: emailErr }, { status: 400 });
+
+    const resume = fd.get("resume");
+    const file = resume instanceof File ? resume : null;
+    const bytes = file && file.size > 0 && file.size <= 4 * 1024 * 1024 ? new Uint8Array(await file.arrayBuffer()) : undefined;
+    const resumeErr = resumeProblem(file, bytes?.subarray(0, 8));
+    if (resumeErr || !file || !bytes) return NextResponse.json({ error: resumeErr ?? "Attach a resume." }, { status: 400 });
+    const safeFilename = file.name.replace(/[^\w.\- ]+/g, "_").slice(0, 120);
 
     const html = `<div style="font-family:Arial,sans-serif;max-width:640px;color:#1a1a1a">
       <h2 style="border-bottom:3px solid #fbba2d;padding-bottom:8px">Career application via jrew.co.in</h2>
@@ -27,28 +54,24 @@ export async function POST(request: Request) {
         <tr><td style="padding:6px 0;color:#555">Experience</td><td>${esc(experience) || "not given"}</td></tr>
       </table>
       ${message ? `<p style="margin-top:14px;white-space:pre-line;line-height:1.6">${esc(message)}</p>` : ""}
-      ${resume instanceof File && resume.size > 0 ? `<p style="color:#555">Resume attached: ${esc(resume.name)}</p>` : ""}</div>`;
+      <p style="color:#555">Resume attached: ${esc(safeFilename)} (${Math.round(file.size / 1024)} KB)</p></div>`;
 
-    const configured = process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS;
-    if (configured) {
-      const transporter = nodemailer.createTransport({
-        host: process.env.SMTP_HOST,
-        port: parseInt(process.env.SMTP_PORT || "587", 10),
-        secure: process.env.SMTP_PORT === "465",
-        auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
-      });
-      const attachments = resume instanceof File && resume.size > 0 ? [{ filename: resume.name, content: Buffer.from(await resume.arrayBuffer()), contentType: resume.type || "application/octet-stream" }] : [];
-      await transporter.sendMail({
+    if (smtpConfigured()) {
+      await transport().sendMail({
         from: `"JREW careers" <${process.env.SMTP_USER}>`,
         replyTo: email,
         to: process.env.CAREERS_EMAIL || "careers@jrew.co.in",
         subject: `Application: ${position || "General"}: ${name}`,
         html,
-        attachments,
+        attachments: [{ filename: safeFilename, content: Buffer.from(bytes), contentType: file.type || "application/octet-stream" }],
       });
       return NextResponse.json({ success: true, delivered: "smtp" });
     }
-    console.log("[CAREERS] SMTP not configured; submission logged:", { name, email, phone, position, experience, message, resume: resume instanceof File ? resume.name : "none" });
+    if (isProduction()) {
+      console.error("[CAREERS] SMTP is not configured in production; submission refused.");
+      return NextResponse.json({ error: "Mail is not configured. Please email careers@jrew.co.in directly." }, { status: 500 });
+    }
+    console.log("[CAREERS] SMTP not configured; submission logged:", { name, email, phone, position, experience, message, resume: `${safeFilename} (${file.size} bytes)` });
     return NextResponse.json({ success: true, delivered: "console" });
   } catch (err) {
     console.error("Careers API error:", err);

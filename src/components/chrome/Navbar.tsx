@@ -22,7 +22,7 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
   const [pastHero, setPastHero] = useState(!isHome);
   const [seenPath, setSeenPath] = useState(pathname);
-  const ref = useRef<HTMLElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
 
   // Route changed: close the overlay and reset the hero state during render (no effect needed).
   if (seenPath !== pathname) {
@@ -41,6 +41,8 @@ export function Navbar() {
         start: "bottom 72px",
         onEnter: () => setPastHero(true),
         onLeaveBack: () => setPastHero(false),
+        // the hero pins itself (Hero.tsx); refresh after that pin so the spacer is in the measurement
+        refreshPriority: -1,
       });
       return () => st.kill();
     },
@@ -53,9 +55,12 @@ export function Navbar() {
     window.addEventListener("keydown", onKey);
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    const toggle = toggleRef.current;
+    document.querySelector<HTMLElement>("#mobile-menu a")?.focus();
     return () => {
       window.removeEventListener("keydown", onKey);
       document.body.style.overflow = prev;
+      toggle?.focus();
     };
   }, [open]);
 
@@ -64,7 +69,6 @@ export function Navbar() {
   return (
     <>
       <header
-        ref={ref}
         className={cn(
           "fixed inset-x-0 top-0 z-[var(--z-nav)] transition-[background-color,border-color] duration-300",
           onInk ? "on-ink border-b border-transparent bg-transparent text-on-ink" : "border-b border-line bg-paper/95 text-ink backdrop-blur-md",
@@ -111,6 +115,7 @@ export function Navbar() {
               Request a quote
             </Link>
             <button
+              ref={toggleRef}
               type="button"
               onClick={() => setOpen((v) => !v)}
               aria-expanded={open}
@@ -129,7 +134,6 @@ export function Navbar() {
         <div
           id="mobile-menu"
           role="dialog"
-          aria-modal="true"
           aria-label="Menu"
           className="anim-drop fixed inset-0 top-[72px] z-[calc(var(--z-nav)-1)] flex flex-col bg-paper text-ink lg:hidden"
         >
