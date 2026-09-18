@@ -235,16 +235,19 @@ for (const [w, h, mobile] of [[390, 844, true], [768, 1024, false]]) {
     await page.waitForTimeout(600);
     const overflow = await page.evaluate(() => document.scrollingElement.scrollWidth - window.innerWidth);
     note(overflow <= 0, "G9", `no horizontal overflow at ${w} on ${route}`, `${overflow}px`);
-    await page.screenshot({ path: `${SHOTS}/${w}-${name(route)}.png`, fullPage: w === 390 });
     if (mobile) {
+      // Measure before the full-page screenshot: Playwright's fullPage capture resets touch emulation
+      // afterwards, so `(pointer: coarse)` reads false and coarse-only sizing disappears from the page.
+      const coarse = await page.evaluate(() => matchMedia("(pointer: coarse)").matches);
       const small = await page.evaluate(() =>
         [...document.querySelectorAll("a, button")]
           .filter((e) => e.offsetParent !== null && !e.closest("p, dd, dt, td"))
           .map((e) => ({ t: e.textContent.trim().slice(0, 30), h: e.getBoundingClientRect().height, w: e.getBoundingClientRect().width }))
           .filter((b) => b.h > 0 && (b.h < 44 || b.w < 44)),
       );
-      note(small.length === 0, "G7", `touch targets >= 44px on ${route}`, small.slice(0, 4).map((s) => `${s.t}(${Math.round(s.w)}x${Math.round(s.h)})`).join(" | "));
+      note(coarse && small.length === 0, "G7", `touch targets >= 44px on ${route}`, `${coarse ? "coarse pointer" : "NOT coarse"}; ${small.slice(0, 4).map((s) => `${s.t}(${Math.round(s.w)}x${Math.round(s.h)})`).join(" | ")}`);
     }
+    await page.screenshot({ path: `${SHOTS}/${w}-${name(route)}.png`, fullPage: w === 390 });
   }
   if (mobile) {
     await page.goto(BASE + "/", { waitUntil: "networkidle" });

@@ -4,6 +4,8 @@ import { execSync } from "node:child_process";
 import fs from "node:fs";
 
 const BASE = process.env.BASE || "http://localhost:3201";
+// "simulate" (Lantern, the Lighthouse default) or "devtools" (observed metrics under real throttling). See QA-REPORT.md.
+const THROTTLING = process.env.LH_THROTTLING ?? "simulate";
 const ROUTES = ["/", "/products/attachments", "/contact"];
 fs.mkdirSync("screenshots/lighthouse", { recursive: true });
 const rows = [];
@@ -11,7 +13,7 @@ for (const route of ROUTES) {
   for (const form of ["desktop", "mobile"]) {
     const out = `screenshots/lighthouse/${form}-${route === "/" ? "home" : route.slice(1).replace(/\//g, "-")}.json`;
     const preset = form === "desktop" ? "--preset=desktop" : "";
-    execSync(`npx --yes lighthouse "${BASE}${route}" ${preset} --only-categories=performance,accessibility,best-practices,seo --output=json --output-path="${out}" --chrome-flags="--headless=new --no-sandbox" --quiet`, { stdio: "inherit" });
+    execSync(`npx --yes lighthouse "${BASE}${route}" ${preset} --only-categories=performance,accessibility,best-practices,seo --throttling-method=${THROTTLING} --output=json --output-path="${out}" --chrome-flags="--headless=new --no-sandbox" --quiet`, { stdio: "inherit" });
     const j = JSON.parse(fs.readFileSync(out, "utf8"));
     const a = j.audits;
     rows.push({
