@@ -20,7 +20,15 @@ export function Navbar() {
   const isHome = pathname === "/";
   const [open, setOpen] = useState(false);
   const [pastHero, setPastHero] = useState(!isHome);
+  const [seenPath, setSeenPath] = useState(pathname);
   const ref = useRef<HTMLElement>(null);
+
+  // Route changed: close the overlay and reset the hero state during render (no effect needed).
+  if (seenPath !== pathname) {
+    setSeenPath(pathname);
+    setOpen(false);
+    setPastHero(!isHome);
+  }
 
   useGSAP(
     () => {
@@ -39,10 +47,6 @@ export function Navbar() {
   );
 
   useEffect(() => {
-    setPastHero(!isHome);
-  }, [isHome, pathname]);
-
-  useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
     window.addEventListener("keydown", onKey);
@@ -53,10 +57,6 @@ export function Navbar() {
       document.body.style.overflow = prev;
     };
   }, [open]);
-
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
 
   const onInk = isHome && !pastHero && !open;
 

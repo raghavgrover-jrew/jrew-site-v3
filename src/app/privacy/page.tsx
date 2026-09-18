@@ -17,7 +17,7 @@ export default function PrivacyPage() {
             <strong className="text-ink">Forms.</strong> The request-a-quote, enquiry and careers forms send what you type, and any resume you attach, by email to {contact.legalName} so that the relevant team can reply. Nothing you submit is sold or shared with third parties for marketing.
           </p>
           <p>
-            <strong className="text-ink">Cookies and analytics.</strong> This site sets no advertising or analytics cookies and runs no third-party tracking scripts. Fonts are served from Google Fonts through the site's own build, and images through the hosting provider.
+            <strong className="text-ink">Cookies and analytics.</strong> This site sets no advertising or analytics cookies and runs no third-party tracking scripts. Fonts are served from Google Fonts through the website build, and images through the hosting provider.
           </p>
           <p>
             <strong className="text-ink">Drawings and technical data.</strong> Drawings and specifications are handled under a non-disclosure agreement on request. Please do not attach controlled documents to the forms; ask for an NDA first.

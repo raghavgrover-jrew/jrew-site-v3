@@ -1,0 +1,1566 @@
+{
+  "base": "http://localhost:3200",
+  "at": "2026-09-18T19:52:22.698Z",
+  "results": [
+    {
+      "ok": true,
+      "gate": "G5",
+      "label": "route / responds 200",
+      "detail": 200
+    },
+    {
+      "ok": true,
+      "gate": "G7",
+      "label": "axe serious/critical on /",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G7",
+      "label": "alt attributes complete on /",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "unique title on /",
+      "detail": "JREW Engineering Limited | Precision engineering for tomorrow's machinery"
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "meta description on /",
+      "detail": "264 chars"
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "canonical on /",
+      "detail": "https://jrew.co.in/"
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "JSON-LD parses with Organization on /",
+      "detail": "Organization,WebSite"
+    },
+    {
+      "ok": true,
+      "gate": "G7",
+      "label": "exactly one h1 on /",
+      "detail": "1"
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "og:image declared on home",
+      "detail": "http://localhost:3200/opengraph-image?7da9648c6ccca044"
+    },
+    {
+      "ok": false,
+      "gate": "G12",
+      "label": "og:image resolves",
+      "detail": "404 text/html; charset=utf-8"
+    },
+    {
+      "ok": true,
+      "gate": "G11",
+      "label": "external link has noopener on /",
+      "detail": "https://www.linkedin.com/company/jrew-engineering"
+    },
+    {
+      "ok": true,
+      "gate": "G11",
+      "label": "external link has noopener on /",
+      "detail": "https://stakon.in"
+    },
+    {
+      "ok": false,
+      "gate": "G14",
+      "label": "eyebrow budget on /",
+      "detail": "5 of ceil(10/3)=4"
+    },
+    {
+      "ok": false,
+      "gate": "G14",
+      "label": "no marigold type on paper on /",
+      "detail": "13"
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "no wrapped CTA labels at 1440 on /",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "one quote CTA label on /",
+      "detail": "Request a quote"
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "no em or en dashes rendered on /",
+      "detail": "0"
+    },
+    {
+      "ok": true,
+      "gate": "G5",
+      "label": "route /products responds 200",
+      "detail": 200
+    },
+    {
+      "ok": true,
+      "gate": "G7",
+      "label": "axe serious/critical on /products",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G7",
+      "label": "alt attributes complete on /products",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "unique title on /products",
+      "detail": "Products | JREW Engineering"
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "meta description on /products",
+      "detail": "278 chars"
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "canonical on /products",
+      "detail": "https://jrew.co.in/products"
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "JSON-LD parses with Organization on /products",
+      "detail": "Organization,WebSite,BreadcrumbList,Product,Product,Product,Product,Product,Product"
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "BreadcrumbList on /products",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "Product JSON-LD on /products",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G7",
+      "label": "exactly one h1 on /products",
+      "detail": "1"
+    },
+    {
+      "ok": true,
+      "gate": "G11",
+      "label": "external link has noopener on /products",
+      "detail": "https://www.linkedin.com/company/jrew-engineering"
+    },
+    {
+      "ok": true,
+      "gate": "G11",
+      "label": "external link has noopener on /products",
+      "detail": "https://stakon.in"
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "eyebrow budget on /products",
+      "detail": "3 of ceil(8/3)=3"
+    },
+    {
+      "ok": false,
+      "gate": "G14",
+      "label": "no marigold type on paper on /products",
+      "detail": "8"
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "no wrapped CTA labels at 1440 on /products",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "one quote CTA label on /products",
+      "detail": "Request a quote"
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "no em or en dashes rendered on /products",
+      "detail": "0"
+    },
+    {
+      "ok": true,
+      "gate": "G5",
+      "label": "route /products/attachments responds 200",
+      "detail": 200
+    },
+    {
+      "ok": true,
+      "gate": "G7",
+      "label": "axe serious/critical on /products/attachments",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G7",
+      "label": "alt attributes complete on /products/attachments",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "unique title on /products/attachments",
+      "detail": "Attachments and work tools | JREW Engineering"
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "meta description on /products/attachments",
+      "detail": "239 chars"
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "canonical on /products/attachments",
+      "detail": "https://jrew.co.in/products/attachments"
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "JSON-LD parses with Organization on /products/attachments",
+      "detail": "Organization,WebSite,BreadcrumbList,Product,Product,Product,Product,Product,Product,Product,Product,Product,Product,Product,Product,Product,Product"
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "BreadcrumbList on /products/attachments",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "Product JSON-LD on /products/attachments",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G7",
+      "label": "exactly one h1 on /products/attachments",
+      "detail": "1"
+    },
+    {
+      "ok": true,
+      "gate": "G11",
+      "label": "external link has noopener on /products/attachments",
+      "detail": "https://www.linkedin.com/company/jrew-engineering"
+    },
+    {
+      "ok": true,
+      "gate": "G11",
+      "label": "external link has noopener on /products/attachments",
+      "detail": "https://stakon.in"
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "eyebrow budget on /products/attachments",
+      "detail": "1 of ceil(2/3)=1"
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "no marigold type on paper on /products/attachments",
+      "detail": "0"
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "no wrapped CTA labels at 1440 on /products/attachments",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "one quote CTA label on /products/attachments",
+      "detail": "Request a quote"
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "no em or en dashes rendered on /products/attachments",
+      "detail": "0"
+    },
+    {
+      "ok": true,
+      "gate": "G5",
+      "label": "route /stakon responds 200",
+      "detail": 200
+    },
+    {
+      "ok": true,
+      "gate": "G7",
+      "label": "axe serious/critical on /stakon",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G7",
+      "label": "alt attributes complete on /stakon",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "unique title on /stakon",
+      "detail": "STAKON material handling equipment | JREW Engineering"
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "meta description on /stakon",
+      "detail": "204 chars"
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "canonical on /stakon",
+      "detail": "https://jrew.co.in/stakon"
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "JSON-LD parses with Organization on /stakon",
+      "detail": "Organization,WebSite,BreadcrumbList,Product,Product,Product"
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "BreadcrumbList on /stakon",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "Product JSON-LD on /stakon",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G7",
+      "label": "exactly one h1 on /stakon",
+      "detail": "1"
+    },
+    {
+      "ok": true,
+      "gate": "G11",
+      "label": "external link has noopener on /stakon",
+      "detail": "https://stakon.in"
+    },
+    {
+      "ok": true,
+      "gate": "G11",
+      "label": "external link has noopener on /stakon",
+      "detail": "https://www.linkedin.com/company/jrew-engineering"
+    },
+    {
+      "ok": true,
+      "gate": "G11",
+      "label": "external link has noopener on /stakon",
+      "detail": "https://stakon.in"
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "eyebrow budget on /stakon",
+      "detail": "1 of ceil(2/3)=1"
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "no marigold type on paper on /stakon",
+      "detail": "0"
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "no wrapped CTA labels at 1440 on /stakon",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "one quote CTA label on /stakon",
+      "detail": "Request a quote"
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "no em or en dashes rendered on /stakon",
+      "detail": "0"
+    },
+    {
+      "ok": true,
+      "gate": "G5",
+      "label": "route /capabilities responds 200",
+      "detail": 200
+    },
+    {
+      "ok": false,
+      "gate": "G7",
+      "label": "axe serious/critical on /capabilities",
+      "detail": "color-contrast(13)"
+    },
+    {
+      "ok": true,
+      "gate": "G7",
+      "label": "alt attributes complete on /capabilities",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "unique title on /capabilities",
+      "detail": "Capabilities | JREW Engineering"
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "meta description on /capabilities",
+      "detail": "295 chars"
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "canonical on /capabilities",
+      "detail": "https://jrew.co.in/capabilities"
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "JSON-LD parses with Organization on /capabilities",
+      "detail": "Organization,WebSite,BreadcrumbList"
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "BreadcrumbList on /capabilities",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G7",
+      "label": "exactly one h1 on /capabilities",
+      "detail": "1"
+    },
+    {
+      "ok": true,
+      "gate": "G11",
+      "label": "external link has noopener on /capabilities",
+      "detail": "https://www.linkedin.com/company/jrew-engineering"
+    },
+    {
+      "ok": true,
+      "gate": "G11",
+      "label": "external link has noopener on /capabilities",
+      "detail": "https://stakon.in"
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "eyebrow budget on /capabilities",
+      "detail": "2 of ceil(5/3)=2"
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "no marigold type on paper on /capabilities",
+      "detail": "0"
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "no wrapped CTA labels at 1440 on /capabilities",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "one quote CTA label on /capabilities",
+      "detail": "Request a quote"
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "no em or en dashes rendered on /capabilities",
+      "detail": "0"
+    },
+    {
+      "ok": true,
+      "gate": "G5",
+      "label": "route /quality responds 200",
+      "detail": 200
+    },
+    {
+      "ok": true,
+      "gate": "G7",
+      "label": "axe serious/critical on /quality",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G7",
+      "label": "alt attributes complete on /quality",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "unique title on /quality",
+      "detail": "Quality | JREW Engineering"
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "meta description on /quality",
+      "detail": "269 chars"
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "canonical on /quality",
+      "detail": "https://jrew.co.in/quality"
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "JSON-LD parses with Organization on /quality",
+      "detail": "Organization,WebSite,BreadcrumbList"
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "BreadcrumbList on /quality",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G7",
+      "label": "exactly one h1 on /quality",
+      "detail": "1"
+    },
+    {
+      "ok": true,
+      "gate": "G11",
+      "label": "external link has noopener on /quality",
+      "detail": "https://www.linkedin.com/company/jrew-engineering"
+    },
+    {
+      "ok": true,
+      "gate": "G11",
+      "label": "external link has noopener on /quality",
+      "detail": "https://stakon.in"
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "eyebrow budget on /quality",
+      "detail": "1 of ceil(5/3)=2"
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "no marigold type on paper on /quality",
+      "detail": "0"
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "no wrapped CTA labels at 1440 on /quality",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "one quote CTA label on /quality",
+      "detail": "Request a quote"
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "no em or en dashes rendered on /quality",
+      "detail": "0"
+    },
+    {
+      "ok": true,
+      "gate": "G5",
+      "label": "route /facilities responds 200",
+      "detail": 200
+    },
+    {
+      "ok": true,
+      "gate": "G7",
+      "label": "axe serious/critical on /facilities",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G7",
+      "label": "alt attributes complete on /facilities",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "unique title on /facilities",
+      "detail": "Facilities | JREW Engineering"
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "meta description on /facilities",
+      "detail": "284 chars"
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "canonical on /facilities",
+      "detail": "https://jrew.co.in/facilities"
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "JSON-LD parses with Organization on /facilities",
+      "detail": "Organization,WebSite,BreadcrumbList"
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "BreadcrumbList on /facilities",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G7",
+      "label": "exactly one h1 on /facilities",
+      "detail": "1"
+    },
+    {
+      "ok": true,
+      "gate": "G11",
+      "label": "external link has noopener on /facilities",
+      "detail": "https://www.linkedin.com/company/jrew-engineering"
+    },
+    {
+      "ok": true,
+      "gate": "G11",
+      "label": "external link has noopener on /facilities",
+      "detail": "https://stakon.in"
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "eyebrow budget on /facilities",
+      "detail": "1 of ceil(3/3)=1"
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "no marigold type on paper on /facilities",
+      "detail": "0"
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "no wrapped CTA labels at 1440 on /facilities",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "one quote CTA label on /facilities",
+      "detail": "Request a quote"
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "no em or en dashes rendered on /facilities",
+      "detail": "0"
+    },
+    {
+      "ok": true,
+      "gate": "G5",
+      "label": "route /about responds 200",
+      "detail": 200
+    },
+    {
+      "ok": true,
+      "gate": "G7",
+      "label": "axe serious/critical on /about",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G7",
+      "label": "alt attributes complete on /about",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "unique title on /about",
+      "detail": "About | JREW Engineering"
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "meta description on /about",
+      "detail": "283 chars"
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "canonical on /about",
+      "detail": "https://jrew.co.in/about"
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "JSON-LD parses with Organization on /about",
+      "detail": "Organization,WebSite,BreadcrumbList"
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "BreadcrumbList on /about",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G7",
+      "label": "exactly one h1 on /about",
+      "detail": "1"
+    },
+    {
+      "ok": true,
+      "gate": "G11",
+      "label": "external link has noopener on /about",
+      "detail": "https://www.linkedin.com/company/jrew-engineering"
+    },
+    {
+      "ok": true,
+      "gate": "G11",
+      "label": "external link has noopener on /about",
+      "detail": "https://stakon.in"
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "eyebrow budget on /about",
+      "detail": "2 of ceil(6/3)=2"
+    },
+    {
+      "ok": false,
+      "gate": "G14",
+      "label": "no marigold type on paper on /about",
+      "detail": "5"
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "no wrapped CTA labels at 1440 on /about",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "one quote CTA label on /about",
+      "detail": "Request a quote"
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "no em or en dashes rendered on /about",
+      "detail": "0"
+    },
+    {
+      "ok": true,
+      "gate": "G5",
+      "label": "route /contact responds 200",
+      "detail": 200
+    },
+    {
+      "ok": true,
+      "gate": "G7",
+      "label": "axe serious/critical on /contact",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G7",
+      "label": "alt attributes complete on /contact",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "unique title on /contact",
+      "detail": "Contact | JREW Engineering"
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "meta description on /contact",
+      "detail": "154 chars"
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "canonical on /contact",
+      "detail": "https://jrew.co.in/contact"
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "JSON-LD parses with Organization on /contact",
+      "detail": "Organization,WebSite,BreadcrumbList"
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "BreadcrumbList on /contact",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G7",
+      "label": "exactly one h1 on /contact",
+      "detail": "1"
+    },
+    {
+      "ok": true,
+      "gate": "G11",
+      "label": "external link has noopener on /contact",
+      "detail": "https://www.linkedin.com/company/jrew-engineering"
+    },
+    {
+      "ok": true,
+      "gate": "G11",
+      "label": "external link has noopener on /contact",
+      "detail": "https://stakon.in"
+    },
+    {
+      "ok": false,
+      "gate": "G14",
+      "label": "eyebrow budget on /contact",
+      "detail": "2 of ceil(3/3)=1"
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "no marigold type on paper on /contact",
+      "detail": "0"
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "no wrapped CTA labels at 1440 on /contact",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "one quote CTA label on /contact",
+      "detail": "Request a quote"
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "no em or en dashes rendered on /contact",
+      "detail": "0"
+    },
+    {
+      "ok": true,
+      "gate": "G5",
+      "label": "route /careers responds 200",
+      "detail": 200
+    },
+    {
+      "ok": true,
+      "gate": "G7",
+      "label": "axe serious/critical on /careers",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G7",
+      "label": "alt attributes complete on /careers",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "unique title on /careers",
+      "detail": "Careers | JREW Engineering"
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "meta description on /careers",
+      "detail": "171 chars"
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "canonical on /careers",
+      "detail": "https://jrew.co.in/careers"
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "JSON-LD parses with Organization on /careers",
+      "detail": "Organization,WebSite,BreadcrumbList"
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "BreadcrumbList on /careers",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G7",
+      "label": "exactly one h1 on /careers",
+      "detail": "1"
+    },
+    {
+      "ok": true,
+      "gate": "G11",
+      "label": "external link has noopener on /careers",
+      "detail": "https://www.linkedin.com/company/jrew-engineering"
+    },
+    {
+      "ok": true,
+      "gate": "G11",
+      "label": "external link has noopener on /careers",
+      "detail": "https://stakon.in"
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "eyebrow budget on /careers",
+      "detail": "0 of ceil(3/3)=1"
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "no marigold type on paper on /careers",
+      "detail": "0"
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "no wrapped CTA labels at 1440 on /careers",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "one quote CTA label on /careers",
+      "detail": "Request a quote"
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "no em or en dashes rendered on /careers",
+      "detail": "0"
+    },
+    {
+      "ok": true,
+      "gate": "G5",
+      "label": "route /privacy responds 200",
+      "detail": 200
+    },
+    {
+      "ok": true,
+      "gate": "G7",
+      "label": "axe serious/critical on /privacy",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G7",
+      "label": "alt attributes complete on /privacy",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "unique title on /privacy",
+      "detail": "Privacy | JREW Engineering"
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "meta description on /privacy",
+      "detail": "66 chars"
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "canonical on /privacy",
+      "detail": "https://jrew.co.in/privacy"
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "JSON-LD parses with Organization on /privacy",
+      "detail": "Organization,WebSite,BreadcrumbList"
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "BreadcrumbList on /privacy",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G7",
+      "label": "exactly one h1 on /privacy",
+      "detail": "1"
+    },
+    {
+      "ok": true,
+      "gate": "G11",
+      "label": "external link has noopener on /privacy",
+      "detail": "https://www.linkedin.com/company/jrew-engineering"
+    },
+    {
+      "ok": true,
+      "gate": "G11",
+      "label": "external link has noopener on /privacy",
+      "detail": "https://stakon.in"
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "eyebrow budget on /privacy",
+      "detail": "0 of ceil(2/3)=1"
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "no marigold type on paper on /privacy",
+      "detail": "0"
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "no wrapped CTA labels at 1440 on /privacy",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "one quote CTA label on /privacy",
+      "detail": "Request a quote"
+    },
+    {
+      "ok": true,
+      "gate": "G14",
+      "label": "no em or en dashes rendered on /privacy",
+      "detail": "0"
+    },
+    {
+      "ok": true,
+      "gate": "G6",
+      "label": "server HTML carries content on /",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G6",
+      "label": "server HTML carries content on /products",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G6",
+      "label": "server HTML carries content on /products/attachments",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G6",
+      "label": "server HTML carries content on /stakon",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G6",
+      "label": "server HTML carries content on /capabilities",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G6",
+      "label": "server HTML carries content on /quality",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G6",
+      "label": "server HTML carries content on /facilities",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G6",
+      "label": "server HTML carries content on /about",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G6",
+      "label": "server HTML carries content on /contact",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G6",
+      "label": "server HTML carries content on /careers",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G6",
+      "label": "server HTML carries content on /privacy",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G11",
+      "label": "internal link /",
+      "detail": 200
+    },
+    {
+      "ok": true,
+      "gate": "G11",
+      "label": "internal link /about",
+      "detail": 200
+    },
+    {
+      "ok": true,
+      "gate": "G11",
+      "label": "internal link /capabilities",
+      "detail": 200
+    },
+    {
+      "ok": true,
+      "gate": "G11",
+      "label": "internal link /careers",
+      "detail": 200
+    },
+    {
+      "ok": true,
+      "gate": "G11",
+      "label": "internal link /contact",
+      "detail": 200
+    },
+    {
+      "ok": true,
+      "gate": "G11",
+      "label": "internal link /facilities",
+      "detail": 200
+    },
+    {
+      "ok": true,
+      "gate": "G11",
+      "label": "internal link /privacy",
+      "detail": 200
+    },
+    {
+      "ok": true,
+      "gate": "G11",
+      "label": "internal link /products",
+      "detail": 200
+    },
+    {
+      "ok": true,
+      "gate": "G11",
+      "label": "internal link /products/attachments",
+      "detail": 200
+    },
+    {
+      "ok": true,
+      "gate": "G11",
+      "label": "internal link /quality",
+      "detail": 200
+    },
+    {
+      "ok": true,
+      "gate": "G11",
+      "label": "internal link /stakon",
+      "detail": 200
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "sitemap lists every route",
+      "detail": "200"
+    },
+    {
+      "ok": true,
+      "gate": "G12",
+      "label": "robots.txt present with sitemap",
+      "detail": "200"
+    },
+    {
+      "ok": true,
+      "gate": "G7",
+      "label": "first tab stop is the skip link",
+      "detail": "Skip to content"
+    },
+    {
+      "ok": true,
+      "gate": "G7",
+      "label": "skip link targets #main",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G7",
+      "label": "attachment filter toggles aria-pressed and hides cards",
+      "detail": "pressed=true visible=8"
+    },
+    {
+      "ok": true,
+      "gate": "G7",
+      "label": "attachment dialog opens",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G7",
+      "label": "attachment dialog closes on Esc",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G7",
+      "label": "by-machine tabs move with ArrowRight",
+      "detail": "Skid steers"
+    },
+    {
+      "ok": false,
+      "gate": "G4",
+      "label": "console clean across routes",
+      "detail": "[warning] http://localhost:3200/products :: Image with src \"/images/forged/forging-shop-panorama.jpg\" was detected as the Largest Contentful Paint (LCP). Please add the `loading=\"eager\"` property if this  || [warning] http://localhost:3200/products/attachments :: Image with src \"/images/attachments/man-basket.jpg\" was detected as the Largest Contentful Paint (LCP). Please add the `loading=\"eager\"` property if this image  || [warning] http://localhost:3200/stakon :: Image with src \"/images/stakon/stacker-hero.png\" was detected as the Largest Contentful Paint (LCP). Please add the `loading=\"eager\"` property if this image is "
+    },
+    {
+      "ok": true,
+      "gate": "G5",
+      "label": "zero failed requests incl. images",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G8",
+      "label": "no pins under reduced motion (home)",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G8",
+      "label": "Lenis not constructed under reduced motion",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G8",
+      "label": "all home content visible without motion",
+      "detail": "0 hidden"
+    },
+    {
+      "ok": true,
+      "gate": "G8",
+      "label": "no clip-path wipes left closed",
+      "detail": "0"
+    },
+    {
+      "ok": true,
+      "gate": "G8",
+      "label": "timeline not pinned under reduced motion",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G9",
+      "label": "no horizontal overflow at 390 on /",
+      "detail": "0px"
+    },
+    {
+      "ok": false,
+      "gate": "G7",
+      "label": "touch targets >= 44px on /",
+      "detail": "All six families(91x23) | enquiry@jrew.co.in(125x23) | Products(56x21) | Capabilities(74x21)"
+    },
+    {
+      "ok": true,
+      "gate": "G9",
+      "label": "no horizontal overflow at 390 on /products",
+      "detail": "0px"
+    },
+    {
+      "ok": false,
+      "gate": "G7",
+      "label": "touch targets >= 44px on /products",
+      "detail": "View(31x23) | View(31x23) | View(31x23) | View(31x23)"
+    },
+    {
+      "ok": true,
+      "gate": "G9",
+      "label": "no horizontal overflow at 390 on /products/attachments",
+      "detail": "0px"
+    },
+    {
+      "ok": false,
+      "gate": "G7",
+      "label": "touch targets >= 44px on /products/attachments",
+      "detail": "enquiry@jrew.co.in(125x23) | Products(56x21) | Capabilities(74x21) | Quality(45x21)"
+    },
+    {
+      "ok": true,
+      "gate": "G9",
+      "label": "no horizontal overflow at 390 on /stakon",
+      "detail": "0px"
+    },
+    {
+      "ok": false,
+      "gate": "G7",
+      "label": "touch targets >= 44px on /stakon",
+      "detail": "enquiry@jrew.co.in(125x23) | Products(56x21) | Capabilities(74x21) | Quality(45x21)"
+    },
+    {
+      "ok": true,
+      "gate": "G9",
+      "label": "no horizontal overflow at 390 on /capabilities",
+      "detail": "0px"
+    },
+    {
+      "ok": false,
+      "gate": "G7",
+      "label": "touch targets >= 44px on /capabilities",
+      "detail": "enquiry@jrew.co.in(125x23) | Products(56x21) | Capabilities(74x21) | Quality(45x21)"
+    },
+    {
+      "ok": true,
+      "gate": "G9",
+      "label": "no horizontal overflow at 390 on /quality",
+      "detail": "0px"
+    },
+    {
+      "ok": false,
+      "gate": "G7",
+      "label": "touch targets >= 44px on /quality",
+      "detail": "enquiry@jrew.co.in(117x20) | enquiry@jrew.co.in(125x23) | Products(56x21) | Capabilities(74x21)"
+    },
+    {
+      "ok": true,
+      "gate": "G9",
+      "label": "no horizontal overflow at 390 on /facilities",
+      "detail": "0px"
+    },
+    {
+      "ok": false,
+      "gate": "G7",
+      "label": "touch targets >= 44px on /facilities",
+      "detail": "enquiry@jrew.co.in(125x23) | Products(56x21) | Capabilities(74x21) | Quality(45x21)"
+    },
+    {
+      "ok": true,
+      "gate": "G9",
+      "label": "no horizontal overflow at 390 on /about",
+      "detail": "0px"
+    },
+    {
+      "ok": false,
+      "gate": "G7",
+      "label": "touch targets >= 44px on /about",
+      "detail": "enquiry@jrew.co.in(125x23) | Products(56x21) | Capabilities(74x21) | Quality(45x21)"
+    },
+    {
+      "ok": true,
+      "gate": "G9",
+      "label": "no horizontal overflow at 390 on /contact",
+      "detail": "0px"
+    },
+    {
+      "ok": false,
+      "gate": "G7",
+      "label": "touch targets >= 44px on /contact",
+      "detail": "enquiry@jrew.co.in(134x22) | +91 97 3334 3338(106x21) | enquiry@jrew.co.in(125x23) | Products(56x21)"
+    },
+    {
+      "ok": true,
+      "gate": "G9",
+      "label": "no horizontal overflow at 390 on /careers",
+      "detail": "0px"
+    },
+    {
+      "ok": false,
+      "gate": "G7",
+      "label": "touch targets >= 44px on /careers",
+      "detail": "enquiry@jrew.co.in(125x23) | Products(56x21) | Capabilities(74x21) | Quality(45x21)"
+    },
+    {
+      "ok": true,
+      "gate": "G9",
+      "label": "no horizontal overflow at 390 on /privacy",
+      "detail": "0px"
+    },
+    {
+      "ok": false,
+      "gate": "G7",
+      "label": "touch targets >= 44px on /privacy",
+      "detail": "enquiry@jrew.co.in(134x22) | enquiry@jrew.co.in(125x23) | Products(56x21) | Capabilities(74x21)"
+    },
+    {
+      "ok": true,
+      "gate": "G9",
+      "label": "mobile menu opens",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G9",
+      "label": "mobile menu closes on Esc",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G9",
+      "label": "no horizontal overflow at 768 on /",
+      "detail": "0px"
+    },
+    {
+      "ok": true,
+      "gate": "G9",
+      "label": "no horizontal overflow at 768 on /products",
+      "detail": "0px"
+    },
+    {
+      "ok": true,
+      "gate": "G9",
+      "label": "no horizontal overflow at 768 on /products/attachments",
+      "detail": "0px"
+    },
+    {
+      "ok": true,
+      "gate": "G9",
+      "label": "no horizontal overflow at 768 on /stakon",
+      "detail": "0px"
+    },
+    {
+      "ok": true,
+      "gate": "G9",
+      "label": "no horizontal overflow at 768 on /capabilities",
+      "detail": "0px"
+    },
+    {
+      "ok": true,
+      "gate": "G9",
+      "label": "no horizontal overflow at 768 on /quality",
+      "detail": "0px"
+    },
+    {
+      "ok": true,
+      "gate": "G9",
+      "label": "no horizontal overflow at 768 on /facilities",
+      "detail": "0px"
+    },
+    {
+      "ok": true,
+      "gate": "G9",
+      "label": "no horizontal overflow at 768 on /about",
+      "detail": "0px"
+    },
+    {
+      "ok": true,
+      "gate": "G9",
+      "label": "no horizontal overflow at 768 on /contact",
+      "detail": "0px"
+    },
+    {
+      "ok": true,
+      "gate": "G9",
+      "label": "no horizontal overflow at 768 on /careers",
+      "detail": "0px"
+    },
+    {
+      "ok": true,
+      "gate": "G9",
+      "label": "no horizontal overflow at 768 on /privacy",
+      "detail": "0px"
+    },
+    {
+      "ok": true,
+      "gate": "G10",
+      "label": "RFQ step 1 shows a validation error",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G10",
+      "label": "RFQ failure shows the error banner",
+      "detail": "The RFQ did not send. Your entries are intact. Retry, or email enquiry@jrew.co.in directly. | "
+    },
+    {
+      "ok": true,
+      "gate": "G10",
+      "label": "RFQ entries intact after failure",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G10",
+      "label": "RFQ submits (console fallback or SMTP)",
+      "detail": "{\"success\":true,\"delivered\":\"console\"}"
+    },
+    {
+      "ok": true,
+      "gate": "G10",
+      "label": "RFQ success state shown",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G10",
+      "label": "enquiry form shows three field errors when empty",
+      "detail": "3"
+    },
+    {
+      "ok": true,
+      "gate": "G10",
+      "label": "careers form requires a resume",
+      "detail": "Attach a resume, PDF preferred. | "
+    }
+  ]
+}
