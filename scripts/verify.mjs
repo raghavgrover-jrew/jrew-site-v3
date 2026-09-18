@@ -319,7 +319,7 @@ for (const [w, h, mobile] of [[390, 844, true], [768, 1024, false]]) {
   const body = await resp.json().catch(() => ({}));
   note(resp.status() === 200 && body.success === true, "G10", "RFQ submits (console fallback or SMTP)", JSON.stringify(body));
   await page.waitForTimeout(400);
-  note(await page.evaluate(() => document.body.textContent.includes("We have your enquiry")), "G10", "RFQ success state shown");
+  note(await page.evaluate(() => document.body.textContent.includes("We have your RFQ")), "G10", "RFQ success state shown");
 
   // enquiry validation
   await page.goto(BASE + "/contact", { waitUntil: "networkidle" });

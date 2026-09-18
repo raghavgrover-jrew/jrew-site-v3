@@ -1,6 +1,6 @@
 {
   "base": "http://localhost:3201",
-  "at": "2026-09-18T20:26:10.606Z",
+  "at": "2026-09-18T23:14:33.768Z",
   "results": [
     {
       "ok": true,
@@ -24,7 +24,7 @@
       "ok": true,
       "gate": "G12",
       "label": "unique title on /",
-      "detail": "JREW Engineering Limited | Precision engineering for tomorrow's machinery"
+      "detail": "JREW Engineering | Masts, axles, attachments and machined components for OEMs"
     },
     {
       "ok": true,
@@ -1290,7 +1290,7 @@
       "ok": true,
       "gate": "G7",
       "label": "nav stays on ink while the pinned hero is on screen",
-      "detail": "{\"y\":899,\"onInk\":true,\"heroBottom\":496}"
+      "detail": "{\"y\":899,\"onInk\":true,\"heroBottom\":566}"
     },
     {
       "ok": true,
@@ -1341,10 +1341,10 @@
       "detail": "0px"
     },
     {
-      "ok": false,
+      "ok": true,
       "gate": "G7",
       "label": "touch targets >= 44px on /",
-      "detail": "coarse pointer; About(38x44)"
+      "detail": "coarse pointer; "
     },
     {
       "ok": true,
@@ -1353,10 +1353,10 @@
       "detail": "0px"
     },
     {
-      "ok": false,
+      "ok": true,
       "gate": "G7",
       "label": "touch targets >= 44px on /products",
-      "detail": "coarse pointer; View(31x44) | View(31x44) | View(31x44) | View(31x44)"
+      "detail": "coarse pointer; "
     },
     {
       "ok": true,
@@ -1365,10 +1365,10 @@
       "detail": "0px"
     },
     {
-      "ok": false,
+      "ok": true,
       "gate": "G7",
       "label": "touch targets >= 44px on /products/attachments",
-      "detail": "coarse pointer; About(38x44)"
+      "detail": "coarse pointer; "
     },
     {
       "ok": true,
@@ -1377,10 +1377,10 @@
       "detail": "0px"
     },
     {
-      "ok": false,
+      "ok": true,
       "gate": "G7",
       "label": "touch targets >= 44px on /stakon",
-      "detail": "coarse pointer; About(38x44)"
+      "detail": "coarse pointer; "
     },
     {
       "ok": true,
@@ -1389,10 +1389,10 @@
       "detail": "0px"
     },
     {
-      "ok": false,
+      "ok": true,
       "gate": "G7",
       "label": "touch targets >= 44px on /capabilities",
-      "detail": "coarse pointer; About(38x44)"
+      "detail": "coarse pointer; "
     },
     {
       "ok": true,
@@ -1401,10 +1401,10 @@
       "detail": "0px"
     },
     {
-      "ok": false,
+      "ok": true,
       "gate": "G7",
       "label": "touch targets >= 44px on /quality",
-      "detail": "coarse pointer; About(38x44)"
+      "detail": "coarse pointer; "
     },
     {
       "ok": true,
@@ -1413,10 +1413,10 @@
       "detail": "0px"
     },
     {
-      "ok": false,
+      "ok": true,
       "gate": "G7",
       "label": "touch targets >= 44px on /facilities",
-      "detail": "coarse pointer; About(38x44)"
+      "detail": "coarse pointer; "
     },
     {
       "ok": true,
@@ -1425,10 +1425,10 @@
       "detail": "0px"
     },
     {
-      "ok": false,
+      "ok": true,
       "gate": "G7",
       "label": "touch targets >= 44px on /about",
-      "detail": "coarse pointer; About(38x44)"
+      "detail": "coarse pointer; "
     },
     {
       "ok": true,
@@ -1437,10 +1437,10 @@
       "detail": "0px"
     },
     {
-      "ok": false,
+      "ok": true,
       "gate": "G7",
       "label": "touch targets >= 44px on /contact",
-      "detail": "coarse pointer; About(38x44)"
+      "detail": "coarse pointer; "
     },
     {
       "ok": true,
@@ -1449,10 +1449,10 @@
       "detail": "0px"
     },
     {
-      "ok": false,
+      "ok": true,
       "gate": "G7",
       "label": "touch targets >= 44px on /careers",
-      "detail": "coarse pointer; About(38x44)"
+      "detail": "coarse pointer; "
     },
     {
       "ok": true,
@@ -1461,10 +1461,10 @@
       "detail": "0px"
     },
     {
-      "ok": false,
+      "ok": true,
       "gate": "G7",
       "label": "touch targets >= 44px on /privacy",
-      "detail": "coarse pointer; About(38x44)"
+      "detail": "coarse pointer; "
     },
     {
       "ok": true,

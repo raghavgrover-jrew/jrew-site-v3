@@ -77,6 +77,10 @@ Lenis smooth scroll with GSAP owning the RAF; hero entrance and pinned exit (des
 | Mast figures from both Spread 04 and Spread 08 | Spread 08 figures removed from the capabilities proof row | Code review found the two figures contradict each other for a reader; Spread 04 kept on Products |
 | Indian digit grouping (6,00,000) | International grouping (600,000) | Export audience; the brochure itself prints 600,000 |
 | `aria-modal` on the mobile menu | Dropped; focus moves in on open and back on close | No focus trap was implemented, so the attribute would have misdescribed the widget |
+| Home order: hero, stats, sectors, families, components, process, customers, quality, facilities, RFQ | Customer logo wall moved to directly after the stat band | Adversarial read: proof arrived at 55 percent of the mobile page; benchmark pattern 5 also puts the logo wall under the hero region |
+| Nav RFQ button from 640 px up | Visible at every width | Adversarial read: on a phone the CTA was reachable only through the menu or the footer on 9 of 11 routes |
+| RFQ step 2 always required | Optional for "Plant visit or supplier audit" and "Co-development / new product introduction" | Those enquiries have no volume or timeline yet; the form was blocking them |
+| Mobile menu and RFQ steps animate in and out | Enter only; exits instant | Motion audit F4, F5 |
 
 ## 5. Decisions made without asking
 
@@ -88,13 +92,13 @@ Detail, command output and the round-by-round fix list are in `QA-REPORT.md`. Su
 
 | Check | Result |
 |---|---|
-| `pnpm build` | see QA-REPORT round 3 |
+| `pnpm build` | exit 0, all routes prerendered |
 | `pnpm lint` | 0 problems |
-| `pnpm test` | 25 passed (11 data and RFQ, 14 API) |
-| Gate harness `scripts/verify.mjs` | see QA-REPORT round 3 |
-| Lighthouse | see QA-REPORT round 3 (simulated and observed) |
+| `pnpm test` | 26 passed (12 data and RFQ, 14 API) |
+| Gate harness `scripts/verify.mjs` | 264 of 264 checks (round 4, second pass) |
+| Lighthouse | Observed throttling: every target met, mobile LCP 1.54 to 1.57 s, CLS 0, accessibility 100 on all six runs. Lantern simulation on the local HTTP/1.1 server reports mobile LCP 2.65 to 3.25 s; the cause is the simulator's pessimistic graph on localhost (QA-REPORT rounds 1 and 3). Re-measure on the Vercel preview |
 | Code review | 2 critical, 8 important, 14 minor findings; all addressed in commit 171cce5 except the two content questions handed to Raghav (Needs input 9, 10) |
-| Adversarial read | see QA-REPORT round 3 |
+| Adversarial read | 7 fix-now items: 6 fixed in commit 0a964ce, the h1 swap kept as a test candidate (Needs input 20); copy notes applied where the brochure allows |
 
 ## 7. Needs Raghav's input
 
@@ -114,6 +118,12 @@ Carried from PLAN.md, updated for what the build resolved.
 12. **Vector logo files** to replace the PDF extractions, if the brand team has them (names are stable; drop-in).
 13. **At deploy:** `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `ENQUIRY_EMAIL`, `CAREERS_EMAIL`.
 14. **Analytics.** None installed. If wanted, name the tool; a consent banner follows from that choice.
+15. **RFQ response window.** The success state and the acknowledgement email name the reply route but promise no time. State one ("within N working days") and it goes in two strings.
+16. **A named commercial contact or role.** The only person named on the site is the founder. A sourcing director expects a name or at least "the Head of Business Development replies". Your call whether to name someone.
+17. **"0 PPM" scope.** Printed as an absolute. A buyer will ask which programmes and which period; if a window exists ("0 PPM on export programmes, FYxx to FYxx") it should be stated, otherwise the claim stays as printed.
+18. **"USD 50M+ annual turnover".** Add the fiscal year if you want it dated.
+19. **Attachments headline.** Spread 05 prints both "India's widest attachment range" (headline) and "One of India's widest engineered-attachment ranges" (intro). Both are on the page as printed; pick one if you want them aligned.
+20. **Hero headline test.** The adversarial read proposes replacing the cover slogan h1 with a noun sentence ("Forklift masts, axle assemblies, attachments and machined components for construction and material-handling OEMs"). Kept the brochure line; the swap is a one-string change in `src/data/whyJrew.ts` if you prefer the concrete version.
 
 ## 8. Deploy checklist (Gate 2)
 
