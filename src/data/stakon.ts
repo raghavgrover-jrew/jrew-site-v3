@@ -12,7 +12,7 @@ export const stakon = {
     "Curtis/ZAPI control, AC drive and European hydraulics",
     "Three-stage telescopic mast to 6.3 m, no deflection at height",
     "Solid steel body and mast assemblies throughout",
-    "500 kg to 2,000 kg across 14 models",
+    "14 models across the FE, SE and FEPT series, 500 kg to 2,000 kg",
   ],
   hero: { image: "/images/stakon/stacker-hero.png", alt: "STAKON fully electric pallet stacker with telescopic mast" },
   models: [

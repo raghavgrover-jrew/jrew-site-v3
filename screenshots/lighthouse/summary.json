@@ -6,42 +6,42 @@
     "a11y": 100,
     "bp": 100,
     "seo": 100,
-    "lcp": 0.75,
+    "lcp": 0.21,
     "cls": 0,
-    "tbt": 0
+    "tbt": 2
   },
   {
     "route": "/",
-    "form": "mobile",
-    "perf": 95,
-    "a11y": 100,
-    "bp": 100,
-    "seo": 100,
-    "lcp": 2.87,
-    "cls": 0,
-    "tbt": 41
-  },
-  {
-    "route": "/products/attachments",
-    "form": "desktop",
-    "perf": 100,
-    "a11y": 100,
-    "bp": 100,
-    "seo": 100,
-    "lcp": 0.64,
-    "cls": 0,
-    "tbt": 0
-  },
-  {
-    "route": "/products/attachments",
     "form": "mobile",
     "perf": 94,
     "a11y": 100,
     "bp": 100,
     "seo": 100,
-    "lcp": 3.11,
+    "lcp": 1.71,
     "cls": 0,
-    "tbt": 24
+    "tbt": 260
+  },
+  {
+    "route": "/products/attachments",
+    "form": "desktop",
+    "perf": 100,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100,
+    "lcp": 0.06,
+    "cls": 0,
+    "tbt": 0
+  },
+  {
+    "route": "/products/attachments",
+    "form": "mobile",
+    "perf": 99,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100,
+    "lcp": 1.55,
+    "cls": 0,
+    "tbt": 49
   },
   {
     "route": "/contact",
@@ -50,19 +50,19 @@
     "a11y": 100,
     "bp": 100,
     "seo": 100,
-    "lcp": 0.53,
+    "lcp": 0.06,
     "cls": 0,
     "tbt": 0
   },
   {
     "route": "/contact",
     "form": "mobile",
-    "perf": 97,
+    "perf": 100,
     "a11y": 100,
     "bp": 100,
     "seo": 100,
-    "lcp": 2.66,
+    "lcp": 1.54,
     "cls": 0,
-    "tbt": 23
+    "tbt": 49
   }
 ]

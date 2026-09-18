@@ -14,11 +14,11 @@ export default function Home() {
     <>
       <Hero />
       <StatBand />
+      <Trusted />
       <Sectors />
       <FamilyGrid />
       <ComponentStories />
       <ProcessChain />
-      <Trusted />
       <QualityBand />
       <FacilityStrip />
       <WhyJrewRfq />

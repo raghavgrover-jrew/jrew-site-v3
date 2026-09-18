@@ -12,6 +12,11 @@ import { TwoToneHeading } from "@/components/ui/TwoToneHeading";
 import { Button } from "@/components/ui/Button";
 import { rfqHref } from "@/lib/site";
 import { cover } from "@/data/whyJrew";
+import { certifications } from "@/data/quality";
+import { awards } from "@/data/awards";
+
+const catAward = awards.find((a) => a.id === "cat-ser");
+const proofLine = [...certifications.filter((c) => c.code.startsWith("ISO") || c.code.startsWith("EN")).map((c) => c.code), catAward ? `Caterpillar ${catAward.title} ${catAward.years?.join(", ")}` : null].filter(Boolean).join("  ·  ");
 
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
@@ -49,6 +54,7 @@ export function Hero() {
                 See capabilities
               </Button>
             </div>
+            <p className="hero-in tnum mt-7 max-w-[44rem] text-[13px] leading-relaxed tracking-[0.02em] text-on-ink-3">{proofLine}</p>
           </div>
         </div>
         <div className="hero-img relative min-h-[46vw] lg:min-h-0">

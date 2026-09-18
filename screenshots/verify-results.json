@@ -1,6 +1,6 @@
 {
   "base": "http://localhost:3201",
-  "at": "2026-09-18T20:07:05.903Z",
+  "at": "2026-09-18T20:26:10.606Z",
   "results": [
     {
       "ok": true,
@@ -1270,6 +1270,30 @@
     },
     {
       "ok": true,
+      "gate": "G7",
+      "label": "by-machine tab focus follows selection",
+      "detail": "Skid steers"
+    },
+    {
+      "ok": true,
+      "gate": "G7",
+      "label": "RFQ radio focus is visible on the label",
+      "detail": "solid 2px"
+    },
+    {
+      "ok": true,
+      "gate": "G7",
+      "label": "form controls carry aria-describedby or aria-labelledby",
+      "detail": "1"
+    },
+    {
+      "ok": true,
+      "gate": "G7",
+      "label": "nav stays on ink while the pinned hero is on screen",
+      "detail": "{\"y\":899,\"onInk\":true,\"heroBottom\":496}"
+    },
+    {
+      "ok": true,
       "gate": "G4",
       "label": "console clean across routes",
       "detail": ""
@@ -1320,7 +1344,7 @@
       "ok": false,
       "gate": "G7",
       "label": "touch targets >= 44px on /",
-      "detail": "All six families(91x23) | enquiry@jrew.co.in(125x23) | Products(56x21) | Capabilities(74x21)"
+      "detail": "coarse pointer; About(38x44)"
     },
     {
       "ok": true,
@@ -1332,7 +1356,7 @@
       "ok": false,
       "gate": "G7",
       "label": "touch targets >= 44px on /products",
-      "detail": "View(31x23) | View(31x23) | View(31x23) | View(31x23)"
+      "detail": "coarse pointer; View(31x44) | View(31x44) | View(31x44) | View(31x44)"
     },
     {
       "ok": true,
@@ -1344,7 +1368,7 @@
       "ok": false,
       "gate": "G7",
       "label": "touch targets >= 44px on /products/attachments",
-      "detail": "enquiry@jrew.co.in(125x23) | Products(56x21) | Capabilities(74x21) | Quality(45x21)"
+      "detail": "coarse pointer; About(38x44)"
     },
     {
       "ok": true,
@@ -1356,7 +1380,7 @@
       "ok": false,
       "gate": "G7",
       "label": "touch targets >= 44px on /stakon",
-      "detail": "enquiry@jrew.co.in(125x23) | Products(56x21) | Capabilities(74x21) | Quality(45x21)"
+      "detail": "coarse pointer; About(38x44)"
     },
     {
       "ok": true,
@@ -1368,7 +1392,7 @@
       "ok": false,
       "gate": "G7",
       "label": "touch targets >= 44px on /capabilities",
-      "detail": "enquiry@jrew.co.in(125x23) | Products(56x21) | Capabilities(74x21) | Quality(45x21)"
+      "detail": "coarse pointer; About(38x44)"
     },
     {
       "ok": true,
@@ -1380,7 +1404,7 @@
       "ok": false,
       "gate": "G7",
       "label": "touch targets >= 44px on /quality",
-      "detail": "enquiry@jrew.co.in(125x23) | Products(56x21) | Capabilities(74x21) | Quality(45x21)"
+      "detail": "coarse pointer; About(38x44)"
     },
     {
       "ok": true,
@@ -1392,7 +1416,7 @@
       "ok": false,
       "gate": "G7",
       "label": "touch targets >= 44px on /facilities",
-      "detail": "enquiry@jrew.co.in(125x23) | Products(56x21) | Capabilities(74x21) | Quality(45x21)"
+      "detail": "coarse pointer; About(38x44)"
     },
     {
       "ok": true,
@@ -1404,7 +1428,7 @@
       "ok": false,
       "gate": "G7",
       "label": "touch targets >= 44px on /about",
-      "detail": "enquiry@jrew.co.in(125x23) | Products(56x21) | Capabilities(74x21) | Quality(45x21)"
+      "detail": "coarse pointer; About(38x44)"
     },
     {
       "ok": true,
@@ -1416,7 +1440,7 @@
       "ok": false,
       "gate": "G7",
       "label": "touch targets >= 44px on /contact",
-      "detail": "enquiry@jrew.co.in(125x23) | Products(56x21) | Capabilities(74x21) | Quality(45x21)"
+      "detail": "coarse pointer; About(38x44)"
     },
     {
       "ok": true,
@@ -1428,7 +1452,7 @@
       "ok": false,
       "gate": "G7",
       "label": "touch targets >= 44px on /careers",
-      "detail": "enquiry@jrew.co.in(125x23) | Products(56x21) | Capabilities(74x21) | Quality(45x21)"
+      "detail": "coarse pointer; About(38x44)"
     },
     {
       "ok": true,
@@ -1440,7 +1464,7 @@
       "ok": false,
       "gate": "G7",
       "label": "touch targets >= 44px on /privacy",
-      "detail": "enquiry@jrew.co.in(125x23) | Products(56x21) | Capabilities(74x21) | Quality(45x21)"
+      "detail": "coarse pointer; About(38x44)"
     },
     {
       "ok": true,

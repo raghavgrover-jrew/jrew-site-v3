@@ -9,7 +9,7 @@ export interface Sector {
 }
 
 export const sectorsIntro =
-  "From precision components to fully assembled structures, we deliver engineered solutions that power industry forward.";
+  "Components and assemblies for four equipment sectors. Each list names what JREW makes for those machines today.";
 
 export const sectors: Sector[] = [
   {

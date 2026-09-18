@@ -25,6 +25,11 @@ describe("validateRfqStep", () => {
     expect(e).toHaveProperty("timeline");
     expect(e).not.toHaveProperty("grade");
   });
+  it("step 2 is optional for a plant visit or co-development enquiry", () => {
+    expect(validateRfqStep(2, { family: "Plant visit or supplier audit" })).toEqual({});
+    expect(validateRfqStep(2, { family: "Co-development / new product introduction" })).toEqual({});
+    expect(validateRfqStep(2, { family: rfqFamilies[0] })).toHaveProperty("quantityBand");
+  });
   it("step 3 requires name, company and a valid email", () => {
     const e = validateRfqStep(3, { email: "nope" });
     expect(e).toHaveProperty("name");

@@ -1,3 +1,4 @@
+import { contact } from "@/lib/site";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { TwoToneHeading } from "@/components/ui/TwoToneHeading";
 import { SectionShell } from "@/components/ui/SectionShell";
@@ -25,7 +26,7 @@ export function WhyJrewRfq() {
         </ol>
         <div id="rfq-home">
           <h3 className="display-md text-xl">Open an RFQ</h3>
-          <p className="mt-2 text-[15px] text-ink-2">Four questions. It lands with the commercial team, not a mailbox.</p>
+          <p className="mt-2 text-[15px] text-ink-2">Three short steps. Read by the commercial team; the reply comes from {contact.email}.</p>
           <div className="mt-5">
             <RfqFlow idPrefix="home" />
           </div>

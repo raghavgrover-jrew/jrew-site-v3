@@ -20,7 +20,7 @@ export default function PrivacyPage() {
             <strong className="text-ink">Cookies and analytics.</strong> This site sets no advertising or analytics cookies and runs no third-party tracking scripts. Fonts are served from Google Fonts through the website build, and images through the hosting provider.
           </p>
           <p>
-            <strong className="text-ink">Drawings and technical data.</strong> Drawings and specifications are handled under a non-disclosure agreement on request. Please do not attach controlled documents to the forms; ask for an NDA first.
+            <strong className="text-ink">Drawings and technical data.</strong> The RFQ and enquiry forms take no attachments by design. Drawings and specifications are exchanged under a non-disclosure agreement after first contact.
           </p>
           <p>
             <strong className="text-ink">Questions.</strong> Write to{" "}

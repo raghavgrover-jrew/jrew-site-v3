@@ -57,6 +57,15 @@ export async function POST(request: Request) {
         subject: `${subject}: ${name}${company ? ` (${company})` : ""}`,
         html,
       });
+      // Acknowledgement to the sender: fixed text, no submitted content echoed, failure never blocks the main send.
+      await transport()
+        .sendMail({
+          from: `"JREW Engineering" <${process.env.SMTP_USER}>`,
+          to: email,
+          subject: "JREW Engineering: we have your enquiry",
+          text: "Thank you. Your enquiry has reached the JREW Engineering commercial team and a reply will come from enquiry@jrew.co.in. Where drawings are involved we send an NDA first. JREW Engineering Limited, Mohali, Punjab, India.",
+        })
+        .catch((e: unknown) => console.warn("[CONTACT] acknowledgement not sent:", e));
       return NextResponse.json({ success: true, delivered: "smtp" });
     }
     if (isProduction()) {

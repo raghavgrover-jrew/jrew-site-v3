@@ -13,7 +13,7 @@ const sourceSans = Source_Sans_3({ weight: ["400", "600", "700"], subsets: ["lat
 export const viewport: Viewport = { themeColor: "#1a1a1a", width: "device-width", initialScale: 1 };
 
 export const metadata: Metadata = {
-  title: { default: "JREW Engineering Limited | Precision engineering for tomorrow's machinery", template: "%s | JREW Engineering" },
+  title: { default: "JREW Engineering | Masts, axles, attachments and machined components for OEMs", template: "%s | JREW Engineering" },
   description:
     "JREW Engineering builds fabricated and precision-machined components, sub-assemblies and engineered attachments for OEMs in construction, material handling, agriculture and railways. Four units in Punjab and Haryana, exporting since 2010, in production since 1973.",
   metadataBase: new URL(SITE_URL),

@@ -81,7 +81,7 @@ export const mastFamily = {
   eyebrow: "Forklift mast systems and carriage assemblies",
   headline: { lead: "Mast systems,", mark: "fully operational" },
   body:
-    "Precision-engineered, fully operational mast assemblies from 1.5-15 t capacity and lift heights up to 14 metres. Built on proprietary C and I profiles hot-rolled and mountable on forklifts of any brand with a compatible arrangement. Carriage assemblies included.",
+    "Precision-engineered, fully operational mast assemblies from 1.5-15 t capacity and lift heights up to 14 metres. Built on JREW's own hot-rolled C and I profiles; mounts on any forklift brand with a compatible carriage arrangement. Carriage assemblies included.",
   pills: ["Compatibility across brands", "Up to 15 tonnes capacity", "Up to 14 metres height", "Proprietary steel profiles"],
   image: "/images/products/mast-assembly.jpg",
   source: "Spread 04",

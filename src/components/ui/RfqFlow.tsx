@@ -4,9 +4,10 @@
 // per-field errors, distinct submitting / success / failure states; entries survive a failed submit.
 
 import { useRef, useState } from "react";
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { contact } from "@/lib/site";
-import { validateRfqStep, buildContactPayload, rfqFamilies, rfqQuantityBands, rfqDrawingStatus, rfqTimelines, type RfqDraft, type RfqErrors } from "@/lib/rfq";
+import { validateRfqStep, buildContactPayload, volumeOptionalFor, rfqFamilies, rfqQuantityBands, rfqDrawingStatus, rfqTimelines, type RfqDraft, type RfqErrors } from "@/lib/rfq";
 import { Field, RadioGrid, StatusBanner, inputCls } from "@/components/ui/forms";
 import { Button } from "@/components/ui/Button";
 
@@ -17,6 +18,7 @@ export function RfqFlow({ idPrefix = "rfq" }: { idPrefix?: string }) {
   const [step, setStep] = useState(0);
   const [moved, setMoved] = useState(false);
   const [draft, setDraft] = useState<RfqDraft>(EMPTY);
+  const volumeOptional = volumeOptionalFor(draft.family);
   const [errors, setErrors] = useState<RfqErrors>({});
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const panelRef = useRef<HTMLDivElement>(null);
@@ -54,7 +56,7 @@ export function RfqFlow({ idPrefix = "rfq" }: { idPrefix?: string }) {
     return (
       <div className="border border-ink bg-paper p-7 sm:p-9" role="status">
         <p className="kicker">RFQ received</p>
-        <p className="display-md mt-2 text-2xl">We have your enquiry.</p>
+        <p className="display-md mt-2 text-2xl">We have your RFQ.</p>
         <dl className="hairline mt-5 space-y-2 pt-4 text-[15px]">
           {[["Enquiry", draft.family], ["Quantity band", draft.quantityBand], ["Timeline", draft.timeline], ["Reply to", draft.email]].map(([k, v]) => (
             <div key={k} className="flex justify-between gap-6">
@@ -63,7 +65,11 @@ export function RfqFlow({ idPrefix = "rfq" }: { idPrefix?: string }) {
             </div>
           ))}
         </dl>
-        <p className="mt-5 text-[15px] leading-relaxed text-ink-2">A reply comes from {contact.email}. Drawings are handled under NDA on request.</p>
+        <p className="mt-5 text-[15px] leading-relaxed text-ink-2">
+          The commercial team replies from {contact.email} with clarifying questions and, where drawings are involved, an NDA. Meanwhile:{" "}
+          <Link href="/capabilities" className="font-semibold underline decoration-marigold decoration-2 underline-offset-4">capabilities</Link> and{" "}
+          <Link href="/quality" className="font-semibold underline decoration-marigold decoration-2 underline-offset-4">quality and certifications</Link>.
+        </p>
       </div>
     );
   }
@@ -91,17 +97,17 @@ export function RfqFlow({ idPrefix = "rfq" }: { idPrefix?: string }) {
             ) : null}
             {step === 1 ? (
               <div className="space-y-6">
-                <Field group label="Annual quantity" error={errors.quantityBand}>
+                <Field group label="Annual quantity" optional={volumeOptional} error={errors.quantityBand}>
                   <RadioGrid name="Annual quantity" options={rfqQuantityBands} value={draft.quantityBand} onChange={set("quantityBand")} columns={3} />
                 </Field>
-                <Field group label="Sourcing timeline" error={errors.timeline}>
+                <Field group label="Sourcing timeline" optional={volumeOptional} error={errors.timeline}>
                   <RadioGrid name="Sourcing timeline" options={rfqTimelines} value={draft.timeline} onChange={set("timeline")} />
                 </Field>
                 <div className="grid gap-5 sm:grid-cols-2">
                   <Field label="Material or grade" optional htmlFor={id("grade")}>
                     <input id={id("grade")} value={draft.grade} onChange={(e) => set("grade")(e.target.value)} placeholder="e.g. S355, EN19, IS 2062" className={inputCls} />
                   </Field>
-                  <Field label="Drawing status" optional htmlFor={id("drawings")}>
+                  <Field label="Drawing status" optional htmlFor={id("drawings")} hint="No attachments at this stage. Tell us what exists; drawings are exchanged under NDA after first contact.">
                     <select id={id("drawings")} value={draft.drawingStatus} onChange={(e) => set("drawingStatus")(e.target.value)} className={inputCls}>
                       <option value="">Select</option>
                       {rfqDrawingStatus.map((d) => (
@@ -138,6 +144,7 @@ export function RfqFlow({ idPrefix = "rfq" }: { idPrefix?: string }) {
             {step === 3 ? (
               <div>
                 <p className="text-[15px] text-ink-2">Check the details before they go to the commercial team.</p>
+                <p className="mt-2 text-[14px] text-ink-3">Nothing is attached here; drawings are exchanged under NDA after first contact.</p>
                 <dl className="mt-4 divide-y divide-line border-y border-line">
                   {(
                     [

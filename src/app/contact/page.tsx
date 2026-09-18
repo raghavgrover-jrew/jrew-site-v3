@@ -57,7 +57,7 @@ export default function ContactPage() {
 
       <SectionShell id="enquiry" labelledBy="enquiry-h" tone="warm">
         <TwoToneHeading id="enquiry-h" lead="Not a quote?" mark="Still write." inline className="text-[clamp(1.7rem,3vw,2.5rem)]" />
-        <p className="mt-4 max-w-[56ch] text-ink-2">Supplier introductions, audits, press, STAKON dealerships, anything that needs a person.</p>
+        <p className="mt-4 max-w-[56ch] text-ink-2">Selling to JREW, press, STAKON dealerships, anything else that needs a person.</p>
         <div className="mt-8 max-w-[44rem]">
           <EnquiryForm />
         </div>

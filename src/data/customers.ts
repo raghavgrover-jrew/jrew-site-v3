@@ -4,7 +4,7 @@ export interface Customer { id: string; name: string; logo: string; source: "Spr
 export const customersIntro = {
   eyebrow: "Our customers",
   headline: { lead: "Trusted by", mark: "industry leaders" },
-  body: "Most of our renowned customers have accorded JREW \"sole supplier\" or \"direct-on-line\" status, a trust we hold with humility and responsibility.",
+  body: "Most customers shown here buy from JREW as sole supplier or direct-on-line.",
   source: "Spread 11",
 } as const;
 

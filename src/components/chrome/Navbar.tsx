@@ -108,7 +108,7 @@ export function Navbar() {
             <Link
               href={rfqHref}
               className={cn(
-                "hidden min-h-[44px] items-center px-5 text-[15px] font-semibold transition-colors sm:inline-flex",
+                "inline-flex min-h-[44px] items-center whitespace-nowrap px-3 text-[14px] font-semibold transition-colors sm:px-5 sm:text-[15px]",
                 onInk ? "bg-marigold text-ink hover:bg-marigold-deep" : "bg-ink text-on-ink hover:bg-ink-panel-2",
               )}
             >

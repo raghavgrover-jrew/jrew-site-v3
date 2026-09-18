@@ -18,7 +18,7 @@ export default function StakonPage() {
   return (
     <>
       <JsonLd data={jsonld} />
-      <PageHeader eyebrow={stakon.eyebrow} lead="STAKON" mark="by JREW" lede="Designed and manufactured at our dedicated Mohali facility. The in-house range below carries the printed model names; for specifications beyond these, contact the team." />
+      <PageHeader eyebrow={stakon.eyebrow} lead="STAKON" mark="by JREW" lede="Electric and semi-electric pallet stackers and electric pallet trucks, 500 kg to 2,000 kg, lifting to 6.3 m. Three series are listed with headline specifications; data sheets on request." />
       <StakonBand full />
     </>
   );

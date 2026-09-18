@@ -8,7 +8,7 @@ export interface ProcessStage {
 export const processIntro = {
   eyebrow: "Plate to product",
   headline: { lead: "Every stage engineered", mark: "for repeatability" },
-  lede: "Every process that touches the part is ours. Tolerances are held across operations rather than negotiated between vendors, which is why the parts arrive ready to fit, not ready to rework.",
+  lede: "Nearly every process that touches the part is ours; heat treatment runs through qualified partners under JREW control. Tolerances are held across operations rather than negotiated between vendors, which is why the parts arrive ready to fit, not ready to rework.",
   source: "Spread 07",
 } as const;
 
