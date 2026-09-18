@@ -55,7 +55,7 @@ export function RfqFlow({ idPrefix = "rfq" }: { idPrefix?: string }) {
   if (status === "success") {
     return (
       <div className="border border-ink bg-paper p-7 sm:p-9" role="status">
-        <p className="eyebrow">RFQ received</p>
+        <p className="kicker">RFQ received</p>
         <p className="display-md mt-2 text-2xl">We have your enquiry.</p>
         <dl className="hairline mt-5 space-y-2 pt-4 text-[15px]">
           {[["Enquiry", draft.family], ["Quantity band", draft.quantityBand], ["Timeline", draft.timeline], ["Reply to", draft.email]].map(([k, v]) => (

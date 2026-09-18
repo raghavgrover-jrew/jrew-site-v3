@@ -3,7 +3,6 @@ import Image from "next/image";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { SectionShell } from "@/components/ui/SectionShell";
 import { TwoToneHeading } from "@/components/ui/TwoToneHeading";
-import { Reveal } from "@/components/ui/Reveal";
 import { IndiaMap } from "@/components/ui/IndiaMap";
 import { JsonLd, breadcrumbSchema } from "@/lib/jsonld";
 import { facilities, facilitiesIntro, rajpura } from "@/data/facilities";
@@ -23,7 +22,7 @@ export default function FacilitiesPage() {
       <PageHeader eyebrow={facilitiesIntro.eyebrow} lead={facilitiesIntro.headline.lead} mark={facilitiesIntro.headline.mark} lede={facilitiesIntro.body} />
 
       <SectionShell ariaLabel="Operating units" className="pt-4">
-        <Reveal as="ul" stagger={0.07} className="space-y-4">
+        <ul className="space-y-4">
           {facilities.map((f, i) => (
             <li key={f.id} id={f.id} className={`grid gap-6 p-5 sm:p-7 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] ${i % 2 ? "bg-card-warm" : "bg-card-cool"}`}>
               <div className="relative aspect-[4/3] overflow-hidden">
@@ -52,7 +51,7 @@ export default function FacilitiesPage() {
               </div>
             </li>
           ))}
-        </Reveal>
+        </ul>
       </SectionShell>
 
       <SectionShell id="rajpura" labelledBy="rajpura-h" tone="ink">

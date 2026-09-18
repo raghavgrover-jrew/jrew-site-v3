@@ -41,7 +41,7 @@ export function CareerForm() {
   if (status === "success") {
     return (
       <div className="border border-ink bg-paper p-7" role="status">
-        <p className="eyebrow">Application received</p>
+        <p className="kicker">Application received</p>
         <p className="mt-2 text-[15px] leading-relaxed text-ink-2">HR reads every application. If there is a fit now or in the next quarter, you will hear from us at the address you gave.</p>
       </div>
     );

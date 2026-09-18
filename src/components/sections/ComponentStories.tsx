@@ -18,7 +18,7 @@ export function ComponentStories({ headingLevel = "h2" }: { headingLevel?: "h2" 
               <Image src={c.image} alt={c.imageAlt} fill sizes="(min-width: 768px) 20vw, 40vw" className="object-contain p-4" />
             </div>
             <div>
-              <div className="inline-block bg-ink px-3 py-2 leading-tight">
+              <div className="on-ink inline-block bg-ink px-3 py-2 leading-tight">
                 <p className="text-[15px] font-bold text-marigold">{c.part}</p>
                 <p className="text-[13px] font-semibold text-on-ink">{c.customer}</p>
               </div>

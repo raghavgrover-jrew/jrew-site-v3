@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { TwoToneHeading } from "@/components/ui/TwoToneHeading";
 import { SectionShell } from "@/components/ui/SectionShell";
-import { Reveal } from "@/components/ui/Reveal";
 import { families, familiesIntro } from "@/data/families";
 import { cn } from "@/lib/utils";
 
@@ -15,11 +14,11 @@ export function FamilyGrid() {
           <TwoToneHeading id="families-h" lead="Six families," mark="one source." inline className="text-[clamp(1.9rem,3.6vw,3rem)]" />
           <p className="mt-5 max-w-[60ch] text-ink-2">{familiesIntro}</p>
         </div>
-        <Link href="/products" className="text-[15px] font-semibold underline decoration-marigold decoration-2 underline-offset-4 hover:decoration-ink">
+        <Link href="/products" className="tap text-[15px] font-semibold underline decoration-marigold decoration-2 underline-offset-4 hover:decoration-ink">
           All six families
         </Link>
       </div>
-      <Reveal as="ul" stagger={0.06} className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {families.map((f, i) => (
           <li key={f.id} className={cn("group flex flex-col border border-line bg-paper", i === 0 && "lg:row-span-2")}>
             <Link href={f.href} className="flex h-full flex-col">
@@ -34,7 +33,7 @@ export function FamilyGrid() {
             </Link>
           </li>
         ))}
-      </Reveal>
+      </ul>
     </SectionShell>
   );
 }

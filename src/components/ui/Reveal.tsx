@@ -38,7 +38,7 @@ export function Reveal({
         gsap.from(targets, {
           y,
           autoAlpha: 0,
-          duration: 0.7,
+          duration: 0.55,
           delay,
           stagger: stagger ?? 0,
           ease: "expo.out",

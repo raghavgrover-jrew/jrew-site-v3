@@ -106,6 +106,26 @@ p {
 .on-ink .eyebrow {
   color: var(--on-ink-3);
 }
+/* Kicker: the same small label inside a card or aside. Not a section eyebrow; not counted by the budget. */
+.kicker {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.on-ink .kicker {
+  color: var(--on-ink-3);
+}
+/* Standalone text links become 44px tall on coarse pointers (inline links inside prose are exempt per WCAG 2.5.8) */
+@media (pointer: coarse) {
+  .tap {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+}
 
 .tnum {
   font-variant-numeric: tabular-nums lining-nums;
@@ -194,6 +214,18 @@ p {
 ::selection {
   background: var(--marigold);
   color: var(--ink);
+}
+
+/* Native dialog entrance: short fade and 6px lift; the shell's reduced-motion block collapses it */
+@keyframes dialog-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+dialog[open] {
+  animation: dialog-in 0.22s var(--ease-out);
+}
+dialog::backdrop {
+  animation: dialog-in 0.22s var(--ease-out);
 }
 
 /* Reduced motion: collapse everything; JS never constructs Lenis or pins under this query */

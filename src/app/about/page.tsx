@@ -4,7 +4,6 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { SectionShell } from "@/components/ui/SectionShell";
 import { TwoToneHeading } from "@/components/ui/TwoToneHeading";
 import { Eyebrow } from "@/components/ui/Eyebrow";
-import { Reveal } from "@/components/ui/Reveal";
 import { TimelineRail } from "@/components/ui/TimelineRail";
 import { JsonLd, breadcrumbSchema } from "@/lib/jsonld";
 import { whoWeAre, vision, mission, icare, uplift } from "@/data/values";
@@ -26,13 +25,13 @@ export default function AboutPage() {
 
       <SectionShell ariaLabel="How JREW works" className="pt-4">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,6fr)_minmax(0,6fr)]">
-          <Reveal as="ul" stagger={0.07} className="divide-y divide-line border-y border-line">
+          <ul className="divide-y divide-line border-y border-line">
             {whoWeAre.bullets.map((b, i) => (
               <li key={i} className={`bar my-4 text-[15px] leading-relaxed text-ink ${i % 2 ? "bar-marigold" : ""}`}>
                 {b}
               </li>
             ))}
-          </Reveal>
+          </ul>
           <div className="relative aspect-[4/3] overflow-hidden">
             <Image src={whoWeAre.image.src} alt={whoWeAre.image.alt} fill sizes="(min-width: 1024px) 45vw, 90vw" className="object-cover" />
           </div>
@@ -56,7 +55,7 @@ export default function AboutPage() {
           <ul className="mt-6 space-y-3">
             {icare.items.map((v) => (
               <li key={v.letter} className="grid grid-cols-[2.25rem_1fr] gap-3">
-                <span className="display flex size-9 items-center justify-center bg-ink text-lg text-marigold">{v.letter}</span>
+                <span className="on-ink display flex size-9 items-center justify-center bg-ink text-lg text-marigold">{v.letter}</span>
                 <span>
                   <span className="block text-[15px] font-bold">{v.word}</span>
                   <span className="block text-[14px] text-ink-2">{v.body}</span>
@@ -89,7 +88,7 @@ export default function AboutPage() {
         <TwoToneHeading id="responsibility-h" lead={responsibility.headline.lead} mark={responsibility.headline.mark} inline className="text-[clamp(1.9rem,3.6vw,3rem)]" />
         <p className="mt-5 max-w-[60ch] text-ink-2">{responsibility.body}</p>
         <h3 className="mt-10 text-[13px] font-semibold uppercase tracking-[0.08em] text-ink-3">{responsibility.csrTitle}</h3>
-        <Reveal as="ul" stagger={0.06} className="mt-4 grid gap-4 md:grid-cols-3">
+        <ul className="mt-4 grid gap-4 md:grid-cols-3">
           {responsibility.csr.map((c) => (
             <li key={c.title} className="border border-line bg-paper">
               <div className="relative aspect-[3/2] overflow-hidden">
@@ -102,7 +101,7 @@ export default function AboutPage() {
               </div>
             </li>
           ))}
-        </Reveal>
+        </ul>
         <dl className="on-ink mt-10 grid gap-px bg-ink-line md:grid-cols-3">
           {responsibility.esg.map((e) => (
             <div key={e.title} className="bg-ink-panel p-6">

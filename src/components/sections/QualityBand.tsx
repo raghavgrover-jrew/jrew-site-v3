@@ -2,7 +2,6 @@ import Image from "next/image";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { TwoToneHeading } from "@/components/ui/TwoToneHeading";
 import { SectionShell } from "@/components/ui/SectionShell";
-import { Reveal } from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
 import { certifications, qualityIntro, inspection } from "@/data/quality";
 import { proof } from "@/data/partnership";
@@ -16,14 +15,14 @@ export function QualityBand() {
           <Eyebrow>{qualityIntro.eyebrow}</Eyebrow>
           <TwoToneHeading id="quality-h" lead={qualityIntro.headline.lead} mark={qualityIntro.headline.mark} className="text-[clamp(1.9rem,3.6vw,3rem)]" />
           <p className="mt-5 max-w-[56ch] text-ink-2">{qualityIntro.body}</p>
-          <Reveal as="ul" stagger={0.05} className="mt-8 flex flex-wrap gap-2" aria-label="Certifications">
+          <ul className="mt-8 flex flex-wrap gap-2" aria-label="Certifications">
             {certifications.map((c) => (
-              <li key={c.code} className="bg-ink px-4 py-2.5 leading-tight">
+              <li key={c.code} className="on-ink bg-ink px-4 py-2.5 leading-tight">
                 <p className="tnum text-[15px] font-bold text-marigold">{c.code}</p>
                 <p className="text-[12px] font-semibold uppercase tracking-[0.06em] text-on-ink-2">{c.scope}</p>
               </li>
             ))}
-          </Reveal>
+          </ul>
           <p className="mt-3 text-[13px] font-semibold uppercase tracking-[0.08em] text-ink-3">{qualityIntro.certifier}</p>
           <Button href="/quality" variant="secondary" className="mt-8">
             Quality systems and inspection

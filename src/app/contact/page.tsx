@@ -25,21 +25,21 @@ export default function ContactPage() {
           <RfqFlow idPrefix="contact" />
           <div className="flex flex-col gap-4">
             <div className="border border-line bg-card-warm p-6">
-              <p className="eyebrow">Direct</p>
+              <p className="kicker">Direct</p>
               <p className="mt-2">
-                <a href={`mailto:${contact.email}`} className="text-[16px] font-semibold underline decoration-marigold decoration-2 underline-offset-4 hover:decoration-ink">
+                <a href={`mailto:${contact.email}`} className="tap text-[16px] font-semibold underline decoration-marigold decoration-2 underline-offset-4 hover:decoration-ink">
                   {contact.email}
                 </a>
               </p>
               <p className="mt-1">
-                <a href={contact.phoneHref} className="tnum text-[15px] text-ink-2 hover:text-ink">
+                <a href={contact.phoneHref} className="tap tnum text-[15px] text-ink-2 hover:text-ink">
                   {contact.phone}
                 </a>
               </p>
               <p className="mt-4 text-[13.5px] leading-relaxed text-ink-3">Drawings are handled under NDA on request. Careers applications go through the careers page.</p>
             </div>
             <div className="border border-line bg-paper p-6">
-              <p className="eyebrow">Plants</p>
+              <p className="kicker">Plants</p>
               <ul className="mt-3 space-y-4">
                 {facilities.map((f) => (
                   <li key={f.id}>

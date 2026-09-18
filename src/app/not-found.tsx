@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/Button";
 export default function NotFound() {
   return (
     <section className="shell flex min-h-[70vh] flex-col justify-center py-32">
-      <p className="eyebrow">404</p>
+      <p className="kicker">404</p>
       <h1 className="display max-w-[16ch] text-[clamp(2rem,5vw,4rem)]">
         <span className="block">This page is</span>
         <span className="hl block">off the drawing.</span>

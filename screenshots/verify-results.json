@@ -1,6 +1,6 @@
 {
-  "base": "http://localhost:3200",
-  "at": "2026-09-18T19:52:22.698Z",
+  "base": "http://localhost:3201",
+  "at": "2026-09-18T19:53:44.947Z",
   "results": [
     {
       "ok": true,
@@ -54,13 +54,13 @@
       "ok": true,
       "gate": "G12",
       "label": "og:image declared on home",
-      "detail": "http://localhost:3200/opengraph-image?7da9648c6ccca044"
+      "detail": "https://jrew.co.in/opengraph-image?7da9648c6ccca044"
     },
     {
       "ok": false,
       "gate": "G12",
       "label": "og:image resolves",
-      "detail": "404 text/html; charset=utf-8"
+      "detail": "404 text/html; charset=UTF-8"
     },
     {
       "ok": true,
@@ -1269,10 +1269,10 @@
       "detail": "Skid steers"
     },
     {
-      "ok": false,
+      "ok": true,
       "gate": "G4",
       "label": "console clean across routes",
-      "detail": "[warning] http://localhost:3200/products :: Image with src \"/images/forged/forging-shop-panorama.jpg\" was detected as the Largest Contentful Paint (LCP). Please add the `loading=\"eager\"` property if this  || [warning] http://localhost:3200/products/attachments :: Image with src \"/images/attachments/man-basket.jpg\" was detected as the Largest Contentful Paint (LCP). Please add the `loading=\"eager\"` property if this image  || [warning] http://localhost:3200/stakon :: Image with src \"/images/stakon/stacker-hero.png\" was detected as the Largest Contentful Paint (LCP). Please add the `loading=\"eager\"` property if this image is "
+      "detail": ""
     },
     {
       "ok": true,

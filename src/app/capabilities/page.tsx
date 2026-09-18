@@ -4,7 +4,6 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { SectionShell } from "@/components/ui/SectionShell";
 import { TwoToneHeading } from "@/components/ui/TwoToneHeading";
 import { Eyebrow } from "@/components/ui/Eyebrow";
-import { Reveal } from "@/components/ui/Reveal";
 import { ProcessTable } from "@/components/ui/ProcessTable";
 import { Button } from "@/components/ui/Button";
 import { JsonLd, breadcrumbSchema } from "@/lib/jsonld";
@@ -43,17 +42,17 @@ export default function CapabilitiesPage() {
         <TwoToneHeading id="partnership-h" lead={partnership.headline.lead} mark={partnership.headline.mark} className="max-w-[22ch] text-[clamp(1.9rem,3.6vw,3rem)]" />
         <p className="mt-5 max-w-[64ch] text-ink-2">{partnership.body}</p>
         <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,6fr)_minmax(0,6fr)]">
-          <Reveal as="ol" stagger={0.06} className="space-y-3">
+          <ol className="space-y-3">
             {partnership.steps.map((s, i) => (
               <li key={s.title} className="grid grid-cols-[3rem_1fr] gap-4 bg-paper p-5">
-                <span className="tnum display text-2xl text-marigold-deep">{String(i + 1).padStart(2, "0")}</span>
+                <span className="tnum display text-2xl text-ink-3">{String(i + 1).padStart(2, "0")}</span>
                 <div>
                   <h3 className="display-md text-lg">{s.title}</h3>
                   <p className="mt-1 text-[15px] leading-relaxed text-ink-2">{s.body}</p>
                 </div>
               </li>
             ))}
-          </Reveal>
+          </ol>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
             {partnership.images.map((im) => (
               <div key={im.src} className="relative aspect-[4/3] overflow-hidden">
@@ -68,14 +67,14 @@ export default function CapabilitiesPage() {
         <TwoToneHeading id="proof-h" lead={proof.headline.lead} mark={proof.headline.mark} className="max-w-[18ch] text-[clamp(1.9rem,3.6vw,3rem)]" />
         <p className="mt-5 max-w-[60ch] text-ink-2">{proof.body}</p>
         <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
-          <Reveal as="ul" stagger={0.06} className="divide-y divide-line border-y border-line">
+          <ul className="divide-y divide-line border-y border-line">
             {proof.rows.map((r, i) => (
               <li key={r.title} className={`bar my-4 ${i % 2 ? "bar-marigold" : ""}`}>
                 <h3 className="display-md text-lg">{r.title}</h3>
                 <p className="mt-1 text-[15px] leading-relaxed text-ink-2">{r.body}</p>
               </li>
             ))}
-          </Reveal>
+          </ul>
           <div className="flex flex-col gap-4">
             <div className="relative aspect-[16/10] overflow-hidden">
               <Image src={proof.image.src} alt={proof.image.alt} fill sizes="(min-width: 1024px) 40vw, 90vw" className="object-cover" />

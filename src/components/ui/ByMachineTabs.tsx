@@ -52,7 +52,7 @@ export function ByMachineTabs() {
               <li key={it.text} className="flex items-start justify-between gap-6 py-3 text-[15px]">
                 <span className="text-ink-2">{it.text}</span>
                 {it.href ? (
-                  <Link href={it.href} className="shrink-0 font-semibold underline decoration-marigold decoration-2 underline-offset-4 hover:decoration-ink">
+                  <Link href={it.href} className="tap shrink-0 font-semibold underline decoration-marigold decoration-2 underline-offset-4 hover:decoration-ink">
                     View
                   </Link>
                 ) : null}

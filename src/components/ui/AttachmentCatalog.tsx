@@ -50,7 +50,7 @@ export function AttachmentCatalog() {
             <li key={a.id} hidden={hidden} className="border border-line bg-paper">
               <button type="button" onClick={() => open(a.id)} className="group flex h-full w-full flex-col text-left">
                 <div className="relative aspect-[4/3] w-full bg-paper">
-                  <Image src={a.image} alt={a.imageAlt} fill sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 90vw" className="object-contain p-5 transition-transform duration-500 ease-out-expo group-hover:scale-[1.03]" />
+                  <Image src={a.image} alt={a.imageAlt} fill sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 90vw" className="object-contain p-5" />
                 </div>
                 <div className="hairline flex flex-1 flex-col p-5">
                   <span className="inline-block self-start bg-marigold px-2.5 py-1 text-[14px] font-bold text-ink">{a.name}</span>

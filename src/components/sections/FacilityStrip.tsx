@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { TwoToneHeading } from "@/components/ui/TwoToneHeading";
 import { SectionShell } from "@/components/ui/SectionShell";
-import { Reveal } from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
 import { facilities, facilitiesIntro, rajpura } from "@/data/facilities";
 
@@ -18,7 +17,7 @@ export function FacilityStrip() {
           All four units
         </Button>
       </div>
-      <Reveal as="ul" stagger={0.06} className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {facilities.map((f) => (
           <li key={f.id} className="border border-line bg-paper">
             <div className="relative aspect-[3/2]">
@@ -35,7 +34,7 @@ export function FacilityStrip() {
             </div>
           </li>
         ))}
-      </Reveal>
+      </ul>
       <div className="on-ink mt-4 grid gap-6 bg-ink-panel p-6 text-on-ink sm:p-8 lg:grid-cols-[auto_1fr] lg:items-center">
         <p className="display tnum text-[clamp(2.5rem,5vw,4rem)] leading-none text-marigold">{rajpura.year}</p>
         <div>

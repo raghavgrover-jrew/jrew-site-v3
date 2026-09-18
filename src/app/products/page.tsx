@@ -7,7 +7,6 @@ import { ByMachineTabs } from "@/components/ui/ByMachineTabs";
 import { TwoToneHeading } from "@/components/ui/TwoToneHeading";
 import { SectionShell } from "@/components/ui/SectionShell";
 import { Eyebrow } from "@/components/ui/Eyebrow";
-import { Reveal } from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
 import { ComponentStories } from "@/components/sections/ComponentStories";
 import { StakonBand } from "@/components/sections/StakonBand";
@@ -85,13 +84,13 @@ export default function ProductsPage() {
             </h2>
             <TwoToneHeading as="p" lead={axleFamily.headline.lead} mark={axleFamily.headline.mark} className="mt-2 text-[clamp(1.9rem,3.6vw,3rem)]" />
             <p className="mt-5 max-w-[60ch] text-ink-2">{axleFamily.body}</p>
-            <Reveal as="ul" stagger={0.05} className="mt-6 divide-y divide-line border-y border-line">
+            <ul className="mt-6 divide-y divide-line border-y border-line">
               {axleFamily.variants.map((v) => (
                 <li key={v} className="bar bar-marigold my-3 text-[15px] leading-relaxed text-ink">
                   {v}
                 </li>
               ))}
-            </Reveal>
+            </ul>
           </div>
         </div>
       </SectionShell>
@@ -118,7 +117,7 @@ export default function ProductsPage() {
       <SectionShell id="forged" labelledBy="forged-h">
         <Eyebrow>{forgedIntro.eyebrow}</Eyebrow>
         <TwoToneHeading id="forged-h" lead={forgedIntro.headline.lead} mark={forgedIntro.headline.mark} inline className="text-[clamp(1.9rem,3.6vw,3rem)]" />
-        <Reveal as="ul" stagger={0.06} className="mt-10 grid gap-4 md:grid-cols-3">
+        <ul className="mt-10 grid gap-4 md:grid-cols-3">
           {forgedProducts.map((f) => (
             <li key={f.id} className="border border-line bg-paper">
               <div className="relative aspect-[4/3]">
@@ -131,7 +130,7 @@ export default function ProductsPage() {
               </div>
             </li>
           ))}
-        </Reveal>
+        </ul>
         <dl className="on-ink mt-4 grid gap-px bg-ink-line sm:grid-cols-2 lg:grid-cols-4">
           {forgedStrip.map((s) => (
             <div key={s.title} className="bg-ink-panel p-5">

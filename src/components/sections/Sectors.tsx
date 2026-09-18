@@ -3,7 +3,6 @@ import { Eyebrow } from "@/components/ui/Eyebrow";
 import { TwoToneHeading } from "@/components/ui/TwoToneHeading";
 import { SectionShell } from "@/components/ui/SectionShell";
 import { Wipe } from "@/components/ui/Wipe";
-import { Reveal } from "@/components/ui/Reveal";
 import { sectors, sectorsIntro } from "@/data/sectors";
 import { cn } from "@/lib/utils";
 
@@ -14,7 +13,7 @@ export function Sectors() {
       <Eyebrow>Industries we serve</Eyebrow>
       <TwoToneHeading id="sectors-h" lead="Four sectors," mark="one platform" inline className="text-[clamp(1.9rem,3.6vw,3rem)]" />
       <p className="mt-5 max-w-[56ch] text-ink-2">{sectorsIntro}</p>
-      <Reveal as="ul" stagger={0.08} className="mt-10 space-y-3">
+      <ul className="mt-10 space-y-3">
         {sectors.map((s, i) => (
           <li key={s.id} className={cn("grid items-center gap-6 p-6 sm:p-8 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]", i % 2 === 0 ? "bg-card-cool" : "bg-card-warm")}>
             <div className={cn("bar", i % 2 === 1 && "bar-marigold")}>
@@ -26,7 +25,7 @@ export function Sectors() {
             </Wipe>
           </li>
         ))}
-      </Reveal>
+      </ul>
     </SectionShell>
   );
 }

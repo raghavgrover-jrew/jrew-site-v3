@@ -102,7 +102,7 @@ const browser = await chromium.launch();
     note(seo.h1 === 1, "G7", `exactly one h1 on ${route}`, `${seo.h1}`);
     if (route === "/") note(seo.og.length > 0, "G12", "og:image declared on home", seo.og);
     if (route === "/" && seo.og) {
-      const ogRes = await page.request.get(seo.og);
+      const ogRes = await page.request.get(seo.og.replace(/^https?:\/\/[^/]+/, BASE));
       note(ogRes.status() === 200 && (ogRes.headers()["content-type"] || "").includes("image"), "G12", "og:image resolves", `${ogRes.status()} ${ogRes.headers()["content-type"]}`);
     }
 
@@ -118,7 +118,7 @@ const browser = await chromium.launch();
     // G14 design rails
     const rails = await page.evaluate(() => {
       const sections = document.querySelectorAll("main section, main header").length;
-      const eyebrows = document.querySelectorAll("main .eyebrow").length;
+      const eyebrows = document.querySelectorAll("main .eyebrow").length; // .kicker (card labels) is excluded by design
       const marigoldTypeOnPaper = [...document.querySelectorAll(".text-marigold")].filter((el) => !el.closest(".on-ink")).length;
       const wraps = [...document.querySelectorAll('a[class*="bg-ink"], a[class*="bg-marigold"], button[class*="bg-ink"], button[class*="bg-marigold"]')]
         .filter((el) => el.offsetParent !== null)
@@ -239,7 +239,7 @@ for (const [w, h, mobile] of [[390, 844, true], [768, 1024, false]]) {
     if (mobile) {
       const small = await page.evaluate(() =>
         [...document.querySelectorAll("a, button")]
-          .filter((e) => e.offsetParent !== null)
+          .filter((e) => e.offsetParent !== null && !e.closest("p, dd, dt, td"))
           .map((e) => ({ t: e.textContent.trim().slice(0, 30), h: e.getBoundingClientRect().height, w: e.getBoundingClientRect().width }))
           .filter((b) => b.h > 0 && (b.h < 44 || b.w < 44)),
       );

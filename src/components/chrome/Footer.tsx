@@ -25,47 +25,47 @@ export function Footer() {
           </div>
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-2">
             <nav aria-label="Footer">
-              <p className="eyebrow">Pages</p>
+              <p className="kicker">Pages</p>
               <ul className="mt-4 space-y-2.5 text-[15px]">
                 {navLinks.map((l) => (
                   <li key={l.href}>
-                    <Link href={l.href} className="text-on-ink-2 hover:text-on-ink">
+                    <Link href={l.href} className="tap text-on-ink-2 hover:text-on-ink">
                       {l.label}
                     </Link>
                   </li>
                 ))}
                 <li>
-                  <Link href="/stakon" className="text-on-ink-2 hover:text-on-ink">
+                  <Link href="/stakon" className="tap text-on-ink-2 hover:text-on-ink">
                     STAKON
                   </Link>
                 </li>
                 <li>
-                  <Link href="/careers" className="text-on-ink-2 hover:text-on-ink">
+                  <Link href="/careers" className="tap text-on-ink-2 hover:text-on-ink">
                     Careers
                   </Link>
                 </li>
               </ul>
             </nav>
             <div>
-              <p className="eyebrow">Contact</p>
+              <p className="kicker">Contact</p>
               <ul className="mt-4 space-y-2.5 text-[15px]">
                 <li>
-                  <a href={`mailto:${contact.email}`} className="text-on-ink-2 hover:text-on-ink">
+                  <a href={`mailto:${contact.email}`} className="tap text-on-ink-2 hover:text-on-ink">
                     {contact.email}
                   </a>
                 </li>
                 <li>
-                  <a href={contact.phoneHref} className="tnum text-on-ink-2 hover:text-on-ink">
+                  <a href={contact.phoneHref} className="tap tnum text-on-ink-2 hover:text-on-ink">
                     {contact.phone}
                   </a>
                 </li>
                 <li>
-                  <a href={contact.linkedin} target="_blank" rel="noopener noreferrer" className="text-on-ink-2 hover:text-on-ink">
+                  <a href={contact.linkedin} target="_blank" rel="noopener noreferrer" className="tap text-on-ink-2 hover:text-on-ink">
                     LinkedIn
                   </a>
                 </li>
                 <li>
-                  <a href={contact.stakonUrl} target="_blank" rel="noopener noreferrer" className="text-on-ink-2 hover:text-on-ink">
+                  <a href={contact.stakonUrl} target="_blank" rel="noopener noreferrer" className="tap text-on-ink-2 hover:text-on-ink">
                     stakon.in
                   </a>
                 </li>
@@ -107,7 +107,7 @@ export function Footer() {
             &copy; {new Date().getFullYear()} {contact.legalName}. Public limited since 1994. <span className="tnum">{contact.cin}</span>
           </p>
           <p className="flex gap-5">
-            <Link href="/privacy" className="hover:text-on-ink">
+            <Link href="/privacy" className="tap hover:text-on-ink">
               Privacy
             </Link>
             <span className="tnum">Est. 1973, Chandigarh</span>

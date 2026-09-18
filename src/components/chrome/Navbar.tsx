@@ -7,6 +7,8 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { AnimatePresence, motion } from "framer-motion";
+import { usePrefersReducedMotion } from "@/lib/hooks";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -22,6 +24,7 @@ export function Navbar() {
   const [pastHero, setPastHero] = useState(!isHome);
   const [seenPath, setSeenPath] = useState(pathname);
   const ref = useRef<HTMLElement>(null);
+  const reduced = usePrefersReducedMotion();
 
   // Route changed: close the overlay and reset the hero state during render (no effect needed).
   if (seenPath !== pathname) {
@@ -121,8 +124,19 @@ export function Navbar() {
         </nav>
       </header>
 
-      {open ? (
-        <div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Menu" className="fixed inset-0 top-[72px] z-[calc(var(--z-nav)-1)] flex flex-col bg-paper text-ink lg:hidden">
+      <AnimatePresence>
+        {open ? (
+          <motion.div
+            id="mobile-menu"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Menu"
+            initial={reduced ? false : { opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={reduced ? undefined : { opacity: 0, y: -4 }}
+            transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed inset-0 top-[72px] z-[calc(var(--z-nav)-1)] flex flex-col bg-paper text-ink lg:hidden"
+          >
           <nav aria-label="Mobile" className="shell flex flex-1 flex-col justify-center gap-1 py-8">
             {navLinks.map((l) => (
               <Link key={l.href} href={l.href} onClick={() => setOpen(false)} className={cn("display block border-b border-line py-4 text-3xl", pathname === l.href ? "text-ink" : "text-ink-2")}>
@@ -135,8 +149,9 @@ export function Navbar() {
               Request a quote
             </Link>
           </div>
-        </div>
-      ) : null}
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </>
   );
 }

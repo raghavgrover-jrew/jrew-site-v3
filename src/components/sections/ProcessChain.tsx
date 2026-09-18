@@ -1,6 +1,5 @@
 import { TwoToneHeading } from "@/components/ui/TwoToneHeading";
 import { SectionShell } from "@/components/ui/SectionShell";
-import { Reveal } from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
 import { processStages, processIntro } from "@/data/process";
 
@@ -14,7 +13,7 @@ export function ProcessChain() {
           Full capability table
         </Button>
       </div>
-      <Reveal as="ol" stagger={0.05} className="mt-12 grid gap-px bg-ink-line sm:grid-cols-2 lg:grid-cols-3">
+      <ol className="mt-12 grid gap-px bg-ink-line sm:grid-cols-2 lg:grid-cols-3">
         {processStages.map((p, i) => (
           <li key={p.stage} className="bg-ink-panel p-6">
             <p className="tnum text-[13px] font-semibold text-marigold">{String(i + 1).padStart(2, "0")}</p>
@@ -22,7 +21,7 @@ export function ProcessChain() {
             <p className="mt-2 text-[14.5px] leading-relaxed text-on-ink-2">{p.capability}</p>
           </li>
         ))}
-      </Reveal>
+      </ol>
     </SectionShell>
   );
 }

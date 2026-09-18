@@ -15,7 +15,7 @@ export function ProcessTable() {
       <tbody>
         {processStages.map((p, i) => (
           <tr key={p.stage} className="grid grid-cols-[2.5rem_1fr] border-b border-line py-3 sm:table-row sm:py-0">
-            <td className="tnum py-1 pr-3 text-[13px] font-semibold text-marigold-deep sm:py-4">{String(i + 1).padStart(2, "0")}</td>
+            <td className="tnum py-1 pr-3 text-[13px] font-semibold text-ink-3 sm:py-4">{String(i + 1).padStart(2, "0")}</td>
             <th scope="row" className="display-md py-1 pr-6 text-[16px] font-bold text-ink sm:py-4">
               {p.stage}
             </th>

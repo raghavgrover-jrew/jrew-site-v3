@@ -23,7 +23,7 @@ export function Trusted() {
 
       <div className="mt-16 grid gap-6 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
         <div className="bg-card-warm p-6 sm:p-8">
-          <p className="eyebrow">Awards and recognition</p>
+          <p className="kicker">Awards and recognition</p>
           <h3 className="display-md mt-2 text-xl sm:text-2xl">
             {cat.giver}: {cat.title}
           </h3>

@@ -3,7 +3,6 @@ import Image from "next/image";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { SectionShell } from "@/components/ui/SectionShell";
 import { TwoToneHeading } from "@/components/ui/TwoToneHeading";
-import { Reveal } from "@/components/ui/Reveal";
 import { JsonLd, breadcrumbSchema } from "@/lib/jsonld";
 import { certifications, qualityIntro, inspection, people } from "@/data/quality";
 import { proof } from "@/data/partnership";
@@ -23,14 +22,14 @@ export default function QualityPage() {
       <PageHeader eyebrow={qualityIntro.eyebrow} lead={qualityIntro.headline.lead} mark={qualityIntro.headline.mark} lede={qualityIntro.body} />
 
       <SectionShell ariaLabel="Certifications" className="pt-4">
-        <Reveal as="ul" stagger={0.05} className="grid gap-px bg-line sm:grid-cols-2 lg:grid-cols-5">
+        <ul className="grid gap-px bg-line sm:grid-cols-2 lg:grid-cols-5">
           {certifications.map((c) => (
             <li key={c.code} className="on-ink bg-ink-panel p-5">
               <p className="tnum display-md text-xl text-marigold">{c.code}</p>
               <p className="mt-1 text-[13px] font-semibold uppercase tracking-[0.06em] text-on-ink-2">{c.scope}</p>
             </li>
           ))}
-        </Reveal>
+        </ul>
         <div className="mt-4 flex flex-wrap items-baseline justify-between gap-3 text-[14px]">
           <p className="font-semibold uppercase tracking-[0.08em] text-ink-3">{qualityIntro.certifier}</p>
           <p className="text-ink-2">
@@ -46,13 +45,13 @@ export default function QualityPage() {
         <div className="grid gap-10 lg:grid-cols-[minmax(0,6fr)_minmax(0,6fr)]">
           <div>
             <TwoToneHeading id="inspection-h" lead="Inspection" mark="infrastructure" inline className="text-[clamp(1.9rem,3.6vw,3rem)]" />
-            <Reveal as="ul" stagger={0.05} className="mt-8 divide-y divide-line border-y border-line">
+            <ul className="mt-8 divide-y divide-line border-y border-line">
               {inspection.rows.map((r, i) => (
                 <li key={r} className={`bar my-3 text-[15px] leading-relaxed ${i % 2 ? "bar-marigold" : ""}`}>
                   {r}
                 </li>
               ))}
-            </Reveal>
+            </ul>
           </div>
           <div className="grid gap-4">
             {inspection.images.map((im) => (
@@ -81,14 +80,14 @@ export default function QualityPage() {
         <TwoToneHeading id="people-h" lead={people.headline.lead} mark={people.headline.mark} className="max-w-[16ch] text-[clamp(1.9rem,3.6vw,3rem)]" />
         <p className="mt-5 max-w-[60ch] text-ink-2">{people.body}</p>
         <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
-          <Reveal as="ul" stagger={0.06} className="space-y-3">
+          <ul className="space-y-3">
             {people.rows.map((r, i) => (
               <li key={r.title} className={`bar p-5 ${i % 2 ? "bg-card-warm bar-marigold" : "bg-card-cool"}`}>
                 <h3 className="display-md text-lg">{r.title}</h3>
                 <p className="mt-1 text-[15px] leading-relaxed text-ink-2">{r.body}</p>
               </li>
             ))}
-          </Reveal>
+          </ul>
           <div className="relative aspect-[4/3] overflow-hidden lg:aspect-auto">
             <Image src={people.images[0].src} alt={people.images[0].alt} fill sizes="(min-width: 1024px) 40vw, 90vw" className="object-cover" />
           </div>
