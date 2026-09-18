@@ -1,3 +1,9 @@
+---
+title: BENCHMARK
+type: note
+permalink: home/desktop/jrew/code/jrew-site-v3/benchmark-1
+---
+
 # BENCHMARK - competitor and best-in-class research for jrew.co.in v3
 
 Date: 2026-09-18. Extends `02_Global_Best_Practices.md` (Apr 2026, brochure-oriented) with live-site structure captured on 18 Sep 2026. Method: 29 sites captured headlessly at 1440x900 (fold + full-page screenshots in `benchmark/screens/`, extracted nav, headings, forms and CTA labels in `benchmark/capture.json`, summary in `benchmark/capture-table.md`), plus 20 deep-dive visits in the built-in browser for the qualification path and for the eight sites that blocked automation (Cascade, Parker, Linamar, Siemens, Safran, Endurance, Sundaram Clayton, Igloo). Visual design was not copied from any site; only structure, qualification path, proof mechanics, native web elements, motion and performance posture were extracted.

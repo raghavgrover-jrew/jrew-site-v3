@@ -1,3 +1,9 @@
+---
+title: INGEST-FINDINGS
+type: note
+permalink: home/desktop/jrew/code/jrew-site-v3/docs/ingest-findings
+---
+
 # Ingest Findings - JREW website v3
 
 Date: 2026-09-18. Phase 1 of `JREW_WEBSITE_V3_PROMPT.md`. Sources read in full: `05_Brochure_2026_Visual_Extraction.md` + all 12 spread renders, `02_Global_Best_Practices.md`, `01_Brochure_Page_Analysis.md`, apple-scroll-starter (AUDIT-REPORT, AUDIT-ASSETS, ARCHITECTURE, globals.css, 27 sections, ui, subpages, API routes, data), jrew-forge (PRODUCT, DESIGN, BUILD-REPORT, spec, plan, site.ts, data, chrome, RFQ flow, verify.mjs).
