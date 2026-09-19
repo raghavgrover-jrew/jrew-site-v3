@@ -4,65 +4,65 @@
     "form": "desktop",
     "perf": 100,
     "a11y": 100,
-    "bp": 100,
-    "seo": 100,
-    "lcp": 0.18,
+    "bp": 93,
+    "seo": 69,
+    "lcp": 0.33,
     "cls": 0,
-    "tbt": 2
+    "tbt": 0
   },
   {
     "route": "/",
     "form": "mobile",
+    "perf": 87,
+    "a11y": 100,
+    "bp": 93,
+    "seo": 69,
+    "lcp": 2.78,
+    "cls": 0,
+    "tbt": 227
+  },
+  {
+    "route": "/products/attachments",
+    "form": "desktop",
+    "perf": 100,
+    "a11y": 100,
+    "bp": 93,
+    "seo": 69,
+    "lcp": 0.54,
+    "cls": 0,
+    "tbt": 0
+  },
+  {
+    "route": "/products/attachments",
+    "form": "mobile",
     "perf": 93,
     "a11y": 100,
-    "bp": 100,
-    "seo": 100,
-    "lcp": 1.66,
+    "bp": 93,
+    "seo": 69,
+    "lcp": 2.58,
     "cls": 0,
-    "tbt": 276
-  },
-  {
-    "route": "/products/attachments",
-    "form": "desktop",
-    "perf": 100,
-    "a11y": 100,
-    "bp": 100,
-    "seo": 100,
-    "lcp": 0.11,
-    "cls": 0,
-    "tbt": 0
-  },
-  {
-    "route": "/products/attachments",
-    "form": "mobile",
-    "perf": 99,
-    "a11y": 100,
-    "bp": 100,
-    "seo": 100,
-    "lcp": 1.57,
-    "cls": 0,
-    "tbt": 67
+    "tbt": 41
   },
   {
     "route": "/contact",
     "form": "desktop",
     "perf": 100,
     "a11y": 100,
-    "bp": 100,
-    "seo": 100,
-    "lcp": 0.09,
+    "bp": 93,
+    "seo": 69,
+    "lcp": 0.39,
     "cls": 0,
     "tbt": 0
   },
   {
     "route": "/contact",
     "form": "mobile",
-    "perf": 99,
+    "perf": 93,
     "a11y": 100,
-    "bp": 100,
-    "seo": 100,
-    "lcp": 1.57,
+    "bp": 93,
+    "seo": 69,
+    "lcp": 2.58,
     "cls": 0,
-    "tbt": 57
+    "tbt": 40
   }
 ]

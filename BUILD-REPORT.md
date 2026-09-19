@@ -233,3 +233,27 @@ stated scale if Raghav wants one, which needs real dimensions rather than a visu
 | Hero | `sizes` matches the 9/20 column it occupies from 1024px up, rather than claiming the full viewport | `src/components/sections/Hero.tsx` |
 
 Console is clean on all eleven routes, dev and production, apart from the deliberate 404 probe.
+
+## 13. Deployment (2026-09-19)
+
+Preview published to a new Vercel project, `jrew-site-v3`, `prj_3kxBOF0XL0skN1ACddrCZA0VsATF`. Not
+the v1 project, no custom domain, jrew.co.in and its DNS untouched.
+
+| Point | State |
+|---|---|
+| Deployment type | Preview only. Vercel assigned the project's first build to production regardless of flags; that deployment was removed, and the production alias now answers 404 |
+| Access | Behind Vercel's deployment protection, so it opens for Raghav while signed in. `verify.mjs` and `lighthouse.mjs` accept `PREVIEW_BYPASS` to drive it; the secret is not in the repo |
+| Indexing | `robots.txt` disallows everything and the head carries `noindex, nofollow` on any host that is not jrew.co.in |
+| Canonical | A Vercel build with no explicit `NEXT_PUBLIC_SITE_URL` canonicalises to its own host |
+| Forms | 500 with an on-screen refusal and the fallback address, until the six SMTP variables are set. No console fallback on Vercel, by design |
+| Gates on the deployment | 279 of 280. The one failure is Vercel's own preview toolbar script being blocked by our CSP |
+| Lighthouse on the deployment | Desktop 100 with LCP 0.33 to 0.54 s. Mobile LCP 2.58 to 2.78 s, a little over target; cause and the two rejected remedies are in QA-REPORT round 7 |
+
+Open, and needing Raghav rather than code:
+
+1. The six SMTP values, so the forms work.
+2. Vercel's preview toolbar: turn it off in project settings, or allow `vercel.live` in the preview
+   CSP. The second would stop the preview rehearsing the real policy.
+3. Whether to inline critical CSS to pull mobile LCP under 2.5 s on Lighthouse's mobile profile.
+4. Whether this preview should become a shareable URL, which means promoting a build to the
+   project's production alias. Not done: production deployment was never authorised.

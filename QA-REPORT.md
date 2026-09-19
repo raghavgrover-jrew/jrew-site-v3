@@ -448,14 +448,110 @@ lazy below-the-fold traffic; without the path optimisation it would have been 43
 Build: exit 0, all routes prerendered, `/icon.svg` now in the route list. Lint: 0 problems.
 Tests: 70 passed across four files.
 
+## Round 7: deployed, and measured on the deployment
+
+Project `jrew-site-v3` on Vercel (`prj_3kxBOF0XL0skN1ACddrCZA0VsATF`), which is not the v1 project
+and carries no custom domain. jrew.co.in and its DNS were never touched.
+
+### Vercel put the first build on production
+
+A new project's first deployment is assigned to production whatever flags are passed, so the first
+build went up as a public, crawlable production deployment. That is the opposite of what was asked
+for, so it was removed the same minute; the project now holds preview deployments only and its
+production alias answers 404. Two consequences were worth fixing properly rather than patching over:
+
+- Only jrew.co.in may be indexed. `robots.ts` now offers nothing at all to crawlers off that origin
+  and the layout adds `noindex, nofollow` to the head, so a crawler that reached a URL before
+  reading robots.txt is still told not to keep it. The claims register is unsigned and the privacy
+  notice is a draft for legal review, so no copy of this belongs in an index yet.
+- A Vercel build with no explicit `NEXT_PUBLIC_SITE_URL` canonicalises to its own host, so every
+  preview is self-consistent and none of them claims to be jrew.co.in.
+
+The harness's robots check is now host-aware: on the canonical origin it requires a sitemap line, and
+anywhere else it requires that everything be disallowed and that the head carry noindex.
+
+### Gates on the deployment
+
+`279/280 checks`. The one failure is not ours:
+
+```
+FAIL  G4  console clean across routes  ::  Loading the script
+'https://vercel.live/_next-live/feedback/feedback.js' violates the following
+Content Security Policy directive: "script-src 'self' 'unsafe-inline'"
+```
+
+Vercel injects its own preview feedback toolbar at the edge, into preview deployments only. It is not
+in our HTML and will not exist on jrew.co.in. Clearing it means either turning the toolbar off in the
+project settings or allowing `vercel.live` in the preview CSP, and the second would stop the preview
+from rehearsing the real policy. Left for Raghav to choose.
+
+The four checks that submit a form cannot pass until SMTP is set: there is no console fallback on
+Vercel by design. Checked by hand instead, and the refusal is visible rather than silent:
+
+```
+POST /api/contact -> 500
+{"error":"Mail is not configured. Please email enquiry@jrew.co.in directly."}
+```
+
+Every route answers 200 over HTTPS, a missing page answers 404, and the social card renders
+(`/opengraph-image`, 200, image/png, 49,667 bytes).
+
+### Lighthouse on the deployment, observed throttling
+
+```
+route | form | perf | a11y | best | seo | LCP s | CLS | TBT ms
+/ | desktop | 100 | 100 | 93 | 69 | 0.33 | 0 | 0
+/ | mobile | 87 | 100 | 93 | 69 | 2.78 | 0 | 227
+/products/attachments | desktop | 100 | 100 | 93 | 69 | 0.54 | 0 | 0
+/products/attachments | mobile | 93 | 100 | 93 | 69 | 2.58 | 0 | 41
+/contact | desktop | 100 | 100 | 93 | 69 | 0.39 | 0 | 0
+/contact | mobile | 93 | 100 | 93 | 69 | 2.58 | 0 | 40
+```
+
+SEO reads 69 on every route because the page is deliberately `noindex`; best practices reads 93
+because of the blocked Vercel script. Both are preview artefacts.
+
+Desktop is excellent. Mobile LCP is 2.58 to 2.78 s, consistently a little over the 2.5 s threshold.
+This is the real-network number the local runs could not show: locally the server answers in 17 ms,
+so the same build measured 1.5 to 1.7 s.
+
+### Why mobile LCP sits where it does
+
+The largest paint on every route is text, not a photograph. The waterfall explains the rest:
+
+| Resource | Starts | Ends | Transfer |
+|---|---|---|---|
+| document | 703 ms | 1,394 ms | 23 KB |
+| 3 font files | 1,308 ms | 2,498 to 3,086 ms | 39 KB |
+| hero image | 1,309 ms | 3,683 ms | 40 KB |
+| **stylesheet, render-blocking** | 1,311 ms | **2,634 ms** | 11 KB |
+
+First paint waits on that 11 KB stylesheet, which shares a throttled pipe with 79 KB of font and
+image preloads. Server response is 17 ms; the 703 ms is Lighthouse's emulated round trip.
+
+Two remedies were tried on the deployment and both measured worse, so both were reverted:
+
+| Attempt | Mobile LCP | Desktop LCP | CLS |
+|---|---|---|---|
+| As shipped | 2.78 / 2.58 / 2.58 | 0.33 / 0.54 / 0.39 | 0 |
+| No font preloads at all | 2.62 / 2.43 / 2.42 | 1.57 / 0.95 / 0.75 | 0.027 on home |
+| Poppins unpreloaded, hero not preloaded | 2.68 / 2.57 / 2.50 | 1.80 / 0.78 / 0.89 | 0.027 on home |
+
+Dropping the preloads buys about 0.15 s on mobile, costs 0.4 to 1.2 s on desktop, and starts
+shifting the layout when the body face swaps in. Not a trade worth making. The remaining lever is
+the render-blocking stylesheet itself: inlining the critical rules would cut a round trip out of the
+first paint on mobile. That is a real change to how the page is built, so it is a decision, not a
+tidy-up. Lighthouse's mobile profile is also deliberately pessimistic, and field data from real
+devices is what search actually uses.
+
 ## Final state
 
 | Gate | Result |
 |---|---|
 | G1 build | exit 0, all routes prerendered |
 | G2 lint | 0 problems |
-| G3 tests | 71 passed |
-| G4 to G12, G14 | 282 of 282 checks (round 6) |
+| G3 tests | 74 passed |
+| G4 to G12, G14 | 282 of 282 locally (round 6). On the deployment 279 of 280: the one failure is Vercel's injected preview toolbar being blocked by our CSP, and four submit checks need SMTP |
 | G13 Lighthouse | Observed throttling: every target met (mobile LCP 1.54 to 1.67 s, desktop 0.08 to 0.10 s, CLS 0, a11y 100). Lantern simulation on the local HTTP/1.1 server: contact clears 2.5 s, home and attachments mobile 3.2 to 3.4 s (rounds 1, 3 and 5); to be re-measured on the Vercel preview |
 
 Open items are content decisions, not defects; they are listed in BUILD-REPORT.md section 7.

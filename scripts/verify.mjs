@@ -179,7 +179,18 @@ const newContext = (opts = {}) => browser.newContext(bypass ? { ...opts, extraHT
   const smText = await sm.text();
   note(sm.status() === 200 && ROUTES.every((r) => smText.includes(r === "/" ? "<loc>" : r)), "G12", "sitemap lists every route", `${sm.status()}`);
   const rb = await page.request.get(BASE + "/robots.txt");
-  note(rb.status() === 200 && (await rb.text()).includes("Sitemap:"), "G12", "robots.txt present with sitemap", `${rb.status()}`);
+  // Only jrew.co.in may be indexed. Anywhere else the site must close itself to crawlers, so which
+  // robots.txt is correct depends on the host the harness is pointed at.
+  const rbText = await rb.text();
+  const closed = /^Disallow:\s*\/\s*$/m.test(rbText) && !/^Allow:/m.test(rbText);
+  const canonicalHost = new URL(BASE).origin === "https://jrew.co.in";
+  if (canonicalHost) {
+    note(rb.status() === 200 && rbText.includes("Sitemap:") && !closed, "G12", "robots.txt present with sitemap", `${rb.status()}`);
+  } else {
+    note(rb.status() === 200 && closed && !rbText.includes("Sitemap:"), "G12", "robots.txt closes a non-canonical host to crawlers", rbText.replace(/\s+/g, " ").trim().slice(0, 60));
+    const noindex = await page.request.get(BASE + "/").then((r) => r.text());
+    note(/<meta name="robots" content="noindex[^"]*"/.test(noindex), "G12", "non-canonical host carries noindex in the head");
+  }
 
   // G7 keyboard probes
   await page.goto(BASE + "/", { waitUntil: "networkidle" });
