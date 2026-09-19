@@ -10,11 +10,11 @@ import { proof } from "@/data/partnership";
 export function QualityBand() {
   return (
     <SectionShell id="quality" labelledBy="quality-h" tone="cool">
-      <div className="grid gap-10 lg:grid-cols-[minmax(0,6fr)_minmax(0,6fr)] lg:gap-14">
+      <Eyebrow>{qualityIntro.eyebrow}</Eyebrow>
+      <TwoToneHeading id="quality-h" lead={qualityIntro.headline.lead} mark={qualityIntro.headline.mark} className="max-w-[30ch] text-[clamp(1.9rem,3.6vw,3rem)]" />
+      <div className="mt-8 grid gap-10 lg:grid-cols-[minmax(0,6fr)_minmax(0,6fr)] lg:gap-14">
         <div>
-          <Eyebrow>{qualityIntro.eyebrow}</Eyebrow>
-          <TwoToneHeading id="quality-h" lead={qualityIntro.headline.lead} mark={qualityIntro.headline.mark} className="text-[clamp(1.9rem,3.6vw,3rem)]" />
-          <p className="mt-5 max-w-[56ch] text-ink-2">{qualityIntro.body}</p>
+          <p className="max-w-[56ch] text-ink-2">{qualityIntro.body}</p>
           <ul className="mt-8 flex flex-wrap gap-2" aria-label="Certifications">
             {certifications.map((c) => (
               <li key={c.code} className="on-ink bg-ink px-4 py-2.5 leading-tight">

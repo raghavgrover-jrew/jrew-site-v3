@@ -43,7 +43,7 @@ export function ByMachineTabs() {
           </option>
         ))}
       </select>
-      <div role="tablist" aria-label="Machine type" className="hidden flex-wrap gap-1 sm:flex">
+      <div role="tablist" aria-label="Machine type" className="hidden gap-1 sm:grid sm:grid-cols-2 md:grid-cols-5">
         {byMachine.map((m) => (
           <button
             key={m.id}
@@ -54,7 +54,7 @@ export function ByMachineTabs() {
             tabIndex={active === m.id ? 0 : -1}
             onClick={() => setActive(m.id)}
             onKeyDown={onKeyDown}
-            className={cn("min-h-[44px] border px-4 text-[14.5px] font-semibold transition-colors", active === m.id ? "border-ink bg-ink text-on-ink" : "border-line-strong bg-paper text-ink-2 hover:border-ink hover:text-ink")}
+            className={cn("min-h-[44px] border px-3 text-[14px] font-semibold transition-colors", active === m.id ? "border-ink bg-ink text-on-ink" : "border-line-strong bg-paper text-ink-2 hover:border-ink hover:text-ink")}
           >
             {m.label}
           </button>

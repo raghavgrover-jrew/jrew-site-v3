@@ -33,14 +33,14 @@ export function AttachmentCatalog() {
             type="button"
             aria-pressed={filter === c.key}
             onClick={() => setFilter(c.key)}
-            className={cn("min-h-[44px] border px-4 text-[14.5px] font-semibold transition-colors", filter === c.key ? "border-ink bg-ink text-on-ink" : "border-line-strong bg-paper text-ink-2 hover:border-ink hover:text-ink")}
+            className={cn("min-h-[44px] border px-4 text-[13px] font-semibold uppercase tracking-[0.06em] transition-colors", filter === c.key ? "on-ink border-ink bg-ink text-marigold" : "border-line-strong bg-paper text-ink-2 hover:border-ink hover:text-ink")}
           >
             {c.label}
           </button>
         ))}
       </div>
       <p className="tnum mt-3 text-[14px] text-ink-3" aria-live="polite">
-        {shown} of {attachments.length} attachments
+        {filter === "all" ? `All ${attachments.length} attachments` : `${shown} of ${attachments.length} attachments`}
       </p>
 
       <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -56,7 +56,7 @@ export function AttachmentCatalog() {
                   <span className="inline-block self-start bg-marigold px-2.5 py-1 text-[14px] font-bold text-ink">{a.name}</span>
                   <p className="mt-3 text-[14.5px] leading-relaxed text-ink">{a.spec}</p>
                   <p className="mt-2 text-[14px] leading-relaxed text-ink-3">{a.applications}</p>
-                  <span className="mt-4 text-[14px] font-semibold underline decoration-marigold decoration-2 underline-offset-4 group-hover:decoration-ink">Details</span>
+                  <span className="mt-auto pt-4 text-[14px] font-semibold underline decoration-marigold decoration-2 underline-offset-4 group-hover:decoration-ink">Details</span>
                 </div>
               </button>
             </li>
@@ -70,15 +70,18 @@ export function AttachmentCatalog() {
         onClick={(e) => {
           if (e.target === dialogRef.current) dialogRef.current?.close();
         }}
-        className="m-auto w-[min(92vw,44rem)] border border-ink bg-paper p-0 text-ink backdrop:bg-ink/70"
+        className="m-auto w-[min(92vw,52rem)] border border-ink bg-paper p-0 text-ink backdrop:bg-ink/70"
         aria-label={active ? active.name : "Attachment"}
       >
         {active ? (
-          <div>
-            <div className="relative aspect-[16/10] bg-card-warm">
-              <Image src={active.image} alt={active.imageAlt} fill sizes="44rem" className="object-contain p-6" />
+          <div className="relative sm:grid sm:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
+            <button type="button" onClick={() => dialogRef.current?.close()} aria-label="Close" className="absolute right-2 top-2 z-10 flex size-11 items-center justify-center bg-paper text-2xl leading-none text-ink hover:bg-card-warm">
+              <span aria-hidden>×</span>
+            </button>
+            <div className="relative aspect-[4/3] bg-paper sm:aspect-auto sm:min-h-[20rem]">
+              <Image src={active.image} alt={active.imageAlt} fill sizes="(min-width: 640px) 22rem, 92vw" className="object-contain p-4 sm:p-6" />
             </div>
-            <div className="p-6 sm:p-8">
+            <div className="hairline p-6 sm:border-t-0 sm:border-l sm:border-line sm:p-8">
               <span className="inline-block bg-marigold px-2.5 py-1 text-[14px] font-bold">{active.name}</span>
               <dl className="mt-5 space-y-3 text-[15px]">
                 <div>

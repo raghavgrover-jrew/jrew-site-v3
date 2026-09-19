@@ -22,11 +22,16 @@ export function StickySubnav({ items, label = "Sections" }: { items: { id: strin
     return () => io.disconnect();
   }, [items]);
 
+  // keep the current chapter in view when the row scrolls horizontally (phones)
+  useEffect(() => {
+    document.querySelector<HTMLElement>(`nav[aria-label="${label}"] a[aria-current]`)?.scrollIntoView({ inline: "nearest", block: "nearest" });
+  }, [active, label]);
+
   return (
     <nav aria-label={label} className="sticky top-[72px] z-30 border-y border-line bg-paper/95 backdrop-blur-md">
-      <ul className="shell flex gap-1 overflow-x-auto py-1 [scrollbar-width:none]">
+      <ul className="shell flex snap-x gap-1 overflow-x-auto py-1 [scrollbar-width:none] max-sm:[mask-image:linear-gradient(to_right,#000_calc(100%-2.5rem),transparent)]">
         {items.map((i) => (
-          <li key={i.id} className="shrink-0">
+          <li key={i.id} className="shrink-0 snap-start">
             <a
               href={`#${i.id}`}
               aria-current={active === i.id ? "location" : undefined}

@@ -12,9 +12,10 @@ import { awards, awardsIntro, caterpillarYears } from "@/data/awards";
 
 export const metadata: Metadata = {
   title: "About",
-  description:
-    "JREW Engineering Limited, founded 1973 in Chandigarh by Sh. Ram Ratan Agarwal, public limited since 1994. Vision, mission, ICARE values and UPLIFT principles, 18 milestones to the 2027 Rajpura greenfield, CSR through JREW Foundation, and awards from Caterpillar, JCB, Godrej and CII.",
+  description: "JREW Engineering since 1973: who we are, vision and values, a five-decade timeline, community work and customer awards.",
   alternates: { canonical: "/about" },
+  openGraph: { type: "website", url: "/about", title: "About | JREW Engineering", description: "JREW Engineering since 1973: who we are, vision and values, a five-decade timeline, community work and customer awards." },
+  twitter: { card: "summary_large_image", title: "About | JREW Engineering", description: "JREW Engineering since 1973: who we are, vision and values, a five-decade timeline, community work and customer awards." },
 };
 
 export default function AboutPage() {
@@ -25,7 +26,7 @@ export default function AboutPage() {
 
       <SectionShell ariaLabel="How JREW works" className="pt-4">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,6fr)_minmax(0,6fr)]">
-          <ul className="divide-y divide-line border-y border-line">
+          <ul className="divide-y divide-line border-y border-line self-start">
             {whoWeAre.bullets.map((b, i) => (
               <li key={i} className={`bar my-4 text-[15px] leading-relaxed text-ink ${i % 2 ? "bar-marigold" : ""}`}>
                 {b}
@@ -41,15 +42,15 @@ export default function AboutPage() {
       <section aria-label="Vision, mission, values and principles" className="grid md:grid-cols-2">
         <div className="on-ink bg-ink-panel p-8 text-on-ink sm:p-12">
           <p className="display text-xl">{vision.title}</p>
-          <p className="mt-4 text-lg font-semibold leading-snug">{vision.body}</p>
+          <p className="mt-4 max-w-[34ch] text-lg font-semibold leading-snug">{vision.body}</p>
           <p className="display mt-6 text-lg text-marigold">{vision.mark}</p>
         </div>
         <div className="bg-marigold p-8 text-ink sm:p-12">
           <p className="display text-xl">{mission.title}</p>
-          <p className="mt-4 text-lg font-semibold leading-snug">{mission.body}</p>
+          <p className="mt-4 max-w-[34ch] text-lg font-semibold leading-snug">{mission.body}</p>
           <p className="display mt-6 text-lg">{mission.mark}</p>
         </div>
-        <div className="bg-marigold p-8 text-ink sm:p-12">
+        <div className="order-4 bg-marigold p-8 text-ink sm:p-12 md:order-none">
           <p className="display text-xl">{icare.title}</p>
           <p className="mt-1 text-[15px] font-semibold">{icare.lead}</p>
           <ul className="mt-6 space-y-3">
@@ -64,7 +65,7 @@ export default function AboutPage() {
             ))}
           </ul>
         </div>
-        <div className="on-ink bg-ink-panel p-8 text-on-ink sm:p-12">
+        <div className="on-ink order-3 bg-ink-panel p-8 text-on-ink sm:p-12 md:order-none">
           <p className="display text-xl">{uplift.title}</p>
           <p className="mt-1 text-[15px] font-semibold text-on-ink-2">{uplift.lead}</p>
           <ul className="mt-6 space-y-3">
@@ -117,12 +118,12 @@ export default function AboutPage() {
         <TwoToneHeading id="awards-h" lead={awardsIntro.headline.lead} mark={awardsIntro.headline.mark} inline className="text-[clamp(1.9rem,3.6vw,3rem)]" />
         <p className="mt-5 max-w-[60ch] text-ink-2">{awardsIntro.body}</p>
         <div className="mt-10 grid gap-6 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
-          <div className="border border-line bg-paper p-6 sm:p-8">
+          <div className="self-start border border-line bg-paper p-6 sm:p-8">
             <h3 className="display-md text-xl">
               {awards[0].giver}: {awards[0].title}
             </h3>
             <p className="tnum mt-1 text-[15px] font-semibold text-ink-2">{awards[0].note}</p>
-            <ul className="mt-5 grid grid-cols-3 gap-3">
+            <ul className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-3">
               {caterpillarYears.map((y) => (
                 <li key={y.year} className="relative aspect-[3/2] overflow-hidden">
                   <Image src={y.image} alt={`Caterpillar Supplier Excellence Recognition ${y.year}`} fill sizes="(min-width: 1024px) 18vw, 30vw" className="object-cover" />
@@ -136,12 +137,12 @@ export default function AboutPage() {
               <li key={a.id} className="border border-line bg-paper">
                 {a.image ? (
                   <div className="relative aspect-[3/2] overflow-hidden">
-                    <Image src={a.image} alt={a.imageAlt ?? a.title} fill sizes="(min-width: 640px) 25vw, 90vw" className="object-cover" />
+                    <Image src={a.image} alt={a.imageAlt ?? a.title} fill sizes="(min-width: 640px) 25vw, 90vw" className={a.id === "et-now" ? "object-cover object-top" : "object-cover"} />
                   </div>
                 ) : null}
                 <div className="p-4">
                   <p className="text-[13px] font-semibold uppercase tracking-[0.06em] text-ink-3">{a.giver}</p>
-                  <p className="text-[15px] font-bold">{a.title}</p>
+                  <p className="text-[15px] font-bold text-balance">{a.title}</p>
                 </div>
               </li>
             ))}

@@ -55,7 +55,7 @@
 }
 
 html {
-  scroll-behavior: auto; /* Lenis owns smoothing; native under reduced motion */
+  scroll-behavior: auto; /* native scrolling; no smooth-scroll library */
   -webkit-text-size-adjust: 100%;
 }
 
@@ -68,116 +68,138 @@ body {
   font-feature-settings: "kern";
 }
 
-[id] {
-  scroll-margin-top: 5rem;
-}
-
-h1, h2, h3 {
-  text-wrap: balance;
-}
-p {
-  text-wrap: pretty;
-}
-
-/* Display type: the brochure's heavy geometric grotesque, all caps, tight */
-.display {
-  font-family: var(--font-display);
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: -0.02em;
-  line-height: 1.02;
-}
-.display-md {
-  font-family: var(--font-display);
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  line-height: 1.1;
-}
-
-/* Eyebrow: small letterspaced grey label above a chapter headline. Rationed. */
-.eyebrow {
-  font-family: var(--font-sans);
-  font-weight: 600;
-  font-size: 0.8125rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-}
-.on-ink .eyebrow {
-  color: var(--on-ink-3);
-}
-/* Kicker: the same small label inside a card or aside. Not a section eyebrow; not counted by the budget. */
-.kicker {
-  font-family: var(--font-sans);
-  font-weight: 600;
-  font-size: 0.75rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-}
-.on-ink .kicker {
-  color: var(--on-ink-3);
-}
-/* Standalone text links become 44px tall on coarse pointers (inline links inside prose are exempt per WCAG 2.5.8) */
-@media (pointer: coarse) {
-  .tap {
-    display: inline-flex;
-    align-items: center;
-    min-height: 44px;
-    min-width: 44px;
+@layer base {
+  [id] {
+    scroll-margin-top: 5rem;
+  }
+  /* pages with a sticky chapter nav need room for both bars */
+  main:has(nav[aria-label="Sections"]) [id] {
+    scroll-margin-top: 8.5rem;
+  }
+  h1, h2, h3 {
+    text-wrap: balance;
+  }
+  p, li, dd {
+    text-wrap: pretty;
   }
 }
 
-.tnum {
-  font-variant-numeric: tabular-nums lining-nums;
-}
+/* Primitives live in the components layer so Tailwind utilities (pt-4, normal-case, leading-none) can override them. */
+@layer components {
+  /* Association marks sit directly on the ink footer as paper-on-ink monochrome */
+  .assoc-mark {
+    filter: grayscale(1) invert(1) opacity(0.85);
+  }
+  /* Display type: the brochure's heavy geometric grotesque, all caps, tight */
+  .display {
+    font-family: var(--font-display);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    line-height: 1.02;
+  }
+  .display-md {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+  }
 
-/* The marker stroke: line two of a headline on paper. Background-size animates so it follows wraps. */
-.hl {
-  background-image: linear-gradient(var(--marigold), var(--marigold));
-  background-repeat: no-repeat;
-  background-position: 0 100%;
-  background-size: 100% 100%;
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
-  padding: 0.02em 0.14em;
-  margin-left: -0.14em;
-}
+  /* Eyebrow: small letterspaced grey label above a chapter headline. Rationed. */
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 0.8125rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .on-ink .eyebrow {
+    color: var(--on-ink-3);
+  }
+  /* Kicker: the same small label inside a card or aside. Not a section eyebrow; not counted by the budget. */
+  .kicker {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .on-ink .kicker {
+    color: var(--on-ink-3);
+  }
+  /* Standalone text links become 44px tall on coarse pointers (inline links inside prose are exempt per WCAG 2.5.8) */
+  @media (pointer: coarse) {
+    .tap {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      min-width: 44px;
+    }
+  }
 
-/* Brochure card grammar: left bar */
-.bar {
-  position: relative;
-  padding-left: 1.25rem;
-}
-.bar::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.15rem;
-  bottom: 0.15rem;
-  width: 4px;
-  background: var(--ink);
-}
-.bar-marigold::before {
-  background: var(--marigold);
-}
+  .tnum {
+    font-variant-numeric: tabular-nums lining-nums;
+  }
 
-.hairline {
-  border-top: 1px solid var(--line);
-}
-.on-ink .hairline {
-  border-color: var(--ink-line);
-}
+  /* The marker stroke: line two of a headline on paper. Background-size animates so it follows wraps. */
+  .hl {
+    position: relative;
+    z-index: -1;
+    background-image: linear-gradient(var(--marigold), var(--marigold));
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 100% 100%;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    padding: 0.02em 0.14em;
+    margin-left: -0.14em;
+  }
+  /* Page titles draw the marker in once; every other heading is static */
+  .hl-anim {
+    background-size: 0% 100%;
+    transition: background-size 0.6s var(--ease-out) 0.15s;
+  }
+  .hl-anim.is-in {
+    background-size: 100% 100%;
+  }
 
-.shell {
-  width: 100%;
-  max-width: var(--shell);
-  margin-inline: auto;
-  padding-inline: clamp(1.25rem, 4vw, 3.5rem);
-}
+  /* Brochure card grammar: left bar */
+  .bar {
+    position: relative;
+    padding-left: 1.25rem;
+  }
+  .bar::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.15rem;
+    bottom: 0.15rem;
+    width: 4px;
+    background: var(--ink);
+  }
+  .bar-marigold::before {
+    background: var(--marigold);
+  }
 
-.section {
-  padding-block: clamp(4rem, 8vw, 7.5rem);
+  .hairline {
+    border-top: 1px solid var(--line);
+  }
+  .on-ink .hairline {
+    border-color: var(--ink-line);
+  }
+
+  .shell {
+    width: 100%;
+    max-width: var(--shell);
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 4vw, 3.5rem);
+  }
+
+  .section {
+    padding-block: clamp(4rem, 8vw, 7.5rem);
+  }
 }
 
 /* Focus: ink ring on paper, marigold ring on ink */
@@ -235,16 +257,16 @@ dialog[open] {
   to { opacity: 1; transform: none; }
 }
 .anim-rise {
-  animation: rise-in 0.28s var(--ease-out) both;
+  animation: rise-in 0.14s var(--ease-out) both;
 }
 .anim-drop {
-  animation: drop-in 0.22s var(--ease-out) both;
+  animation: drop-in 0.16s var(--ease-out) both;
 }
 dialog::backdrop {
   animation: dialog-in 0.22s var(--ease-out);
 }
 
-/* Reduced motion: collapse everything; JS never constructs Lenis or pins under this query */
+/* Reduced motion: collapse everything; no pins run under this query */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

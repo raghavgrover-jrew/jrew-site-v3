@@ -10,9 +10,10 @@ import { contact } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Quality",
-  description:
-    "ISO 9001:2015, ISO 14001:2015 and ISO 45001:2018 certified by TUV Rheinland, EN ISO 3834-2 fusion welding, CII GreenCo. Bridge CMMs with Renishaw probes, FARO arm CMMs, Level II NDT (DPT, MPI, RT, UT), destructive testing. Zero-PPM record with APQP and PPAP discipline.",
+  description: "ISO 9001, 14001 and 45001 certified by TÜV Rheinland, EN ISO 3834-2 welding, CMM and FARO inspection, zero-PPM record on global supply.",
   alternates: { canonical: "/quality" },
+  openGraph: { type: "website", url: "/quality", title: "Quality | JREW Engineering", description: "ISO 9001, 14001 and 45001 certified by TÜV Rheinland, EN ISO 3834-2 welding, CMM and FARO inspection, zero-PPM record on global supply." },
+  twitter: { card: "summary_large_image", title: "Quality | JREW Engineering", description: "ISO 9001, 14001 and 45001 certified by TÜV Rheinland, EN ISO 3834-2 welding, CMM and FARO inspection, zero-PPM record on global supply." },
 };
 
 export default function QualityPage() {
@@ -42,29 +43,28 @@ export default function QualityPage() {
       </SectionShell>
 
       <SectionShell id="inspection" labelledBy="inspection-h" tone="warm">
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,6fr)_minmax(0,6fr)]">
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
           <div>
             <TwoToneHeading id="inspection-h" lead="Inspection" mark="infrastructure" inline className="text-[clamp(1.9rem,3.6vw,3rem)]" />
             <ul className="mt-8 divide-y divide-line border-y border-line">
               {inspection.rows.map((r, i) => (
-                <li key={r} className={`bar my-3 text-[15px] leading-relaxed ${i % 2 ? "bar-marigold" : ""}`}>
+                <li key={r} className={`bar py-3 text-[17px] leading-relaxed ${i % 2 ? "bar-marigold" : ""}`}>
                   {r}
                 </li>
               ))}
             </ul>
           </div>
-          <div className="grid gap-4">
-            {inspection.images.map((im) => (
-              <div key={im.src} className="relative aspect-[4/3] overflow-hidden">
-                <Image src={im.src} alt={im.alt} fill sizes="(min-width: 1024px) 45vw, 90vw" className="object-cover" />
-              </div>
-            ))}
+          <div className="relative aspect-[4/3] overflow-hidden lg:aspect-auto">
+            <Image src={inspection.images[0].src} alt={inspection.images[0].alt} fill sizes="(min-width: 1024px) 40vw, 90vw" className="object-cover object-[60%_50%]" />
           </div>
+        </div>
+        <div className="relative mt-4 aspect-[16/9] overflow-hidden sm:aspect-[21/9]">
+          <Image src={inspection.images[1].src} alt={inspection.images[1].alt} fill sizes="90vw" className="object-cover object-[50%_55%]" />
         </div>
       </SectionShell>
 
       <SectionShell id="proven" labelledBy="proven-h" tone="ink">
-        <TwoToneHeading id="proven-h" tone="ink" lead={proof.headline.lead} mark={proof.headline.mark} className="max-w-[18ch] text-[clamp(1.9rem,3.6vw,3rem)]" />
+        <TwoToneHeading id="proven-h" tone="ink" lead={proof.headline.lead} mark={proof.headline.mark} className="max-w-[24ch] text-[clamp(1.9rem,3.6vw,3rem)]" />
         <dl className="mt-10 grid gap-px bg-ink-line md:grid-cols-3">
           {proof.panel.map((p) => (
             <div key={p.title} className="bg-ink-panel p-6">
@@ -77,7 +77,7 @@ export default function QualityPage() {
       </SectionShell>
 
       <SectionShell id="people" labelledBy="people-h">
-        <TwoToneHeading id="people-h" lead={people.headline.lead} mark={people.headline.mark} className="max-w-[16ch] text-[clamp(1.9rem,3.6vw,3rem)]" />
+        <TwoToneHeading id="people-h" lead={people.headline.lead} mark={people.headline.mark} className="max-w-[22ch] text-[clamp(1.9rem,3.6vw,3rem)]" />
         <p className="mt-5 max-w-[60ch] text-ink-2">{people.body}</p>
         <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
           <ul className="space-y-3">

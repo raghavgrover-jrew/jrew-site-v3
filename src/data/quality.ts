@@ -4,7 +4,7 @@ export const qualityIntro = {
   headline: { lead: "Quality is engineered in,", mark: "not inspected afterwards" },
   body:
     "Stringent checks plus continual upskilling of technical staff. We monitor and improve across procurement, manufacturing, quality, logistics, packaging and sales using Six Sigma, TQM, Poka-Yoke and 5S, backed by curriculum-based training.",
-  certifier: "ISO certifications by TUV Rheinland, Germany",
+  certifier: "ISO certifications by TÜV Rheinland, Germany",
   source: "Spread 09",
 } as const;
 

@@ -1,6 +1,6 @@
 {
   "base": "http://localhost:3201",
-  "at": "2026-09-18T23:14:33.768Z",
+  "at": "2026-09-19T06:14:50.086Z",
   "results": [
     {
       "ok": true,
@@ -30,7 +30,7 @@
       "ok": true,
       "gate": "G12",
       "label": "meta description on /",
-      "detail": "264 chars"
+      "detail": "169 chars"
     },
     {
       "ok": true,
@@ -54,7 +54,7 @@
       "ok": true,
       "gate": "G12",
       "label": "og:image declared on home",
-      "detail": "https://jrew.co.in/opengraph-image?7da9648c6ccca044"
+      "detail": "https://jrew.co.in/opengraph-image?b8393e6634270529"
     },
     {
       "ok": true,
@@ -132,7 +132,7 @@
       "ok": true,
       "gate": "G12",
       "label": "meta description on /products",
-      "detail": "278 chars"
+      "detail": "151 chars"
     },
     {
       "ok": true,
@@ -234,7 +234,7 @@
       "ok": true,
       "gate": "G12",
       "label": "meta description on /products/attachments",
-      "detail": "239 chars"
+      "detail": "149 chars"
     },
     {
       "ok": true,
@@ -336,7 +336,7 @@
       "ok": true,
       "gate": "G12",
       "label": "meta description on /stakon",
-      "detail": "204 chars"
+      "detail": "128 chars"
     },
     {
       "ok": true,
@@ -444,7 +444,7 @@
       "ok": true,
       "gate": "G12",
       "label": "meta description on /capabilities",
-      "detail": "295 chars"
+      "detail": "146 chars"
     },
     {
       "ok": true,
@@ -540,7 +540,7 @@
       "ok": true,
       "gate": "G12",
       "label": "meta description on /quality",
-      "detail": "269 chars"
+      "detail": "135 chars"
     },
     {
       "ok": true,
@@ -636,7 +636,7 @@
       "ok": true,
       "gate": "G12",
       "label": "meta description on /facilities",
-      "detail": "284 chars"
+      "detail": "136 chars"
     },
     {
       "ok": true,
@@ -732,7 +732,7 @@
       "ok": true,
       "gate": "G12",
       "label": "meta description on /about",
-      "detail": "283 chars"
+      "detail": "119 chars"
     },
     {
       "ok": true,
@@ -924,7 +924,7 @@
       "ok": true,
       "gate": "G12",
       "label": "meta description on /careers",
-      "detail": "171 chars"
+      "detail": "140 chars"
     },
     {
       "ok": true,
@@ -1020,7 +1020,7 @@
       "ok": true,
       "gate": "G12",
       "label": "meta description on /privacy",
-      "detail": "66 chars"
+      "detail": "121 chars"
     },
     {
       "ok": true,
@@ -1062,7 +1062,7 @@
       "ok": true,
       "gate": "G14",
       "label": "eyebrow budget on /privacy",
-      "detail": "0 of ceil(2/3)=1"
+      "detail": "0 of ceil(12/3)=4"
     },
     {
       "ok": true,
@@ -1290,7 +1290,13 @@
       "ok": true,
       "gate": "G7",
       "label": "nav stays on ink while the pinned hero is on screen",
-      "detail": "{\"y\":899,\"onInk\":true,\"heroBottom\":566}"
+      "detail": "{\"y\":900,\"onInk\":false,\"heroBottom\":0}"
+    },
+    {
+      "ok": true,
+      "gate": "G6",
+      "label": "stat figures exact at every scroll position",
+      "detail": ""
     },
     {
       "ok": true,
@@ -1474,6 +1480,12 @@
     },
     {
       "ok": true,
+      "gate": "G7",
+      "label": "mobile menu contains focus and inerts the page",
+      "detail": "16/16 inside, main inert=true"
+    },
+    {
+      "ok": true,
       "gate": "G9",
       "label": "mobile menu closes on Esc",
       "detail": ""
@@ -1566,7 +1578,7 @@
       "ok": true,
       "gate": "G10",
       "label": "RFQ submits (console fallback or SMTP)",
-      "detail": "{\"success\":true,\"delivered\":\"console\"}"
+      "detail": "{\"success\":true,\"delivered\":\"console\",\"reference\":\"JREW-20260919-CCZG2\"}"
     },
     {
       "ok": true,

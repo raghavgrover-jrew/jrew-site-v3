@@ -18,6 +18,7 @@ export function Reveal({
   y = 24,
   stagger,
   as: Tag = "div",
+  ...rest
 }: {
   children: React.ReactNode;
   className?: string;
@@ -26,7 +27,7 @@ export function Reveal({
   /** animate direct children with this stagger instead of the wrapper */
   stagger?: number;
   as?: "div" | "ul" | "ol" | "section";
-}) {
+} & Omit<React.HTMLAttributes<HTMLElement>, "className" | "children">) {
   const ref = useRef<HTMLElement>(null);
 
   useGSAP(
@@ -51,7 +52,7 @@ export function Reveal({
 
   const Comp = Tag as React.ElementType;
   return (
-    <Comp ref={ref} className={cn(className)}>
+    <Comp ref={ref} className={cn(className)} {...rest}>
       {children}
     </Comp>
   );

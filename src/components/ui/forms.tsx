@@ -9,7 +9,7 @@ import { cloneElement, isValidElement, useId } from "react";
 import { cn } from "@/lib/utils";
 
 export const inputCls =
-  "w-full border border-line-strong bg-paper px-4 py-3 text-[16px] text-ink placeholder:text-ink-3 focus:border-ink focus:outline-none aria-[invalid=true]:border-ink aria-[invalid=true]:border-2";
+  "w-full border border-line-strong bg-paper px-4 py-3 text-[16px] text-ink placeholder:text-ink-3 focus:border-ink focus:outline-none focus-visible:outline-offset-0 aria-[invalid=true]:border-ink aria-[invalid=true]:border-2";
 
 type AriaProps = { "aria-describedby"?: string; "aria-labelledby"?: string };
 
@@ -92,14 +92,14 @@ export function RadioGrid({
   columns?: 2 | 3;
 } & AriaProps) {
   return (
-    <div role="radiogroup" aria-label={aria["aria-labelledby"] ? undefined : name} {...aria} className={cn("grid gap-2", columns === 2 ? "sm:grid-cols-2" : "sm:grid-cols-3")}>
+    <div role="radiogroup" aria-label={aria["aria-labelledby"] ? undefined : name} {...aria} className={cn("grid gap-2", columns === 2 ? "sm:grid-cols-2" : "sm:grid-cols-2 xl:grid-cols-3")}>
       {options.map((opt) => {
         const checked = value === opt;
         return (
           <label
             key={opt}
             className={cn(
-              "flex min-h-[48px] cursor-pointer items-center gap-3 border px-4 py-3 text-[15px] transition-colors",
+              "flex min-h-[48px] cursor-pointer items-center gap-3 border px-4 py-3 text-[15px] text-pretty transition-colors",
               // the radio itself is visually hidden; the visible label shows keyboard focus
               "has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-ink",
               checked ? "border-ink bg-card-warm text-ink" : "border-line-strong bg-paper text-ink-2 hover:border-ink-3 hover:text-ink",
@@ -123,6 +123,33 @@ export function Honeypot() {
       <input id="website-field" name="website" type="text" tabIndex={-1} autoComplete="off" defaultValue="" />
     </div>
   );
+}
+
+/** One-line disclosure beside every submit action (Codex audit P0-6). */
+export function PrivacyNote({ what = "this form" }: { what?: string }) {
+  return (
+    <p className="mt-4 text-[13px] leading-relaxed text-ink-3">
+      What you send through {what} goes by email to JREW Engineering Limited for a reply and is kept only as long as the enquiry is open. See the{" "}
+      <a href="/privacy" className="underline decoration-marigold decoration-2 underline-offset-2 hover:text-ink">privacy notice</a>.
+    </p>
+  );
+}
+
+/** A client-generated id so a retried submission is recognised server-side and never sent twice. */
+export function newSubmissionId(): string {
+  if (typeof crypto !== "undefined" && "randomUUID" in crypto) return crypto.randomUUID();
+  return `s-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+}
+
+/** fetch with a hard timeout so a stalled network never leaves the form in "Sending" forever. */
+export async function postWithTimeout(url: string, init: RequestInit, ms = 15_000): Promise<Response> {
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), ms);
+  try {
+    return await fetch(url, { ...init, signal: ctrl.signal });
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
 export function StatusBanner({ children }: { children: React.ReactNode }) {

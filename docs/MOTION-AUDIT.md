@@ -84,3 +84,18 @@ Kept on purpose: it is the brochure's signature mark, it runs once per heading, 
 - `pnpm exec tsc --noEmit`, `pnpm lint`: clean after each change.
 - Gate G8 (reduced motion) passes in verify rounds 1 and 2.
 - The framer-motion removal is visible in the build: no chunk in `.next/static/chunks` contains `framer` or `AnimatePresence` after 98cdd02.
+## 5. Revision after the Codex adversarial audit (2026-09-19, later the same day)
+
+The audit's P0-1, P0-5, P1-10 and P2-11 items reversed four decisions above. Inventory rows affected:
+
+| Row | Before | Now | Why |
+|---|---|---|---|
+| M1 Lenis smooth scroll | lerp 0.1, GSAP ticker owns RAF | Removed; native scrolling everywhere | Global JavaScript on every route with no tested benefit; scroll-linked effects use ScrollTrigger on the native scroll position |
+| M2, M3 hero entrance | copy y 22 with alpha 0 to 1; photo scale with alpha | copy y 14 to 0, transform only; photo static | The hero copy and photograph are the LCP candidates and are never opacity-hidden |
+| M4 hero pinned exit | pin 55 percent, copy fades to 0 | Removed | Left a blank ink panel on screen for about 1,000 px of scroll |
+| M5 marker stroke | every two-tone heading on paper, GSAP | page titles (h1) only, CSS transition toggled by IntersectionObserver; static elsewhere | Reserve the gesture for the opening moment; drop GSAP from the shared heading primitive |
+| M7 stat counters | scrubbed count-up from 20 percent | Static; the approved figure is the only value ever rendered | A visitor could read a false figure mid-scroll; harness now checks every stat at five scroll positions |
+| M10 navbar flip | ScrollTrigger on the hero bottom | IntersectionObserver with a 72 px top margin | No GSAP in the layout chrome |
+| M12, M13 menu and RFQ steps | 0.22 s and 0.28 s | 0.16 s and 0.14 s | Keyboard-initiated transitions near instant |
+
+GSAP now loads only where a scroll-bound effect exists: the home page (hero drift, Reveal on three sections, two Wipes), the products page (Reveal on the component grid) and the about timeline. Every remaining tween is transform or clip-path only and sits inside `prefers-reduced-motion: no-preference`.

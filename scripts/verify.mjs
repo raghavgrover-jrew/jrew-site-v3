@@ -25,12 +25,12 @@ const SSR = {
   "/products/attachments": ["HD Fork with Grab", "Power Grab", "Multi Shovel", "Manure Fork with Grab", "Grapple Scrap with Industrial Grab", "Cotton Grab", "Sugarcane Grab", "Drum Handler", "Pole Planter", "Man Basket", "Skid Steer Pallet Fork", "Fork Frame", "Precision Placer", "Side Tilt-Rotate Carriage"],
   "/stakon": ["STAKON FE Series", "STAKON SE Series", "STAKON FEPT 2000", "6.3 m", "2,000 kg"],
   "/capabilities": ["Cutting", "Forming", "Fabrication and welding", "Machining", "Forging", "Surface treatment", "Assembly", "Heat treatment", "Packaging and dispatch", "0.05 mm", "side-shifter carriage"],
-  "/quality": ["ISO 9001:2015", "ISO 14001:2015", "ISO 45001:2018", "EN ISO 3834-2", "CII GreenCo", "TUV Rheinland", "FARO"],
+  "/quality": ["ISO 9001:2015", "ISO 14001:2015", "ISO 45001:2018", "EN ISO 3834-2", "CII GreenCo", "TÜV Rheinland", "FARO"],
   "/facilities": ["MOH 1", "FBD 1", "FBD 2", "MOH 2", "600,000", "2027"],
   "/about": ["Ram Ratan Agarwal", "1973", "2027", "ICARE", "UPLIFT", "JREW Foundation", "Public limited since 1994"],
   "/contact": ["Start with", "enquiry@jrew.co.in"],
   "/careers": ["Open application"],
-  "/privacy": ["Forms."],
+  "/privacy": ["Who is responsible", "How long we keep it", "Your rights"],
 };
 
 const browser = await chromium.launch();
@@ -214,6 +214,17 @@ const browser = await chromium.launch();
   const navState = await page.evaluate(() => ({ y: Math.round(window.scrollY), onInk: document.querySelector("header")?.classList.contains("on-ink"), heroBottom: Math.round(document.getElementById("hero")?.getBoundingClientRect().bottom ?? 0) }));
   note(navState.y > 300 && (navState.heroBottom <= 72 || navState.onInk === true), "G7", "nav stays on ink while the pinned hero is on screen", JSON.stringify(navState));
 
+  // Codex P0-1: the stat band shows the approved figure at every scroll position
+  await page.goto(BASE + "/", { waitUntil: "networkidle" });
+  const statMismatch = [];
+  for (const y of [0, 300, 600, 900, 1400]) {
+    await page.evaluate((yy) => window.scrollTo(0, yy), y);
+    await page.waitForTimeout(250);
+    const bad = await page.evaluate(() => [...document.querySelectorAll("[data-stat-value]")].filter((el) => el.textContent.trim() !== el.getAttribute("data-stat-value")).map((el) => `${el.textContent.trim()}!=${el.getAttribute("data-stat-value")}`));
+    if (bad.length) statMismatch.push(`y${y}: ${bad.join(",")}`);
+  }
+  note(statMismatch.length === 0, "G6", "stat figures exact at every scroll position", statMismatch.join(" | "));
+
   const realConsole = consoleIssues.filter((c) => !/React DevTools|GL Driver|GPU stall|SwiftShader|\[HMR\]|Fast Refresh/i.test(c));
   note(realConsole.length === 0, "G4", "console clean across routes", realConsole.slice(0, 3).join(" || "));
   const realBad = bad.filter((b) => !b.includes("/_next/webpack-hmr"));
@@ -279,6 +290,18 @@ for (const [w, h, mobile] of [[390, 844, true], [768, 1024, false]]) {
     await page.getByRole("button", { name: /open menu/i }).click();
     await page.waitForTimeout(300);
     note(!!(await page.$("#mobile-menu")), "G9", "mobile menu opens");
+    // Codex P0-4: focus cannot leave the open menu (forward and reverse), background is inert
+    const trap = [];
+    for (let i = 0; i < 12; i++) {
+      await page.keyboard.press("Tab");
+      trap.push(await page.evaluate(() => !!document.activeElement?.closest("#mobile-menu, header")));
+    }
+    for (let i = 0; i < 4; i++) {
+      await page.keyboard.press("Shift+Tab");
+      trap.push(await page.evaluate(() => !!document.activeElement?.closest("#mobile-menu, header")));
+    }
+    const inertMain = await page.evaluate(() => document.getElementById("main")?.hasAttribute("inert") === true);
+    note(trap.every(Boolean) && inertMain, "G7", "mobile menu contains focus and inerts the page", `${trap.filter(Boolean).length}/${trap.length} inside, main inert=${inertMain}`);
     await page.keyboard.press("Escape");
     await page.waitForTimeout(200);
     note(!(await page.$("#mobile-menu")), "G9", "mobile menu closes on Esc");

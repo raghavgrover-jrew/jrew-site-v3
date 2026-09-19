@@ -1,8 +1,9 @@
 "use client";
 
 // The cover spread as a split hero: ink block with the two-tone headline, the real plant
-// photograph unscrimmed on the right. Entrance stagger, then apple-scroll's pinned exit on
-// large screens only. Everything is complete in server HTML.
+// photograph unscrimmed on the right. The copy and the photograph are the page's LCP
+// candidates, so they are never opacity-hidden: the only entrance is a short transform drift
+// on the copy, and the hero scrolls away naturally (no pin, no fade-out; Codex audit P0-5, P2-11).
 
 import { useRef } from "react";
 import Image from "next/image";
@@ -27,13 +28,8 @@ export function Hero() {
       if (!el) return;
       const mm = gsap.matchMedia();
       mm.add("(prefers-reduced-motion: no-preference)", () => {
-        gsap.from(".hero-in", { y: 22, autoAlpha: 0, duration: 0.7, stagger: 0.08, ease: "expo.out", delay: 0.1 });
-        gsap.from(".hero-img", { scale: 1.04, autoAlpha: 0, duration: 1.1, ease: "expo.out" });
-      });
-      mm.add("(prefers-reduced-motion: no-preference) and (min-width: 1024px)", () => {
-        const tl = gsap.timeline({ scrollTrigger: { trigger: el, start: "top top", end: "+=55%", scrub: true, pin: true, anticipatePin: 1 } });
-        tl.to(".hero-copy", { y: -60, autoAlpha: 0, ease: "none" }, 0);
-        tl.to(".hero-img", { y: -30, ease: "none" }, 0);
+        // transform only: the text is painted at full opacity from the first frame
+        gsap.from(".hero-in", { y: 14, duration: 0.6, stagger: 0.06, ease: "expo.out", clearProps: "transform" });
       });
     },
     { scope: ref },
@@ -44,7 +40,7 @@ export function Hero() {
       <div className="grid min-h-[100dvh] lg:grid-cols-[minmax(0,11fr)_minmax(0,9fr)]">
         <div className="hero-copy relative flex flex-col justify-end px-[clamp(1.25rem,4vw,3.5rem)] pb-14 pt-32 lg:justify-center lg:pb-24 lg:pt-28">
           <div className="max-w-[46rem]">
-            <TwoToneHeading as="h1" tone="ink" markFirst lead={cover.headline.lead} mark={cover.headline.mark} className="hero-in text-[clamp(2.5rem,6.2vw,5.5rem)]" />
+            <TwoToneHeading as="h1" tone="ink" markFirst lead={cover.headline.lead} mark={cover.headline.mark} className="hero-in text-[clamp(2.5rem,5.4vw,5.5rem)]" />
             <p className="hero-in mt-7 max-w-[40rem] text-lg leading-relaxed text-on-ink-2 sm:text-xl">{cover.lede}</p>
             <div className="hero-in mt-9 flex flex-wrap gap-3">
               <Button href={rfqHref} variant="onInk">
@@ -64,8 +60,8 @@ export function Hero() {
             fill
             priority
             fetchPriority="high"
-            sizes="(min-width: 1024px) 45vw, 100vw"
-            className="object-cover"
+            sizes="100vw"
+            className="object-cover object-[82%_50%]"
           />
         </div>
       </div>

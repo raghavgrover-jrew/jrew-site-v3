@@ -6,8 +6,10 @@ import { stakon } from "@/data/stakon";
 
 export const metadata: Metadata = {
   title: "STAKON material handling equipment",
-  description: "STAKON electric and semi-electric pallet stackers and electric pallet trucks, 500 kg to 2,000 kg, lifting to 6.3 m: FE Series, SE Series and FEPT 2000. Designed and manufactured at JREW's Mohali facility.",
+  description: "STAKON pallet stackers and pallet trucks by JREW: FE, SE and FEPT series, 500 kg to 2,000 kg, lifting to 6.3 m, built in Mohali.",
   alternates: { canonical: "/stakon" },
+  openGraph: { type: "website", url: "/stakon", title: "STAKON material handling equipment | JREW Engineering", description: "STAKON pallet stackers and pallet trucks by JREW: FE, SE and FEPT series, 500 kg to 2,000 kg, lifting to 6.3 m, built in Mohali." },
+  twitter: { card: "summary_large_image", title: "STAKON material handling equipment | JREW Engineering", description: "STAKON pallet stackers and pallet trucks by JREW: FE, SE and FEPT series, 500 kg to 2,000 kg, lifting to 6.3 m, built in Mohali." },
 };
 
 export default function StakonPage() {
@@ -18,7 +20,7 @@ export default function StakonPage() {
   return (
     <>
       <JsonLd data={jsonld} />
-      <PageHeader eyebrow={stakon.eyebrow} lead="STAKON" mark="by JREW" lede="Electric and semi-electric pallet stackers and electric pallet trucks, 500 kg to 2,000 kg, lifting to 6.3 m. Three series are listed with headline specifications; data sheets on request." />
+      <PageHeader eyebrow={stakon.eyebrow} lead="STAKON" mark="by JREW" lede="Three series with headline specifications; data sheets on request." />
       <StakonBand full />
     </>
   );

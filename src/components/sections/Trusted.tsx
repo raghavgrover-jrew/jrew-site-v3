@@ -10,13 +10,13 @@ export function Trusted() {
   const cat = awards[0];
   const others = awards.slice(1);
   return (
-    <SectionShell id="customers" labelledBy="customers-h">
+    <SectionShell id="customers" labelledBy="customers-h" className="hairline">
       <TwoToneHeading id="customers-h" lead={customersIntro.headline.lead} mark={customersIntro.headline.mark} inline className="text-[clamp(1.9rem,3.6vw,3rem)]" />
       <p className="mt-5 max-w-[60ch] text-ink-2">{customersIntro.body}</p>
-      <Reveal as="ul" stagger={0.02} className="mt-10 grid grid-cols-3 gap-px bg-line sm:grid-cols-4 lg:grid-cols-6" aria-label="Customers">
+      <Reveal as="ul" stagger={0.02} className="mt-10 grid grid-cols-2 gap-px bg-line sm:grid-cols-4 lg:grid-cols-6" aria-label="Customers">
         {customers.map((c) => (
-          <li key={c.id} className="flex h-24 items-center justify-center bg-paper px-5 sm:h-28">
-            <Image src={c.logo} alt={c.name} width={140} height={56} unoptimized className="h-auto max-h-11 w-auto max-w-[8.5rem] object-contain sm:max-h-12" />
+          <li key={c.id} className="flex h-24 items-center justify-center bg-paper px-4 sm:h-28 sm:px-5">
+            <Image src={c.logo} alt={c.name} width={140} height={56} unoptimized className="h-auto max-h-12 w-auto max-w-full object-contain sm:max-h-14 sm:max-w-[8.5rem]" />
           </li>
         ))}
       </Reveal>

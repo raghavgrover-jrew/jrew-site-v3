@@ -50,13 +50,13 @@ Tokens in `src/app/globals.css` (OKLCH), Poppins 700/800 for display and Source 
 
 ### Motion
 
-Lenis smooth scroll with GSAP owning the RAF; hero entrance and pinned exit (desktop only); marker stroke on headings; three `Reveal` sections; scrubbed stat counters; two photograph wipes; a pinned horizontal timeline on About (desktop only); CSS keyframes for the mobile menu, RFQ steps and dialogs. Everything inside `prefers-reduced-motion: no-preference`. Inventory and findings in `docs/MOTION-AUDIT.md`.
+Native scrolling (Lenis was removed after the Codex audit). A transform-only drift on the hero copy; the marker stroke draws in on page titles only; three `Reveal` sections and two photograph wipes on the home page; a pinned horizontal timeline on About (desktop, motion allowed); CSS keyframes for the mobile menu, RFQ steps and dialogs. Stat figures never animate. GSAP loads only on the home, products and about routes. Everything inside `prefers-reduced-motion: no-preference`. Inventory, findings and the revision table are in `docs/MOTION-AUDIT.md`.
 
 ### Forms and API
 
 - RFQ: three steps plus review, validated by `src/lib/rfq.ts`, posted to `/api/contact`; per-field errors with `aria-describedby`, fieldset and legend for radio groups, focus moved to each step, entries preserved after a failed submit, distinct submitting, success and failure states.
 - Enquiry and careers forms with the same primitives; careers requires a resume.
-- `/api/contact` and `/api/careers`: every field bounded and header-safe (`src/lib/validate.ts`), email checked, honeypot field, per-IP rate limit (10 per 10 minutes), resume allowlist by extension, declared type and file signature (PDF, DOC, DOCX, 4 MB so the body stays under Vercel's function limit). SMTP via nodemailer when `SMTP_HOST`, `SMTP_USER`, `SMTP_PASS` are set. Without SMTP: preview and local log the submission and return success (so the path can be exercised); production returns 500 and logs an error so a misconfiguration is never silent. 14 route tests in `src/app/api/__tests__/routes.test.ts`.
+- `/api/contact` and `/api/careers`: same-origin, content-type and size guards; every field bounded and header-safe (`src/lib/validate.ts`); email checked; honeypot; per-IP rate limit (10 per 10 minutes, soft layer); resume allowlist by extension, declared type, file signature and DOCX package structure (4 MB so the body stays under Vercel's function limit). SMTP via nodemailer with timeouts and one retry when `SMTP_HOST`, `SMTP_USER`, `SMTP_PASS` are set; every submission gets a reference (`JREW-YYYYMMDD-XXXXX`) shown on screen, written into the mail subject and sent back to the sender in a fixed-text acknowledgement; a retried `submissionId` returns the same reference without a second mail. Without SMTP the routes fail visibly (HTTP 500, on-page fallback) unless `ALLOW_CONSOLE_DELIVERY=1` on a non-Vercel machine, where a PII-free summary is logged. Responses are `no-store`. 22 route tests in `src/app/api/__tests__/routes.test.ts`.
 
 ### Tooling
 
@@ -124,6 +124,19 @@ Carried from PLAN.md, updated for what the build resolved.
 18. **"USD 50M+ annual turnover".** Add the fiscal year if you want it dated.
 19. **Attachments headline.** Spread 05 prints both "India's widest attachment range" (headline) and "One of India's widest engineered-attachment ranges" (intro). Both are on the page as printed; pick one if you want them aligned.
 20. **Hero headline test.** The adversarial read proposes replacing the cover slogan h1 with a noun sentence ("Forklift masts, axle assemblies, attachments and machined components for construction and material-handling OEMs"). Kept the brochure line; the swap is a one-string change in `src/data/whyJrew.ts` if you prefer the concrete version.
+21. **Claims register sign-off** (`docs/CLAIMS-REGISTER.md`, 24 rows). Business leadership signs each row with evidence attached before production. Rows 1 to 6 (turnover, headcount, 40,000 units, 0 PPM, exports, sole supplier) are the ones a buyer will test first.
+22. **Privacy notice, legal review.** Retention periods (24 months enquiries, 12 months applications, 30 days logs), the DPDP consent basis, the GDPR bases for EEA visitors and the grievance route are drafted, not approved.
+23. **HSTS preload and the jrew.co.in zone.** HSTS ships without `preload`; add it only once every subdomain is HTTPS-only.
+24. **Edge rate limit and bot protection.** The in-process limiter is a soft layer per serverless instance. Set a Vercel WAF rate-limit rule on `/api/*` (for example 10 requests per 10 minutes per IP) at deploy; add Turnstile only if spam appears.
+25. **Resume handling.** Attachments are forwarded to HR unscanned (the allowlist and signature checks reject executables and disguised archives, not malware inside a real PDF). Options: a scanning gateway on the careers mailbox, or a Vercel Blob store with expiring links instead of attachments. Infrastructure decision.
+26. **Delivery monitoring.** No synthetic enquiry or inbox check exists. Once SMTP is set, a weekly test submission to `enquiry@` with the reference checked in the inbox is the minimum.
+27. **Acknowledgement email.** Senders now receive a fixed-text acknowledgement with their reference from the SMTP_USER address. Confirm the wording and the sending identity.
+28. **AI crawler policy.** `robots.ts` allows GPTBot, ClaudeBot, PerplexityBot, Google-Extended and others. Keep or restrict; this is a policy choice.
+29. **STAKON page repetition.** The page header and the reused band say the same thing twice before the cards. Option A: header carries "From components to complete machines" and the band drops its h2 and body; option B: cards above the band. Also "STAKON by JREW" is not brochure wording.
+30. **STAKON FEPT card.** The brochure shows the two trucks together; the site shows one (the second render is on disk, unused). Pair or single?
+31. **Godrej award photograph.** The unlabelled stage photo from Spread 11 (four men with a plaque before a JREW screen) is now attached to the Godrej Quality Leadership row on the auditor's identification. Confirm.
+32. **TÜV Rheinland** now carries the umlaut as the brochure prints it.
+33. **Analytics.** Still none. If a tool is chosen, the consent question follows and the three first events are listed in QA-REPORT.
 
 ## 8. Deploy checklist (Gate 2)
 
@@ -151,3 +164,41 @@ jrew-site-v3/
 ```
 
 Related repos: `apple-scroll-starter` (v1, owns the live Vercel project and jrew.co.in; untouched) and `jrew-forge` (v2, never deployed; untouched). Both were read-only reference.
+## 10. Codex adversarial audit: implementation record (2026-09-19)
+
+Source: `~/Documents/Codex/2026-09-19/check-the-v3-build-on-jrew/outputs/JREW-V3-ADVERSARIAL-AUDIT.md`. Treated as the prioritised plan; each finding was checked against the code before acting. "Needs approval" items are collected in section 11.
+
+### P0
+
+| # | Finding | Verified | Done | Evidence |
+|---|---|---|---|---|
+| 1 | Metrics scrubbed from 20 percent, false figures visible mid-scroll | Yes, `KineticNumber` tweened a proxy from `value * 0.2` on scroll | `KineticNumber` is a server component that renders the approved figure only; `data-stat-value` carries the expected string; harness G6 compares every stat at five scroll positions | `scripts/verify.mjs` "stat figures exact at every scroll position" |
+| 2 | Claims register | n/a | `docs/CLAIMS-REGISTER.md`: 24 rows with wording, location, source, scope to record, evidence to attach, status. All rows Pending business approval | Needs approval |
+| 3 | Lead delivery | Yes: in-memory limiter, any `x-forwarded-for`, no content-type or origin checks, console success in previews, full PII in logs, no timeouts, no idempotency, ZIP signature accepted as DOCX | `src/lib/mail.ts` and both routes: same-origin check, content-type and size caps (64 KB JSON, 4 MB + 64 KB multipart), client IP from `x-real-ip` on Vercel, SMTP timeouts (10/10/20 s) with one retry, `submissionId` idempotency returning the same reference, `JREW-YYYYMMDD-XXXXX` reference in both mails and on screen, console delivery only with `ALLOW_CONSOLE_DELIVERY=1` off Vercel (otherwise HTTP 500 and the on-page fallback), PII-free logs (reference, sender domain, subject, sizes), DOCX package check, `Cache-Control: no-store`, client-side 15 s (30 s careers) timeout and double-submit guard. 14 route tests cover these, including a log-content assertion | `src/app/api/__tests__/routes.test.ts` |
+| 3, not done in code | Shared edge rate limiter, Turnstile, synthetic inbox check, CV scanning or link store, delivery monitoring | | Infrastructure decisions; see section 11 | |
+| 4 | Mobile menu focus escapes | Yes | Tab and Shift+Tab cycle inside the toggle and the menu links, `aria-modal` restored, `#main` and `footer` set `inert` while open, focus returns to the toggle, closes on route change; harness presses Tab 12 times and Shift+Tab 4 times | verify.mjs "mobile menu contains focus and inerts the page" |
+| 5 | Pinned hero blank state | Yes | Pin and fade removed; copy drifts 14 px on transform only; photograph static; navbar flip via IntersectionObserver | `Hero.tsx`, `Navbar.tsx` |
+| 6 | Privacy and headers | Yes: notice covered forms and cookies only; no CSP, HSTS, COOP | Privacy notice rewritten in ten sections (controller, purposes, legal basis, retention, processors, transfers, rights, complaints, cookies, changes) as a draft for legal review; disclosure line beside all three submit buttons; CSP, HSTS (no preload), COOP, X-Frame-Options, nosniff, Permissions-Policy, asset caching, `no-store` on the API | `next.config.ts`, `src/app/privacy/page.tsx`, `forms.tsx` `PrivacyNote` |
+
+### P1
+
+| # | Finding | Done |
+|---|---|---|
+| 7 | Homepage headline abstract | Subhead names the products, units and history; title tag names the products. The h1 swap itself is a brand decision (section 11) |
+| 8 | Product context into the RFQ | `RfqFlow` accepts `source`, sends `source` and `submissionId`; the reference number is shown on success and quoted in the acknowledgement. Preselecting the family from a product CTA is wired for `?family=` on the backlog (section 12) |
+| 9 | Shorter homepage | Logo wall moved up (earlier), hero fade removed; the sector rows are 30 percent shorter after the line-art cap; further trimming is an IA decision (section 11) |
+| 10 | Motion | Lenis removed; marker reveal only on page titles; RFQ step 0.14 s, menu 0.16 s; GSAP loads only on routes with scroll-bound effects (home, products, about); no LCP element is ever opacity-hidden |
+
+### P2
+
+| # | Finding | Done |
+|---|---|---|
+| 11 | LCP delay and global JS | Hero renders visibly on first paint; Lenis and the layout-level GSAP gone; per-route GSAP only. Numbers in QA-REPORT round 5 |
+| 12 | Social metadata | Every route has its own Open Graph and Twitter title, description and URL, and its own 1200x630 image in Poppins 800 with the page's two-tone headline (`src/lib/og.tsx`) |
+| 13 | Search architecture | Descriptions cut to 119 to 154 characters; sitemap date is the build date; AI-crawler policy stays "allow" pending the decision in section 11; landing pages for commercial searches are backlog |
+| 14 | Measurement plan | Not installed by design (no consent decision). The events to instrument first are listed in QA-REPORT round 3 |
+
+### P3 and the eleven page audits
+
+Applied: marker stroke hugs the text; `@layer` fix so section padding overrides work on nine routes; nav band opaque over the hero; logo wall fits at 390 with two-column phones; association marks as paper-on-ink with the divider paths stripped; Escorts Kubota, Preet and TÜV re-rendered; favicon; footer duplicate removed; hero crop and full-width source; stat band rules; family grid without the orphan; component cut-outs on paper; forged hook, forks, bearing and the axle re-rendered from the print pages; STAKON renders un-swapped, trimmed, bottom-aligned, units lower case, headline two lines; capabilities partnership and case-study layouts re-flowed to the brochure's order with no dead columns; quality inspection layout re-flowed, TÜV umlaut; facilities cards 8/4 with the photo right, map limited to India with true-position labelled pins; about timeline centred and vertical under reduced motion, Godrej award photo attached, checkerboard order on phones, Caterpillar tiles readable at 390; contact RFQ card top-aligned, Direct card beside the enquiry form, review rows split, step indicator 2x2 on phones; careers photo at 4:3 with the office interior below, first invalid field focused; 404 title and links; attachment units (m³, ±, °), dialog two-column with a close button, count line, pill grammar. Line-art SVG weight and cut-out normalisation remain on the backlog.
+

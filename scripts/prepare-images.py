@@ -72,7 +72,7 @@ MAP = {
   "awards/cii-godrej.jpg": ("p11_x143_1600x1066.jpeg", 1400),
   "awards/jcb.jpg": ("p11_x144_1398x1048.jpeg", 1400),
   "awards/et-now.jpg": ("p11_x134_1270x1025.jpeg", 1400),
-  "awards/stage-unlabelled.jpg": ("p10_x169_1326x939.jpeg", 1400),
+  "awards/godrej-quality-leadership.jpg": ("p10_x169_1326x939.jpeg", 1400),
 }
 total = 0
 for dest, (src, maxpx) in MAP.items():

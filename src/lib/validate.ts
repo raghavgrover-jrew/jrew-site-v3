@@ -19,6 +19,9 @@ export type LimitedField = keyof typeof LIMITS;
 
 /** Resume upload: 4 MB keeps the multipart body under Vercel's 4.5 MB function limit. */
 export const MAX_RESUME = 4 * 1024 * 1024;
+/** Whole-request caps checked against Content-Length before parsing. */
+export const MAX_JSON_BYTES = 64 * 1024;
+export const MAX_MULTIPART_BYTES = MAX_RESUME + 64 * 1024;
 export const RESUME_HINT = "PDF, DOC or DOCX, under 4 MB.";
 
 const RESUME_TYPES: Record<string, string[]> = {
@@ -65,4 +68,14 @@ export function resumeProblem(file: { name: string; size: number; type: string }
     if (!ok) return "The file does not look like a PDF, DOC or DOCX.";
   }
   return null;
+}
+
+/**
+ * A ZIP signature alone does not make a DOCX. A real Word package carries a `[Content_Types].xml`
+ * entry and a `word/` folder; both names appear as ASCII in the archive's local headers and central
+ * directory, so a byte search over the file is enough to reject a renamed archive.
+ */
+export function docxLooksReal(bytes: Uint8Array): boolean {
+  const text = new TextDecoder("latin1").decode(bytes);
+  return text.includes("[Content_Types].xml") && text.includes("word/");
 }

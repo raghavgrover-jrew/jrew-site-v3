@@ -10,7 +10,7 @@ export function Footer() {
   return (
     <footer className="on-ink bg-ink-panel text-on-ink">
       <div className="shell py-14 sm:py-20">
-        <div className="grid gap-8 lg:grid-cols-[1.3fr_1fr]">
+        <div className="grid gap-8 lg:grid-cols-[1.3fr_1fr] lg:items-start">
           <div className="bg-marigold p-7 text-ink sm:p-9">
             <p className="display-md text-2xl sm:text-3xl">{closingCta.headline}</p>
             <p className="mt-3 max-w-[46ch] text-[15px] leading-relaxed text-ink-2">{closingCta.body}</p>
@@ -37,11 +37,6 @@ export function Footer() {
                 <li>
                   <Link href="/stakon" className="tap text-on-ink-2 hover:text-on-ink">
                     STAKON
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/careers" className="tap text-on-ink-2 hover:text-on-ink">
-                    Careers
                   </Link>
                 </li>
               </ul>
@@ -74,7 +69,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="hairline mt-12 grid gap-8 pt-10 md:grid-cols-5">
+        <div className="hairline mt-12 grid gap-8 pt-10 md:grid-cols-3 lg:grid-cols-5">
           {facilities.map((f) => (
             <div key={f.id}>
               <p className="text-[15px] font-semibold">
@@ -96,8 +91,8 @@ export function Footer() {
             <Image src="/brand/jrew-logo-on-ink.svg" alt="JREW Engineering" width={124} height={64} className="h-10 w-auto" />
           </li>
           {associations.map((a) => (
-            <li key={a.id} className="bg-paper px-3 py-2">
-              <Image src={a.logo} alt={a.name} width={120} height={48} className="h-8 w-auto" />
+            <li key={a.id} className="flex h-10 items-center border-l border-ink-line pl-6 first:border-l-0 first:pl-0">
+              <Image src={a.logo} alt={a.name} width={120} height={48} className="h-9 w-auto assoc-mark" />
             </li>
           ))}
         </ul>

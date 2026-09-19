@@ -8,13 +8,8 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
 import { navLinks, rfqHref } from "@/lib/site";
 import { cn } from "@/lib/utils";
-
-gsap.registerPlugin(ScrollTrigger);
 
 export function Navbar() {
   const pathname = usePathname();
@@ -31,34 +26,44 @@ export function Navbar() {
     setPastHero(!isHome);
   }
 
-  useGSAP(
-    () => {
-      if (!isHome) return;
-      const hero = document.getElementById("hero");
-      if (!hero) return;
-      const st = ScrollTrigger.create({
-        trigger: hero,
-        start: "bottom 72px",
-        onEnter: () => setPastHero(true),
-        onLeaveBack: () => setPastHero(false),
-        // the hero pins itself (Hero.tsx); refresh after that pin so the spacer is in the measurement
-        refreshPriority: -1,
-      });
-      return () => st.kill();
-    },
-    { dependencies: [isHome, pathname] },
-  );
+  // On ink while any part of the hero is below the 72px header; paper once it has scrolled past.
+  useEffect(() => {
+    if (!isHome) return;
+    const hero = document.getElementById("hero");
+    if (!hero) return;
+    const io = new IntersectionObserver(([entry]) => setPastHero(!entry.isIntersecting), { rootMargin: "-72px 0px 0px 0px", threshold: 0 });
+    io.observe(hero);
+    return () => io.disconnect();
+  }, [isHome, pathname]);
 
   useEffect(() => {
     if (!open) return;
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    const focusable = () => [...document.querySelectorAll<HTMLElement>("#mobile-menu a[href], #mobile-menu button:not([disabled])")].filter((el) => el.offsetParent !== null);
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setOpen(false);
+        return;
+      }
+      if (e.key !== "Tab") return;
+      // Focus stays inside the overlay: the toggle button, then the menu links, wrapping both ways.
+      const items = [toggleRef.current, ...focusable()].filter((el): el is HTMLElement => !!el);
+      if (items.length === 0) return;
+      const idx = items.indexOf(document.activeElement as HTMLElement);
+      const next = e.shiftKey ? (idx <= 0 ? items.length - 1 : idx - 1) : idx === -1 || idx === items.length - 1 ? 0 : idx + 1;
+      e.preventDefault();
+      items[next].focus();
+    };
     window.addEventListener("keydown", onKey);
+    // The page behind the overlay is inert while it is open; the header (with the toggle) stays live.
+    const background = [document.getElementById("main"), document.querySelector("footer")].filter((el): el is HTMLElement => !!el);
+    for (const el of background) el.setAttribute("inert", "");
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     const toggle = toggleRef.current;
     document.querySelector<HTMLElement>("#mobile-menu a")?.focus();
     return () => {
       window.removeEventListener("keydown", onKey);
+      for (const el of background) el.removeAttribute("inert");
       document.body.style.overflow = prev;
       toggle?.focus();
     };
@@ -71,7 +76,7 @@ export function Navbar() {
       <header
         className={cn(
           "fixed inset-x-0 top-0 z-[var(--z-nav)] transition-[background-color,border-color] duration-300",
-          onInk ? "on-ink border-b border-transparent bg-transparent text-on-ink" : "border-b border-line bg-paper/95 text-ink backdrop-blur-md",
+          onInk ? "on-ink border-b border-ink-line bg-ink-panel text-on-ink" : "border-b border-line bg-paper/95 text-ink backdrop-blur-md",
         )}
       >
         <nav aria-label="Primary" className="shell flex h-[72px] items-center justify-between gap-6">
@@ -109,6 +114,7 @@ export function Navbar() {
               href={rfqHref}
               className={cn(
                 "inline-flex min-h-[44px] items-center whitespace-nowrap px-3 text-[14px] font-semibold transition-colors sm:px-5 sm:text-[15px]",
+                open && "invisible",
                 onInk ? "bg-marigold text-ink hover:bg-marigold-deep" : "bg-ink text-on-ink hover:bg-ink-panel-2",
               )}
             >
@@ -134,6 +140,7 @@ export function Navbar() {
         <div
           id="mobile-menu"
           role="dialog"
+          aria-modal="true"
           aria-label="Menu"
           className="anim-drop fixed inset-0 top-[72px] z-[calc(var(--z-nav)-1)] flex flex-col bg-paper text-ink lg:hidden"
         >

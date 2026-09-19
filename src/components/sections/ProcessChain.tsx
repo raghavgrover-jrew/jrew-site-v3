@@ -8,7 +8,7 @@ export function ProcessChain() {
   return (
     <SectionShell id="process" labelledBy="process-h" tone="ink">
       <div className="flex flex-wrap items-end justify-between gap-6">
-        <TwoToneHeading id="process-h" tone="ink" lead={processIntro.headline.lead} mark={processIntro.headline.mark} className="max-w-[16ch] text-[clamp(1.9rem,3.6vw,3rem)]" />
+        <TwoToneHeading id="process-h" tone="ink" lead={processIntro.headline.lead} mark={processIntro.headline.mark} className="max-w-[28ch] text-[clamp(1.9rem,3.6vw,3rem)]" />
         <Button href="/capabilities" variant="onInkSecondary">
           Full capability table
         </Button>

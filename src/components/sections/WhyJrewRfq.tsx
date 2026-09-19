@@ -11,7 +11,7 @@ export function WhyJrewRfq() {
   return (
     <SectionShell id="why" labelledBy="why-h" tone="warm">
       <Eyebrow>{whyIntro.eyebrow}</Eyebrow>
-      <TwoToneHeading id="why-h" lead={whyIntro.headline.lead} mark={whyIntro.headline.mark} className="max-w-[20ch] text-[clamp(1.9rem,3.6vw,3rem)]" />
+      <TwoToneHeading id="why-h" lead={whyIntro.headline.lead} mark={whyIntro.headline.mark} className="max-w-[32ch] text-[clamp(1.9rem,3.6vw,3rem)]" />
       <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,6fr)_minmax(0,6fr)] lg:gap-14">
         <ol className="space-y-3">
           {whyJrew.map((r, i) => (

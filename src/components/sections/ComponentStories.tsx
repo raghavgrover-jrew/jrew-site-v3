@@ -14,7 +14,7 @@ export function ComponentStories({ headingLevel = "h2" }: { headingLevel?: "h2" 
       <Reveal as="ul" stagger={0.05} className="mt-10 grid gap-x-8 gap-y-10 md:grid-cols-2">
         {components.map((c) => (
           <li key={c.id} className="grid grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-5">
-            <div className="relative aspect-square bg-card-warm">
+            <div className="relative aspect-[4/3] bg-paper">
               <Image src={c.image} alt={c.imageAlt} fill sizes="(min-width: 768px) 20vw, 40vw" className="object-contain p-4" />
             </div>
             <div>

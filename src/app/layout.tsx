@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import { Poppins, Source_Sans_3 } from "next/font/google";
-import { SmoothScrollProvider } from "@/components/providers/SmoothScrollProvider";
 import { Navbar } from "@/components/chrome/Navbar";
 import { Footer } from "@/components/chrome/Footer";
 import { organizationSchema, webSiteSchema } from "@/lib/jsonld";
@@ -14,8 +13,7 @@ export const viewport: Viewport = { themeColor: "#1a1a1a", width: "device-width"
 
 export const metadata: Metadata = {
   title: { default: "JREW Engineering | Masts, axles, attachments and machined components for OEMs", template: "%s | JREW Engineering" },
-  description:
-    "JREW Engineering builds fabricated and precision-machined components, sub-assemblies and engineered attachments for OEMs in construction, material handling, agriculture and railways. Four units in Punjab and Haryana, exporting since 2010, in production since 1973.",
+  description: "Precision-machined components, sub-assemblies and attachments for construction, material handling, agriculture and rail OEMs. Four plants in India, exporting since 2010.",
   metadataBase: new URL(SITE_URL),
   alternates: { canonical: "/" },
   robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-snippet": -1, "max-image-preview": "large", "max-video-preview": -1 } },
@@ -42,11 +40,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <a href="#main" className="skip-link">
           Skip to content
         </a>
-        <SmoothScrollProvider>
-          <Navbar />
-          <main id="main">{children}</main>
-          <Footer />
-        </SmoothScrollProvider>
+        <Navbar />
+        <main id="main">{children}</main>
+        <Footer />
       </body>
     </html>
   );

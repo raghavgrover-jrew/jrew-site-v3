@@ -7,9 +7,10 @@ import { attachments, attachmentsIntro } from "@/data/attachments";
 
 export const metadata: Metadata = {
   title: "Attachments and work tools",
-  description:
-    "India's widest engineered-attachment range: over 100 varieties for backhoe loaders, skid steers, telehandlers, forklifts and cranes, built to OEM drawings with Hardox wear surfaces. Fourteen listed with specifications, filtered by machine.",
+  description: "Engineered attachments with specifications: grabs, forks, buckets and carriages for backhoe loaders, skid steers, telehandlers, forklifts and cranes.",
   alternates: { canonical: "/products/attachments" },
+  openGraph: { type: "website", url: "/products/attachments", title: "Attachments and work tools | JREW Engineering", description: "Engineered attachments with specifications: grabs, forks, buckets and carriages for backhoe loaders, skid steers, telehandlers, forklifts and cranes." },
+  twitter: { card: "summary_large_image", title: "Attachments and work tools | JREW Engineering", description: "Engineered attachments with specifications: grabs, forks, buckets and carriages for backhoe loaders, skid steers, telehandlers, forklifts and cranes." },
 };
 
 export default function AttachmentsPage() {

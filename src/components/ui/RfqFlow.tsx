@@ -8,19 +8,21 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { contact } from "@/lib/site";
 import { validateRfqStep, buildContactPayload, volumeOptionalFor, rfqFamilies, rfqQuantityBands, rfqDrawingStatus, rfqTimelines, type RfqDraft, type RfqErrors } from "@/lib/rfq";
-import { Field, RadioGrid, StatusBanner, inputCls } from "@/components/ui/forms";
+import { Field, RadioGrid, StatusBanner, PrivacyNote, inputCls, newSubmissionId, postWithTimeout } from "@/components/ui/forms";
 import { Button } from "@/components/ui/Button";
 
 const STEPS = ["Enquiry", "Requirements", "Contact", "Review"] as const;
 const EMPTY: RfqDraft = { family: "", quantityBand: "", grade: "", drawingStatus: "", timeline: "", name: "", company: "", email: "", phone: "", notes: "" };
 
-export function RfqFlow({ idPrefix = "rfq" }: { idPrefix?: string }) {
+export function RfqFlow({ idPrefix = "rfq", source }: { idPrefix?: string; source?: string }) {
   const [step, setStep] = useState(0);
   const [moved, setMoved] = useState(false);
   const [draft, setDraft] = useState<RfqDraft>(EMPTY);
   const volumeOptional = volumeOptionalFor(draft.family);
   const [errors, setErrors] = useState<RfqErrors>({});
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [reference, setReference] = useState<string>("");
+  const [submissionId] = useState(newSubmissionId);
   const panelRef = useRef<HTMLDivElement>(null);
   const id = (k: string) => `${idPrefix}-${k}`;
 
@@ -42,10 +44,14 @@ export function RfqFlow({ idPrefix = "rfq" }: { idPrefix?: string }) {
     goto(step + 1);
   };
   const submit = async () => {
+    if (status === "submitting") return;
     setStatus("submitting");
     try {
-      const res = await fetch("/api/contact", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(buildContactPayload(draft)) });
+      const payload = { ...buildContactPayload(draft), submissionId, source: source ?? `rfq:${idPrefix}` };
+      const res = await postWithTimeout("/api/contact", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = (await res.json().catch(() => ({}))) as { reference?: string };
+      setReference(data.reference ?? "");
       setStatus("success");
     } catch {
       setStatus("error");
@@ -57,6 +63,7 @@ export function RfqFlow({ idPrefix = "rfq" }: { idPrefix?: string }) {
       <div className="border border-ink bg-paper p-7 sm:p-9" role="status">
         <p className="kicker">RFQ received</p>
         <p className="display-md mt-2 text-2xl">We have your RFQ.</p>
+        {reference ? <p className="tnum mt-2 text-[15px] text-ink-2">Reference <strong className="text-ink">{reference}</strong>. Quote it in any follow-up.</p> : null}
         <dl className="hairline mt-5 space-y-2 pt-4 text-[15px]">
           {[["Enquiry", draft.family], ["Quantity band", draft.quantityBand], ["Timeline", draft.timeline], ["Reply to", draft.email]].map(([k, v]) => (
             <div key={k} className="flex justify-between gap-6">
@@ -76,7 +83,7 @@ export function RfqFlow({ idPrefix = "rfq" }: { idPrefix?: string }) {
 
   return (
     <div className="border border-line-strong bg-paper p-6 sm:p-8">
-      <ol className="flex flex-wrap gap-x-5 gap-y-2" aria-label="RFQ progress">
+      <ol className="grid grid-cols-2 gap-x-5 gap-y-2 sm:flex sm:flex-wrap" aria-label="RFQ progress">
         {STEPS.map((s, i) => (
           <li key={s} className="flex items-center gap-2 text-[13px] font-semibold tracking-[0.04em] uppercase">
             <span aria-hidden className={cn("size-2.5", i < step ? "bg-marigold" : i === step ? "bg-ink" : "border border-line-strong")} />
@@ -154,20 +161,22 @@ export function RfqFlow({ idPrefix = "rfq" }: { idPrefix?: string }) {
                       ["Material or grade", draft.grade || "Not specified", 1],
                       ["Drawings", draft.drawingStatus || "Not specified", 1],
                       ["Contact", `${draft.name}, ${draft.company}`, 2],
-                      ["Reply to", draft.email + (draft.phone ? `, ${draft.phone}` : ""), 2],
+                      ["Email", draft.email, 2],
+                      ["Phone", draft.phone || "Not given", 2],
                     ] as const
                   ).map(([k, v, s]) => (
                     <div key={k} className="flex items-baseline justify-between gap-4 py-2.5 text-[15px]">
                       <dt className="shrink-0 text-ink-3">{k}</dt>
                       <dd className="flex items-baseline gap-3 text-right text-ink">
                         <span>{v}</span>
-                        <button type="button" onClick={() => goto(s)} className="text-[13px] font-semibold underline underline-offset-2 hover:decoration-marigold">
+                        <button type="button" onClick={() => goto(s)} className="tap text-[13px] font-semibold underline underline-offset-2 hover:decoration-marigold">
                           Edit
                         </button>
                       </dd>
                     </div>
                   ))}
                 </dl>
+                <PrivacyNote what="the RFQ" />
                 {status === "error" ? <div className="mt-5"><StatusBanner>The RFQ did not send. Your entries are intact. Retry, or email {contact.email} directly.</StatusBanner></div> : null}
               </div>
             ) : null}

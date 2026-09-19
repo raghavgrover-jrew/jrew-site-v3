@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { contact } from "@/lib/site";
 import { cn } from "@/lib/utils";
-import { Field, Honeypot, StatusBanner, inputCls } from "@/components/ui/forms";
+import { Field, Honeypot, StatusBanner, PrivacyNote, inputCls, newSubmissionId, postWithTimeout } from "@/components/ui/forms";
 import { EMAIL_RE } from "@/lib/validate";
 import { Button } from "@/components/ui/Button";
 
@@ -11,6 +11,8 @@ import { Button } from "@/components/ui/Button";
 export function EnquiryForm() {
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [reference, setReference] = useState("");
+  const [submissionId] = useState(newSubmissionId);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -23,6 +25,8 @@ export function EnquiryForm() {
       subject: String(fd.get("subject") || "").trim() || "General enquiry",
       message: String(fd.get("message") || "").trim(),
       website: String(fd.get("website") || ""),
+      submissionId,
+      source: "enquiry",
     };
     const errs: Record<string, string> = {};
     if (!data.name) errs.name = "Your name is required.";
@@ -33,8 +37,10 @@ export function EnquiryForm() {
     if (Object.keys(errs).length) return;
     setStatus("submitting");
     try {
-      const res = await fetch("/api/contact", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
+      const res = await postWithTimeout("/api/contact", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const out = (await res.json().catch(() => ({}))) as { reference?: string };
+      setReference(out.reference ?? "");
       setStatus("success");
       form.reset();
     } catch {
@@ -46,7 +52,7 @@ export function EnquiryForm() {
     return (
       <div className="border border-ink bg-paper p-7" role="status">
         <p className="kicker">Enquiry received</p>
-        <p className="mt-2 text-[15px] leading-relaxed text-ink-2">Replies come from {contact.email}.</p>
+        <p className="mt-2 text-[15px] leading-relaxed text-ink-2">Replies come from {contact.email}.{reference ? <> Reference <strong className="tnum text-ink">{reference}</strong>.</> : null}</p>
       </div>
     );
   }
@@ -74,7 +80,8 @@ export function EnquiryForm() {
         </Field>
       </div>
       {status === "error" ? <div className="mt-4"><StatusBanner>Did not send. Retry, or email {contact.email} directly.</StatusBanner></div> : null}
-      <Button type="submit" className="mt-6" disabled={status === "submitting"}>
+      <PrivacyNote what="the enquiry form" />
+      <Button type="submit" className="mt-5" disabled={status === "submitting"}>
         {status === "submitting" ? "Sending" : "Send enquiry"}
       </Button>
     </form>

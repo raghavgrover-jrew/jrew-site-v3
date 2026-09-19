@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 // Spread 02 right. Four rows in the brochure's alternating fills with the left bar and the line art.
 export function Sectors() {
   return (
-    <SectionShell id="sectors" labelledBy="sectors-h" tone="paper">
+    <SectionShell id="sectors" labelledBy="sectors-h" tone="paper" className="hairline">
       <Eyebrow>Industries we serve</Eyebrow>
       <TwoToneHeading id="sectors-h" lead="Four sectors," mark="one platform" inline className="text-[clamp(1.9rem,3.6vw,3rem)]" />
       <p className="mt-5 max-w-[56ch] text-ink-2">{sectorsIntro}</p>
@@ -21,7 +21,7 @@ export function Sectors() {
               <p className="mt-3 max-w-[60ch] text-[15px] leading-relaxed text-ink-2">{s.description}</p>
             </div>
             <Wipe className="relative mx-auto w-full max-w-[26rem] lg:max-w-none">
-              <Image src={s.lineArt} alt={s.lineArtAlt} width={600} height={300} unoptimized className="h-auto w-full" />
+              <Image src={s.lineArt} alt={s.lineArtAlt} width={600} height={300} unoptimized className="mx-auto h-auto max-h-52 w-auto lg:mx-0 lg:ml-auto" />
             </Wipe>
           </li>
         ))}

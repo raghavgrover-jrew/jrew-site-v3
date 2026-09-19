@@ -10,7 +10,7 @@ export function FacilityStrip() {
     <SectionShell id="facilities" labelledBy="facilities-h">
       <div className="flex flex-wrap items-end justify-between gap-6">
         <div>
-          <TwoToneHeading id="facilities-h" lead={facilitiesIntro.headline.lead} mark={facilitiesIntro.headline.mark} className="max-w-[18ch] text-[clamp(1.9rem,3.6vw,3rem)]" />
+          <TwoToneHeading id="facilities-h" lead={facilitiesIntro.headline.lead} mark={facilitiesIntro.headline.mark} className="max-w-[26ch] text-[clamp(1.9rem,3.6vw,3rem)]" />
           <p className="mt-5 max-w-[60ch] text-ink-2">{facilitiesIntro.body}</p>
         </div>
         <Button href="/facilities" variant="secondary">

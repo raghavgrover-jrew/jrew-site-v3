@@ -1,14 +1,6 @@
-"use client";
-
-// Counter for the stat band. SSR ships the final value; GSAP scrubs from a fraction to
-// the value across the element's own scroll window. textContent writes only.
-
-import { useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
-
-gsap.registerPlugin(ScrollTrigger);
+// Stat value for the snapshot band. The exact approved figure is rendered in server HTML and
+// never changes: no count-up, no scroll scrub, so a visitor can never read a false number at
+// any scroll position, zoom level or motion preference (Codex audit, P0-1). Server component.
 
 function format(value: number, decimals = 0) {
   return value.toLocaleString("en-US", { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
@@ -27,30 +19,8 @@ export function KineticNumber({
   suffix?: string;
   className?: string;
 }) {
-  const ref = useRef<HTMLSpanElement>(null);
-
-  useGSAP(
-    () => {
-      const el = ref.current;
-      if (!el) return;
-      const mm = gsap.matchMedia();
-      mm.add("(prefers-reduced-motion: no-preference)", () => {
-        const proxy = { v: value * 0.2 };
-        gsap.to(proxy, {
-          v: value,
-          ease: "none",
-          scrollTrigger: { trigger: el, start: "top 90%", end: "top 45%", scrub: 0.5 },
-          onUpdate: () => {
-            el.textContent = `${prefix}${format(proxy.v, decimals)}${suffix}`;
-          },
-        });
-      });
-    },
-    { scope: ref },
-  );
-
   return (
-    <span ref={ref} className={className}>
+    <span className={className} data-stat-value={`${prefix}${format(value, decimals)}${suffix}`}>
       {prefix}
       {format(value, decimals)}
       {suffix}

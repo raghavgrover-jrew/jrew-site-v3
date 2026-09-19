@@ -266,15 +266,83 @@ ALL LIGHTHOUSE TARGETS MET
 
 Home at 1440: logo wall now sits under the stat band; the certification and award line reads under the hero CTAs. Products at 390: the nav shows logo, "Request a quote" and the menu toggle without wrapping. STAKON at 1440: all four cutouts render with a soft shadow on light cards. Nav links no longer cross onto the hero photograph at 1920.
 
+## Round 5 (commits after 34f0a87): Codex adversarial audit and eleven page-level visual audits
+
+Inputs: `~/Documents/Codex/2026-09-19/check-the-v3-build-on-jrew/outputs/JREW-V3-ADVERSARIAL-AUDIT.md` (P0 to P3, applied as the plan; disposition in BUILD-REPORT section 10) and eleven parallel design-director audits, one per route plus the shared chrome and logos, each with Playwright measurements at 1440, 1024 and 390 (captures under the session scratchpad `audit/`). Their fix lists are folded into the same commits.
+
+### G1 to G3
+
+```
+pnpm build      exit 0, all routes prerendered, 10 route-specific opengraph-image routes
+pnpm lint       0 problems
+pnpm test       Tests 33 passed (33)   (22 API route tests incl. PII-free logs, idempotency, origin, content type, size, DOCX structure, no-SMTP failure)
+```
+
+### P0 verification pass (before the layout patch)
+
+```
+curl -sI /            Content-Security-Policy, Strict-Transport-Security, Cross-Origin-Opener-Policy, X-Frame-Options present
+curl -sI /images/...  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+verify.mjs            265/266 (the one miss: the harness expected the old privacy copy; anchors updated)
+```
+
+New harness checks added for this round and passing: "stat figures exact at every scroll position" (five scroll offsets, `data-stat-value` equality), "mobile menu contains focus and inerts the page" (12 Tab and 4 Shift+Tab presses stay inside `#mobile-menu`/`header`, `#main` carries `inert`).
+
+### Final pass (all rounds applied)
+
+```
+266/266 checks passed
+```
+
+Lighthouse, observed throttling (`LH_THROTTLING=devtools`):
+
+```
+route | form | perf | a11y | best | seo | LCP s | CLS | TBT ms
+/ | desktop | 100 | 100 | 100 | 100 | 0.09 | 0 | 0
+/ | mobile | 96 | 100 | 100 | 100 | 1.58 | 0 | 183
+/products/attachments | desktop | 100 | 100 | 100 | 100 | 0.08 | 0 | 0
+/products/attachments | mobile | 99 | 100 | 100 | 100 | 1.67 | 0 | 57
+/contact | desktop | 100 | 100 | 100 | 100 | 0.1 | 0 | 0
+/contact | mobile | 100 | 100 | 100 | 100 | 1.54 | 0 | 42
+ALL LIGHTHOUSE TARGETS MET
+```
+
+Lighthouse, Lantern simulation (default):
+
+```
+route | form | perf | a11y | best | seo | LCP s | CLS | TBT ms
+/ | desktop | 99 | 100 | 100 | 100 | 0.87 | 0 | 0
+/ | mobile | 92 | 100 | 100 | 100 | 3.4 | 0 | 37
+/products/attachments | desktop | 100 | 100 | 100 | 100 | 0.6 | 0 | 0
+/products/attachments | mobile | 93 | 100 | 100 | 100 | 3.24 | 0 | 14
+/contact | desktop | 100 | 100 | 100 | 100 | 0.59 | 0 | 0
+/contact | mobile | 99 | 100 | 100 | 100 | 2.11 | 0 | 35
+2 rows outside targets
+```
+
+Reading: the hero now renders its copy and photograph visibly on first paint (no opacity entrance, no pin), Lenis is gone and GSAP is per route, and desktop LCP fell to 0.1 s observed. The simulated home and attachments mobile rows stay above 2.5 s for the reason recorded in rounds 1 and 3 (the local HTTP/1.1 server and Lantern's pessimistic graph); `/contact` now clears the target under simulation too. The hero photograph is deliberately served at full width so the signage reads (the auditors found it cropped to "JREW E"), which adds bytes the simulator counts. Re-measure on the Vercel preview over HTTP/2.
+
+### What changed in this round (summary; detail in BUILD-REPORT section 10 and DESIGN.md revision)
+
+- Metrics static; claims register; lead delivery hardened with references, idempotency, timeouts, PII-free logs and visible failure without SMTP; mobile menu focus containment; hero pin and fade removed; privacy notice rewritten (draft for legal); CSP, HSTS, COOP and caching headers; disclosure line beside every submit.
+- Marker stroke hugs each line and animates only on page titles; `@layer` fix so utilities override the primitives (section padding on nine routes was silently wrong); PageHeader and section headings widened to the brochure's two lines.
+- Navbar opaque on ink; Careers in the nav, footer duplicate gone; logo wall fits at 390; association marks as paper-on-ink; Escorts Kubota, Preet and TÜV re-rendered; favicon; per-route social cards in Poppins 800.
+- Photographs: hero crop and full-width source; forged hook and forks, suspension bearing and front axle re-rendered from the print pages (the separations had inverted, the axle was unclipped); STAKON renders un-swapped, trimmed and bottom-aligned; component cut-outs on paper.
+- Layout re-flows on capabilities (partnership steps 2x2, photos side by side; proof rows 2-col with the panel stacked beside the welding photo; case study in the brochure's order with the carriage photo as a band), quality (inspection list beside the passed-part photo, FARO as a band), facilities (8/4 cards, India-only map with true-position labelled pins), about (timeline centred, vertical under reduced motion, Godrej award photo, checkerboard order on phones), contact (RFQ card top-aligned, Direct card beside the enquiry form, review rows split, step indicator 2x2), careers (4:3 photo, office interior band, first invalid field focused), attachments (units m³ ± °, two-column dialog with close control, count line, pill grammar), 404 (title, links).
+
+### Not done in code (decisions or infrastructure; BUILD-REPORT section 11)
+
+Claims sign-off, legal review of the privacy notice, HSTS preload, edge rate limit and Turnstile, CV scanning or link store, delivery monitoring and synthetic inbox check, acknowledgement wording, AI-crawler policy, hero headline swap, STAKON page repetition, FEPT pair, Godrej photo confirmation, analytics. Backlog: line-art SVG weight (about 1.7 MB across four files), cut-out normalisation for the 14 attachments, landing pages for commercial searches, RFQ family preselection from product CTAs.
+
 ## Final state
 
 | Gate | Result |
 |---|---|
 | G1 build | exit 0, all routes prerendered |
 | G2 lint | 0 problems |
-| G3 tests | 26 passed |
-| G4 to G12, G14 | 264 of 264 checks |
-| G13 Lighthouse | Observed throttling: every target met (mobile LCP 1.54 to 1.57 s, CLS 0, a11y 100). Lantern simulation on the local HTTP/1.1 server: mobile LCP 2.65 to 3.25 s, explained in rounds 1 and 3; to be re-measured on the Vercel preview |
+| G3 tests | 33 passed |
+| G4 to G12, G14 | 266 of 266 checks (round 5) |
+| G13 Lighthouse | Observed throttling: every target met (mobile LCP 1.54 to 1.67 s, desktop 0.08 to 0.10 s, CLS 0, a11y 100). Lantern simulation on the local HTTP/1.1 server: contact clears 2.5 s, home and attachments mobile 3.2 to 3.4 s (rounds 1, 3 and 5); to be re-measured on the Vercel preview |
 
 Open items are content decisions, not defects; they are listed in BUILD-REPORT.md section 7.
 

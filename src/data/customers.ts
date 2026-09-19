@@ -24,5 +24,5 @@ export const associations = [
   { id: "make-in-india", name: "Make in India", logo: "/associations/make-in-india.svg" },
   { id: "greenco", name: "CII GreenCo", logo: "/associations/greenco.svg" },
   { id: "cii", name: "CII Active Member", logo: "/associations/cii.svg" },
-  { id: "tuv-rheinland", name: "TUV Rheinland certified: ISO 9001:2015, ISO 14001:2015, ISO 45001:2018", logo: "/associations/tuv-rheinland.svg" },
+  { id: "tuv-rheinland", name: "TÜV Rheinland certified: ISO 9001:2015, ISO 14001:2015, ISO 45001:2018", logo: "/associations/tuv-rheinland.svg" },
 ] as const;

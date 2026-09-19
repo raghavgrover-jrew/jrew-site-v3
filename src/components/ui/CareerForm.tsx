@@ -3,15 +3,17 @@
 import { useState } from "react";
 import { contact } from "@/lib/site";
 import { cn } from "@/lib/utils";
-import { Field, Honeypot, StatusBanner, inputCls } from "@/components/ui/forms";
+import { Field, Honeypot, StatusBanner, PrivacyNote, inputCls, newSubmissionId, postWithTimeout } from "@/components/ui/forms";
 import { EMAIL_RE, RESUME_HINT, resumeProblem } from "@/lib/validate";
 import { Button } from "@/components/ui/Button";
 
-const AREAS = ["Design and manufacturing engineering", "Quality and metrology", "CNC machining and shop floor", "Welding and fabrication", "Supply chain and planning", "Sales and business development", "STAKON engineering, service or sales", "Other"];
+const AREAS = ["Design and manufacturing", "Quality and metrology", "CNC machining and shop floor", "Welding and fabrication", "Supply chain and planning", "Sales and business development", "STAKON engineering, service or sales", "Other"];
 
 export function CareerForm() {
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [reference, setReference] = useState("");
+  const [submissionId] = useState(newSubmissionId);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -26,11 +28,19 @@ export function CareerForm() {
     const resumeErr = resumeProblem(resume);
     if (resumeErr) errs.resume = resumeErr;
     setErrors(errs);
-    if (Object.keys(errs).length) return;
+    if (Object.keys(errs).length) {
+      // take the reader to the first problem instead of leaving them at the button
+      const first = ["name", "email", "resume"].find((k) => errs[k]);
+      requestAnimationFrame(() => document.getElementById(`ca-${first}`)?.focus());
+      return;
+    }
     setStatus("submitting");
     try {
-      const res = await fetch("/api/careers", { method: "POST", body: fd });
+      fd.set("submissionId", submissionId);
+      const res = await postWithTimeout("/api/careers", { method: "POST", body: fd }, 30_000);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const out = (await res.json().catch(() => ({}))) as { reference?: string };
+      setReference(out.reference ?? "");
       setStatus("success");
       form.reset();
     } catch {
@@ -42,7 +52,7 @@ export function CareerForm() {
     return (
       <div className="border border-ink bg-paper p-7" role="status">
         <p className="kicker">Application received</p>
-        <p className="mt-2 text-[15px] leading-relaxed text-ink-2">HR reads every application. If there is a fit now or in the next quarter, you will hear from us at the address you gave.</p>
+        <p className="mt-2 text-[15px] leading-relaxed text-ink-2">HR reads every application. If there is a fit now or in the next quarter, you will hear from us at the address you gave.{reference ? <> Reference <strong className="tnum text-ink">{reference}</strong>.</> : null}</p>
       </div>
     );
   }
@@ -71,7 +81,7 @@ export function CareerForm() {
           <input id="ca-exp" name="experience" placeholder="e.g. 6 years, fabrication QA" className={inputCls} />
         </Field>
         <Field label="Resume" htmlFor="ca-resume" error={errors.resume} hint={RESUME_HINT}>
-          <input id="ca-resume" name="resume" type="file" accept=".pdf,.doc,.docx" className={cn(inputCls, "file:mr-4 file:border-0 file:bg-card-warm file:px-3 file:py-1 file:font-semibold")} aria-invalid={!!errors.resume} />
+          <input id="ca-resume" name="resume" type="file" accept=".pdf,.doc,.docx" className={cn(inputCls, "py-2 file:mr-4 file:border-0 file:bg-card-warm file:px-3 file:py-1 file:font-semibold")} aria-invalid={!!errors.resume} />
         </Field>
       </div>
       <div className="mt-5">
@@ -80,7 +90,8 @@ export function CareerForm() {
         </Field>
       </div>
       {status === "error" ? <div className="mt-4"><StatusBanner>The application did not send. Retry, or email {contact.careersEmail}.</StatusBanner></div> : null}
-      <Button type="submit" className="mt-6" disabled={status === "submitting"}>
+      <PrivacyNote what="the application form" />
+      <Button type="submit" className="mt-5" disabled={status === "submitting"}>
         {status === "submitting" ? "Sending" : "Submit application"}
       </Button>
     </form>

@@ -10,9 +10,10 @@ import { people } from "@/data/quality";
 
 export const metadata: Metadata = {
   title: "Facilities",
-  description:
-    "Four units across two states: MOH 1 Mohali fabrication and machining (50,000 sq ft), FBD 1 Faridabad mother plant (60,000 sq ft), FBD 2 Faridabad feeder plant (10,000 sq ft), MOH 2 Mohali corporate HQ and R&D (40,000 sq ft). Rajpura greenfield, 600,000 sq ft, Phase 1 operations 2027.",
+  description: "Four units in Mohali and Faridabad with their equipment and addresses, and the 600,000 sq ft Rajpura greenfield campus, Phase 1 in 2027.",
   alternates: { canonical: "/facilities" },
+  openGraph: { type: "website", url: "/facilities", title: "Facilities | JREW Engineering", description: "Four units in Mohali and Faridabad with their equipment and addresses, and the 600,000 sq ft Rajpura greenfield campus, Phase 1 in 2027." },
+  twitter: { card: "summary_large_image", title: "Facilities | JREW Engineering", description: "Four units in Mohali and Faridabad with their equipment and addresses, and the 600,000 sq ft Rajpura greenfield campus, Phase 1 in 2027." },
 };
 
 export default function FacilitiesPage() {
@@ -24,9 +25,9 @@ export default function FacilitiesPage() {
       <SectionShell ariaLabel="Operating units" className="pt-4">
         <ul className="space-y-4">
           {facilities.map((f, i) => (
-            <li key={f.id} id={f.id} className={`grid gap-6 p-5 sm:p-7 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] ${i % 2 ? "bg-card-warm" : "bg-card-cool"}`}>
-              <div className="relative aspect-[4/3] overflow-hidden">
-                <Image src={f.image} alt={f.imageAlt} fill sizes="(min-width: 1024px) 40vw, 90vw" className="object-cover" />
+            <li key={f.id} id={f.id} className={`grid gap-6 p-5 sm:p-7 lg:grid-cols-[minmax(0,8fr)_minmax(0,4fr)] ${i % 2 ? "bg-card-warm" : "bg-card-cool"}`}>
+              <div className="relative aspect-[4/3] overflow-hidden lg:order-2 lg:self-start">
+                <Image src={f.image} alt={f.imageAlt} fill sizes="(min-width: 1360px) 400px, (min-width: 1024px) 30vw, 90vw" className={f.id === "moh-2" ? "object-cover object-[50%_40%]" : "object-cover"} />
               </div>
               <div className={`bar ${i % 2 ? "bar-marigold" : ""}`}>
                 <div className="flex flex-wrap items-baseline justify-between gap-3">
@@ -42,7 +43,7 @@ export default function FacilitiesPage() {
                 </p>
                 <p className="mt-4 text-[15px] leading-relaxed text-ink">{f.description}</p>
                 {f.equipment ? (
-                  <p className="mt-3 text-[14.5px] leading-relaxed text-ink-2">
+                  <p className="hairline mt-3 pt-3 text-[14.5px] leading-relaxed text-ink-2">
                     <span className="font-semibold text-ink">Key equipment: </span>
                     {f.equipment}
                   </p>
@@ -55,21 +56,19 @@ export default function FacilitiesPage() {
       </SectionShell>
 
       <SectionShell id="rajpura" labelledBy="rajpura-h" tone="ink">
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:items-start">
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:items-center">
           <div>
-            <TwoToneHeading id="rajpura-h" tone="ink" lead="One greenfield" mark="rising" inline className="text-[clamp(1.9rem,3.6vw,3rem)]" />
+            <TwoToneHeading id="rajpura-h" tone="ink" lead="Next:" mark="Rajpura, 2027" inline className="text-[clamp(1.9rem,3.6vw,3rem)]" />
             <dl className="mt-8 grid gap-px bg-ink-line sm:grid-cols-2">
               {people.future.map((f) => (
-                <div key={f.year} className="bg-ink-panel p-6">
+                <div key={f.year} className="bg-ink-panel py-6 pr-6 pl-6 first:pl-0">
                   <dt className="display tnum text-3xl text-marigold">{f.year}</dt>
                   <dd className="display-md mt-2 text-lg text-on-ink">{f.title}</dd>
                   <dd className="mt-2 text-[15px] leading-relaxed text-on-ink-2">{f.body}</dd>
                 </div>
               ))}
             </dl>
-            <p className="tnum mt-6 text-[14px] text-on-ink-3">
-              Rajpura, Punjab: {rajpura.sqft.toLocaleString("en-US")} sq ft campus. Phase 1 begins operations in {rajpura.year}.
-            </p>
+            <p className="tnum mt-6 text-[14px] text-on-ink-3">Rajpura, Punjab: {rajpura.sqft.toLocaleString("en-US")} sq ft campus, Phase 1.</p>
           </div>
           <IndiaMap />
         </div>

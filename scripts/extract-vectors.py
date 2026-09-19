@@ -40,7 +40,7 @@ def image_png(xref):
     if pix.n - pix.alpha >= 4: pix = fitz.Pixmap(fitz.csRGB, pix)
     return base64.b64encode(pix.tobytes("png")).decode()
 
-def export(page_index, name, cell, subdir, pad=4, mode="inside", skip_wide=True):
+def export(page_index, name, cell, subdir, pad=4, mode="inside", skip_wide=True, min_size=0):
     page = doc[page_index]; drs, imgs = drawings(page_index)
     cell = fitz.Rect(cell); parts = []; boxes = []
     for d in drs:
@@ -52,6 +52,7 @@ def export(page_index, name, cell, subdir, pad=4, mode="inside", skip_wide=True)
             ok = not inter.is_empty and inter.get_area() >= 0.5 * max(r.get_area(), 0.01) and r.y0 >= cell.y0 - 2 and r.y1 <= cell.y1 + 2
         if not ok: continue
         if skip_wide and r.width > 0.9 * cell.width and r.height < 2: continue
+        if min_size and max(r.width, r.height) < min_size: continue  # outlined text glyphs from the neighbouring column
         if r.width < 0.3 and r.height < 0.3: continue
         if mode == "intersect" and r.width > 0.6 * cell.width and all(it[0] in ("re", "qu") for it in d["items"]): continue  # card fills
         fill = d.get("fill"); stroke = d.get("color"); typ = d.get("type", "")
@@ -97,7 +98,7 @@ for ri, (ry0, ry1) in enumerate(rows):
         export(10, names[ri][ci], (cx0, ry0, cx1, ry1), "logos")
 for name, cell in [("excavator", (940, 214, 1260, 376)), ("forklift", (940, 380, 1260, 530)),
                    ("combine-harvester", (940, 532, 1260, 688)), ("locomotive", (940, 690, 1260, 845))]:
-    export(1, name, cell, "lineart", pad=3, mode="intersect", skip_wide=False)
+    export(1, name, cell, "lineart", pad=3, mode="intersect", skip_wide=False, min_size=40)
 for name, cell in [("jrew-wordmark-panel", (95, 770, 205, 830)), ("icema", (222, 770, 306, 830)), ("make-in-india", (312, 770, 396, 830)),
                    ("greenco", (398, 770, 455, 830)), ("cii", (462, 770, 550, 830)), ("tuv-rheinland", (552, 770, 650, 830)),
                    ("jrew-logo-cover", (680, 25, 840, 120))]:

@@ -17,9 +17,10 @@ import { forgedIntro, forgedProducts, forgedStrip } from "@/data/forged";
 
 export const metadata: Metadata = {
   title: "Products",
-  description:
-    "Six product families engineered to OEM drawings: forklift mast systems 1.5-15 t, direct-on-line axle assemblies (40,000+ a year), structural and precision components for JCB, CLAAS, Kubota, Manitou and Caterpillar, 100+ attachments, forged hooks and forks, and STAKON equipment.",
+  description: "Forklift masts, axle assemblies, structural components, attachments and forged products, machined to OEM drawings at four plants in Punjab and Haryana.",
   alternates: { canonical: "/products" },
+  openGraph: { type: "website", url: "/products", title: "Products | JREW Engineering", description: "Forklift masts, axle assemblies, structural components, attachments and forged products, machined to OEM drawings at four plants in Punjab and Haryana." },
+  twitter: { card: "summary_large_image", title: "Products | JREW Engineering", description: "Forklift masts, axle assemblies, structural components, attachments and forged products, machined to OEM drawings at four plants in Punjab and Haryana." },
 };
 
 const subnav = [
@@ -54,14 +55,14 @@ export default function ProductsPage() {
       <SectionShell id="masts" labelledBy="masts-h" tone="warm">
         <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
           <div>
-            <h2 id="masts-h" className="display-md text-lg text-ink-3">
+            <h2 id="masts-h" className="kicker">
               {mastFamily.eyebrow}
             </h2>
             <TwoToneHeading as="p" lead={mastFamily.headline.lead} mark={mastFamily.headline.mark} className="mt-2 text-[clamp(1.9rem,3.6vw,3rem)]" />
             <p className="mt-5 max-w-[60ch] text-ink-2">{mastFamily.body}</p>
             <ul className="mt-6 flex flex-wrap gap-2">
               {mastFamily.pills.map((p) => (
-                <li key={p} className="bg-ink px-3 py-2 text-[13px] font-semibold uppercase tracking-[0.06em] text-on-ink">
+                <li key={p} className="on-ink bg-ink px-3 py-2 text-[13px] font-semibold uppercase tracking-[0.06em] text-marigold">
                   {p}
                 </li>
               ))}
@@ -75,11 +76,11 @@ export default function ProductsPage() {
 
       <SectionShell id="axles" labelledBy="axles-h">
         <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
-          <div className="relative aspect-[16/7] w-full bg-card-warm lg:aspect-[4/3]">
+          <div className="relative aspect-[16/7] w-full bg-paper lg:aspect-[16/9]">
             <Image src={axleFamily.image} alt="Backhoe-loader front axle assembly with steering cylinder" fill sizes="(min-width: 1024px) 40vw, 90vw" className="object-contain p-6" />
           </div>
           <div>
-            <h2 id="axles-h" className="display-md text-lg text-ink-3">
+            <h2 id="axles-h" className="kicker">
               {axleFamily.eyebrow}
             </h2>
             <TwoToneHeading as="p" lead={axleFamily.headline.lead} mark={axleFamily.headline.mark} className="mt-2 text-[clamp(1.9rem,3.6vw,3rem)]" />
@@ -101,10 +102,10 @@ export default function ProductsPage() {
         <Eyebrow>{attachmentsIntro.eyebrow}</Eyebrow>
         <TwoToneHeading id="attachments-h" lead={attachmentsIntro.headline.lead} mark={attachmentsIntro.headline.mark} inline className="text-[clamp(1.9rem,3.6vw,3rem)]" />
         <p className="mt-5 max-w-[64ch] text-ink-2">{attachmentsIntro.body}</p>
-        <ul className="mt-8 grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-7">
+        <ul className="mt-8 grid grid-cols-3 gap-3 md:grid-cols-7 [&>li:nth-child(7)]:max-md:hidden">
           {attachments.slice(0, 7).map((a) => (
             <li key={a.id} className="relative aspect-square bg-paper">
-              <Image src={a.image} alt={a.name} fill sizes="14vw" className="object-contain p-3" />
+              <Image src={a.image} alt={a.name} fill sizes="(min-width: 768px) 14vw, 33vw" className="object-contain p-3" />
             </li>
           ))}
         </ul>
@@ -120,7 +121,7 @@ export default function ProductsPage() {
         <ul className="mt-10 grid gap-4 md:grid-cols-3">
           {forgedProducts.map((f) => (
             <li key={f.id} className="border border-line bg-paper">
-              <div className="relative aspect-[4/3]">
+              <div className="relative aspect-square">
                 <Image src={f.image} alt={f.imageAlt} fill sizes="(min-width: 768px) 30vw, 90vw" className="object-contain p-6" />
               </div>
               <div className="hairline p-5">
@@ -139,8 +140,8 @@ export default function ProductsPage() {
             </div>
           ))}
         </dl>
-        <div className="relative mt-4 aspect-[3/1] w-full overflow-hidden">
-          <Image src="/images/forged/forging-shop-panorama.jpg" alt="Forging shop with hooks and forks in process" fill sizes="100vw" className="object-cover" />
+        <div className="relative mt-4 aspect-[16/9] w-full overflow-hidden sm:aspect-[3/1]">
+          <Image src="/images/forged/forging-shop-panorama.jpg" alt="Forging shop with hooks and forks in process" fill sizes="100vw" className="object-cover object-[50%_45%]" />
         </div>
       </SectionShell>
 

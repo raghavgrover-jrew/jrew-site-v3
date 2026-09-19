@@ -13,7 +13,16 @@ for (const route of ROUTES) {
   for (const form of ["desktop", "mobile"]) {
     const out = `screenshots/lighthouse/${form}-${route === "/" ? "home" : route.slice(1).replace(/\//g, "-")}.json`;
     const preset = form === "desktop" ? "--preset=desktop" : "";
-    execSync(`npx --yes lighthouse "${BASE}${route}" ${preset} --only-categories=performance,accessibility,best-practices,seo --throttling-method=${THROTTLING} --output=json --output-path="${out}" --chrome-flags="--headless=new --no-sandbox" --quiet`, { stdio: "inherit" });
+    // Lighthouse occasionally fails to record the navigation trace (NO_NAVSTART); one retry is enough.
+    for (let attempt = 1; attempt <= 2; attempt++) {
+      try {
+        execSync(`npx --yes lighthouse "${BASE}${route}" ${preset} --only-categories=performance,accessibility,best-practices,seo --throttling-method=${THROTTLING} --output=json --output-path="${out}" --chrome-flags="--headless=new --no-sandbox" --quiet`, { stdio: "inherit" });
+        break;
+      } catch (e) {
+        if (attempt === 2) throw e;
+        console.warn(`lighthouse retry for ${route} (${form})`);
+      }
+    }
     const j = JSON.parse(fs.readFileSync(out, "utf8"));
     const a = j.audits;
     rows.push({
