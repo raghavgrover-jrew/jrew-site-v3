@@ -20,8 +20,11 @@ export function Sectors() {
               <h3 className="display-md text-xl sm:text-2xl">{s.name}</h3>
               <p className="mt-3 max-w-[60ch] text-[15px] leading-relaxed text-ink-2">{s.description}</p>
             </div>
-            <Wipe className="relative mx-auto w-full max-w-[26rem] lg:max-w-none">
-              <Image src={s.lineArt} alt={s.lineArtAlt} width={600} height={300} unoptimized className="mx-auto h-auto max-h-52 w-auto lg:mx-0 lg:ml-auto" />
+            {/* The frame carries the height. With both axes auto a lazy image lays out at 0x0, never
+                intersects the viewport and so never loads at all; a definite box also removes the
+                shift when the art arrives. */}
+            <Wipe className="relative mx-auto h-40 w-full max-w-[26rem] sm:h-48 lg:h-52 lg:max-w-none">
+              <Image src={s.lineArt} alt={s.lineArtAlt} width={600} height={300} unoptimized className="h-full w-full object-contain lg:object-right" />
             </Wipe>
           </li>
         ))}

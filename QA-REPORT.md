@@ -332,7 +332,86 @@ Reading: the hero now renders its copy and photograph visibly on first paint (no
 
 ### Not done in code (decisions or infrastructure; BUILD-REPORT section 11)
 
-Claims sign-off, legal review of the privacy notice, HSTS preload, edge rate limit and Turnstile, CV scanning or link store, delivery monitoring and synthetic inbox check, acknowledgement wording, AI-crawler policy, hero headline swap, STAKON page repetition, FEPT pair, Godrej photo confirmation, analytics. Backlog: line-art SVG weight (about 1.7 MB across four files), cut-out normalisation for the 14 attachments, landing pages for commercial searches, RFQ family preselection from product CTAs.
+Claims sign-off, legal review of the privacy notice, HSTS preload, edge rate limit and Turnstile, CV scanning or link store, delivery monitoring and synthetic inbox check, acknowledgement wording, AI-crawler policy, hero headline swap, STAKON page repetition, FEPT pair, Godrej photo confirmation, analytics. Backlog at the end of round 5: line-art SVG weight (about 1.7 MB across four files), cut-out normalisation for the 14 attachments, landing pages for commercial searches, RFQ family preselection from product CTAs. All but the landing pages are settled in round 6.
+
+## Round 6 (backlog, and one defect the earlier rounds missed)
+
+Not part of the Codex audit. Four items were carried as backlog at the end of round 5; working
+through them surfaced a defect that every earlier gate had passed over.
+
+### The defect: four illustrations that never loaded
+
+`Sectors` rendered its line art with `h-auto max-h-52 w-auto`. Both axes are auto, so before the
+file loads the image has no intrinsic size and lays out at 0x0. A zero-area lazy image never
+intersects the viewport, so it is never fetched, so it never gets an intrinsic size. The four
+sector illustrations on the home page had therefore never appeared, on the dev server or the
+production build. Nothing caught it: the markup is correct, the `alt` text is present, axe is
+satisfied, no request fails because no request is made, and a screenshot of the section shows the
+copy sitting in an apparently intentional two-column layout.
+
+Fixed by giving the frame the height (`h-40 sm:h-48 lg:h-52`, image `h-full w-full object-contain
+lg:object-right`), which also removes the shift when the art arrives.
+
+A gate now covers the whole class: **G5 every image decodes**, run per route after the existing
+full-page scroll sweep, failing on any `<img>` left with `naturalWidth === 0`. It fails on the old
+`Sectors` markup and passes on all eleven routes now.
+
+### Backlog items
+
+| Item | Result |
+|---|---|
+| Line-art SVG weight | 1,724 KB to 486 KB on disk; 439 KB to 124 KB gzipped, which is what the CDN sends |
+| RFQ family preselection from product CTAs | `/contact?enquiry=axles#rfq` opens the flow with step 1 answered |
+| Per-route metadata tests | 32 new assertions over the ten sub-routes |
+| Attachment cut-out normalisation | No change needed; measured and left alone (see below) |
+
+The line art is four traced outlines carrying 18k to 41k absolute nodes at 2dp, with coordinates
+in the 1000s because the viewBox was never moved to the origin. Ramer-Douglas-Peucker at 0.08 user
+units (about 0.13 CSS px at the size the site draws them), origin-translated, relative commands,
+1dp. Measured against the originals by rendering both at the rendered size and 2x device pixels
+and comparing after a 2x downsample that cancels antialias phase: worst case 2.68% of inked pixels
+move at all, mean absolute error under 4 of 255. The floor from 1dp rounding alone is 1.46%.
+
+Cut-outs: all fourteen are already tight crops on white, filling 92 to 100% of their own frame, and
+`object-contain` in the 4:3 card gives each the same fit box. The flatter items (drum handler, pole
+planter) draw shorter than the rest, which is what a catalogue of differently shaped objects should
+look like. Normalising further would mean implying a size relationship the brochure does not state.
+
+### Also in this round
+
+- The favicon built in round 5 was never served. `metadata.icons` in the layout overrode the
+  `app/icon.svg` file convention, so the head carried the full wordmark, which is illegible at 16px.
+  The explicit entry is gone; the build now emits `/icon.svg`.
+- `siteTitle` and `siteDescription` moved to `lib/site.ts`, so the layout defaults are a single
+  source and the metadata test can assert that no route silently falls back to them.
+- G14's quote-label rail now accepts `Request a quote for <family>` alongside the bare label. Five
+  identical link labels pointing at five different preselections would read badly in a screen
+  reader's link list; the rail still catches any other wording.
+
+### Gates after round 6
+
+```
+282/282 checks passed
+```
+
+```
+route | form | perf | a11y | best | seo | LCP s | CLS | TBT ms
+/ | desktop | 100 | 100 | 100 | 100 | 0.14 | 0 | 7
+/ | mobile | 95 | 100 | 100 | 100 | 1.61 | 0 | 241
+/products/attachments | desktop | 100 | 100 | 100 | 100 | 0.09 | 0 | 0
+/products/attachments | mobile | 99 | 100 | 100 | 100 | 1.54 | 0 | 55
+/contact | desktop | 100 | 100 | 100 | 100 | 0.09 | 0 | 0
+/contact | mobile | 99 | 100 | 100 | 100 | 1.55 | 0 | 54
+
+ALL LIGHTHOUSE TARGETS MET
+```
+
+Observed throttling. Home mobile LCP is 1.61 s and CLS is 0 with the four illustrations now
+actually loading, which they were not when round 5 was measured. That costs 124 KB gzipped of
+lazy below-the-fold traffic; without the path optimisation it would have been 439 KB.
+
+Build: exit 0, all routes prerendered, `/icon.svg` now in the route list. Lint: 0 problems.
+Tests: 70 passed across four files.
 
 ## Final state
 
@@ -340,8 +419,8 @@ Claims sign-off, legal review of the privacy notice, HSTS preload, edge rate lim
 |---|---|
 | G1 build | exit 0, all routes prerendered |
 | G2 lint | 0 problems |
-| G3 tests | 33 passed |
-| G4 to G12, G14 | 266 of 266 checks (round 5) |
+| G3 tests | 70 passed |
+| G4 to G12, G14 | 282 of 282 checks (round 6) |
 | G13 Lighthouse | Observed throttling: every target met (mobile LCP 1.54 to 1.67 s, desktop 0.08 to 0.10 s, CLS 0, a11y 100). Lantern simulation on the local HTTP/1.1 server: contact clears 2.5 s, home and attachments mobile 3.2 to 3.4 s (rounds 1, 3 and 5); to be re-measured on the Vercel preview |
 
 Open items are content decisions, not defects; they are listed in BUILD-REPORT.md section 7.

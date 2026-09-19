@@ -2,6 +2,8 @@ import Image from "next/image";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { TwoToneHeading } from "@/components/ui/TwoToneHeading";
 import { SectionShell } from "@/components/ui/SectionShell";
+import { Button } from "@/components/ui/Button";
+import { rfqHrefFor } from "@/lib/rfq";
 import { Reveal } from "@/components/ui/Reveal";
 import { components, componentsIntro } from "@/data/components";
 
@@ -27,6 +29,9 @@ export function ComponentStories({ headingLevel = "h2" }: { headingLevel?: "h2" 
           </li>
         ))}
       </Reveal>
+      <Button href={rfqHrefFor("components")} variant="ghost" className="mt-10">
+        Request a quote for components
+      </Button>
     </SectionShell>
   );
 }

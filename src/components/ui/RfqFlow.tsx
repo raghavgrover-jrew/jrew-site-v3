@@ -3,22 +3,29 @@
 // Three steps plus review. Validated by lib/rfq.ts, posted to /api/contact. Full keyboard path,
 // per-field errors, distinct submitting / success / failure states; entries survive a failed submit.
 
-import { useRef, useState } from "react";
+import { useRef, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { contact } from "@/lib/site";
-import { validateRfqStep, buildContactPayload, volumeOptionalFor, rfqFamilies, rfqQuantityBands, rfqDrawingStatus, rfqTimelines, type RfqDraft, type RfqErrors } from "@/lib/rfq";
+import { validateRfqStep, buildContactPayload, volumeOptionalFor, familyFromSlug, rfqFamilies, rfqQuantityBands, rfqDrawingStatus, rfqTimelines, type RfqDraft, type RfqErrors } from "@/lib/rfq";
 import { Field, RadioGrid, StatusBanner, PrivacyNote, inputCls, newSubmissionId, postWithTimeout } from "@/components/ui/forms";
 import { Button } from "@/components/ui/Button";
 
 const STEPS = ["Enquiry", "Requirements", "Contact", "Review"] as const;
 const EMPTY: RfqDraft = { family: "", quantityBand: "", grade: "", drawingStatus: "", timeline: "", name: "", company: "", email: "", phone: "", notes: "" };
 
+// The enquiry slug a product CTA put in the URL (/contact?enquiry=axles#rfq). Read through an
+// external-store subscription rather than useSearchParams, so the contact page stays statically
+// prerendered; the server snapshot is empty and React re-renders once with the real value.
+const NO_SLUG = "";
+const subscribeToNothing = () => () => {};
+const readEnquirySlug = () => new URLSearchParams(window.location.search).get("enquiry") ?? NO_SLUG;
+const noSlugOnServer = () => NO_SLUG;
+
 export function RfqFlow({ idPrefix = "rfq", source }: { idPrefix?: string; source?: string }) {
-  const [step, setStep] = useState(0);
+  const [stepChosen, setStepChosen] = useState<number | null>(null);
   const [moved, setMoved] = useState(false);
-  const [draft, setDraft] = useState<RfqDraft>(EMPTY);
-  const volumeOptional = volumeOptionalFor(draft.family);
+  const [entered, setDraft] = useState<RfqDraft>(EMPTY);
   const [errors, setErrors] = useState<RfqErrors>({});
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [reference, setReference] = useState<string>("");
@@ -26,12 +33,21 @@ export function RfqFlow({ idPrefix = "rfq", source }: { idPrefix?: string; sourc
   const panelRef = useRef<HTMLDivElement>(null);
   const id = (k: string) => `${idPrefix}-${k}`;
 
+  // Preselection is derived, never written into state: the link answers step 1 and opens the flow
+  // at step 2, and the moment the visitor picks a family themselves their choice takes over.
+  const slug = useSyncExternalStore(subscribeToNothing, readEnquirySlug, noSlugOnServer);
+  const linked = familyFromSlug(slug);
+  const fromLink = linked ? slug.trim().toLowerCase() : "";
+  const draft = linked && !entered.family ? { ...entered, family: linked } : entered;
+  const step = stepChosen ?? (linked ? 1 : 0);
+  const volumeOptional = volumeOptionalFor(draft.family);
+
   const set = (k: keyof RfqDraft) => (v: string) => {
     setDraft((d) => ({ ...d, [k]: v }));
     setErrors((e) => ({ ...e, [k]: undefined }));
   };
   const goto = (n: number) => {
-    setStep(n);
+    setStepChosen(n);
     setMoved(true);
     requestAnimationFrame(() => panelRef.current?.focus({ preventScroll: true }));
   };
@@ -47,7 +63,7 @@ export function RfqFlow({ idPrefix = "rfq", source }: { idPrefix?: string; sourc
     if (status === "submitting") return;
     setStatus("submitting");
     try {
-      const payload = { ...buildContactPayload(draft), submissionId, source: source ?? `rfq:${idPrefix}` };
+      const payload = { ...buildContactPayload(draft), submissionId, source: source ?? (fromLink ? `rfq:${idPrefix}:${fromLink}` : `rfq:${idPrefix}`) };
       const res = await postWithTimeout("/api/contact", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = (await res.json().catch(() => ({}))) as { reference?: string };
@@ -104,6 +120,16 @@ export function RfqFlow({ idPrefix = "rfq", source }: { idPrefix?: string; sourc
             ) : null}
             {step === 1 ? (
               <div className="space-y-6">
+                {draft.family ? (
+                  <p className="flex items-baseline justify-between gap-4 border-b border-line pb-4 text-[15px]">
+                    <span className="text-ink-2">
+                      Enquiry: <strong className="font-semibold text-ink">{draft.family}</strong>
+                    </span>
+                    <button type="button" onClick={() => goto(0)} className="tap shrink-0 text-[13px] font-semibold underline underline-offset-2 hover:decoration-marigold">
+                      Change
+                    </button>
+                  </p>
+                ) : null}
                 <Field group label="Annual quantity" optional={volumeOptional} error={errors.quantityBand}>
                   <RadioGrid name="Annual quantity" options={rfqQuantityBands} value={draft.quantityBand} onChange={set("quantityBand")} columns={3} />
                 </Field>

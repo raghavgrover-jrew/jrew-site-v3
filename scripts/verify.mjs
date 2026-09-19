@@ -72,6 +72,16 @@ const browser = await chromium.launch();
     const missingAlt = await page.evaluate(() => [...document.images].filter((i) => !i.hasAttribute("alt")).length);
     note(missingAlt === 0, "G7", `alt attributes complete on ${route}`, missingAlt ? `${missingAlt} missing` : "");
 
+    // G5 every image actually decodes. A lazily loaded image whose box is auto on both axes lays
+    // out at 0x0, so it never intersects the viewport and never loads at all: the markup, the alt
+    // check and a screenshot of the surrounding text all look fine while the picture is missing.
+    const undecoded = await page.evaluate(async () => {
+      const imgs = [...document.images];
+      for (let t = 0; t < 60 && !imgs.every((i) => i.complete); t++) await new Promise((r) => setTimeout(r, 100));
+      return imgs.filter((i) => !i.complete || i.naturalWidth === 0).map((i) => i.getAttribute("src") || "(no src)");
+    });
+    note(undecoded.length === 0, "G5", `every image decodes on ${route}`, undecoded.join(" | "));
+
     // G12 SEO
     const seo = await page.evaluate(() => {
       const ld = [...document.querySelectorAll('script[type="application/ld+json"]')].map((s) => {
@@ -136,7 +146,11 @@ const browser = await chromium.launch();
     note(rails.eyebrows <= Math.ceil(rails.sections / 3), "G14", `eyebrow budget on ${route}`, `${rails.eyebrows} of ceil(${rails.sections}/3)=${Math.ceil(rails.sections / 3)}`);
     note(rails.marigoldTypeOnPaper === 0, "G14", `no marigold type on paper on ${route}`, `${rails.marigoldTypeOnPaper}`);
     note(rails.wraps.length === 0, "G14", `no wrapped CTA labels at 1440 on ${route}`, rails.wraps.join(" | "));
-    note(rails.quoteLabels.every((l) => l === "Request a quote" || l === "Submit RFQ"), "G14", `one quote CTA label on ${route}`, rails.quoteLabels.join(" | "));
+    // One quote verb across the site. The primary CTA is always the bare "Request a quote"; a
+    // section-level link may name its family ("Request a quote for axles") so a screen-reader link
+    // list does not read five identical labels pointing at five different preselections.
+    const QUOTE_LABEL = /^Request a quote( for [a-z][a-z ]*)?$|^Submit RFQ$/;
+    note(rails.quoteLabels.every((l) => QUOTE_LABEL.test(l)), "G14", `one quote CTA label on ${route}`, rails.quoteLabels.join(" | "));
     note(rails.dashes === 0, "G14", `no em or en dashes rendered on ${route}`, `${rails.dashes}`);
   }
 

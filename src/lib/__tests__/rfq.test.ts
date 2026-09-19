@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { validateRfqStep, buildContactPayload, rfqFamilies, type RfqDraft } from "../rfq";
+import { validateRfqStep, buildContactPayload, familyFromSlug, rfqFamilies, rfqFamilySlugs, rfqHrefFor, type RfqDraft, type RfqFamilySlug } from "../rfq";
+import { rfqHref } from "../site";
+import { families } from "@/data/families";
 
 const full: RfqDraft = {
   family: "Axle and steering assemblies",
@@ -54,5 +56,38 @@ describe("buildContactPayload", () => {
     for (const s of ["Enquiry: Axle and steering assemblies", "Quantity band: 500-5,000 a year", "Material / grade: EN19", "Timeline: Within 3 months", "Two part numbers"]) expect(p.message).toContain(s);
     const q = buildContactPayload({ ...full, grade: "", notes: "" });
     expect(q.message).not.toContain("Material / grade:");
+  });
+});
+
+describe("family preselection from a product link", () => {
+  it("maps every slug to a family the picker actually offers", () => {
+    for (const [slug, family] of Object.entries(rfqFamilySlugs)) {
+      expect(rfqFamilies).toContain(family);
+      expect(familyFromSlug(slug)).toBe(family);
+    }
+  });
+  it("covers every product family on the site", () => {
+    for (const f of families) {
+      const slug = Object.keys(rfqFamilySlugs).find((k) => rfqFamilySlugs[k as RfqFamilySlug] === f.name);
+      expect(slug, `no RFQ slug for family "${f.name}"`).toBeTruthy();
+    }
+  });
+  it("tolerates case and padding, rejects anything else", () => {
+    expect(familyFromSlug(" Axles ")).toBe("Axle and steering assemblies");
+    expect(familyFromSlug("")).toBeUndefined();
+    expect(familyFromSlug(null)).toBeUndefined();
+    expect(familyFromSlug("pumps")).toBeUndefined();
+    expect(familyFromSlug("constructor")).toBeUndefined();
+    expect(familyFromSlug("__proto__")).toBeUndefined();
+  });
+  it("builds a link that lands on the RFQ panel", () => {
+    expect(rfqHrefFor("stakon")).toBe("/contact?enquiry=stakon#rfq");
+    expect(rfqHrefFor("masts").startsWith(rfqHref.replace("#rfq", ""))).toBe(true);
+    expect(rfqHrefFor("masts").endsWith("#rfq")).toBe(true);
+  });
+  it("a preselected draft still has to answer the remaining steps", () => {
+    const draft = { family: familyFromSlug("masts") };
+    expect(validateRfqStep(1, draft)).toEqual({});
+    expect(validateRfqStep(2, draft)).toHaveProperty("quantityBand");
   });
 });

@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { TwoToneHeading } from "@/components/ui/TwoToneHeading";
 import { SectionShell } from "@/components/ui/SectionShell";
 import { Button } from "@/components/ui/Button";
+import { rfqHrefFor } from "@/lib/rfq";
 import { stakon } from "@/data/stakon";
 import { contact } from "@/lib/site";
 
@@ -35,7 +36,7 @@ export function StakonBand({ full = false }: { full?: boolean }) {
             </Button>
           ) : (
             <div className="mt-8 flex flex-wrap gap-3">
-              <Button href="/contact#rfq">Request a quote</Button>
+              <Button href={rfqHrefFor("stakon")}>Request a quote</Button>
               <Button href={contact.stakonUrl} variant="secondary" external>
                 stakon.in
               </Button>

@@ -14,6 +14,15 @@ export const navLinks = [
   { label: "Contact", href: "/contact" },
 ] as const;
 
+/**
+ * The home page's own title and description. They are the layout defaults too, so they live here
+ * rather than inline in layout.tsx: a route that forgets its own metadata falls back to these, and
+ * the metadata test asserts that none of them does.
+ */
+export const siteTitle = "JREW Engineering | Masts, axles, attachments and machined components for OEMs";
+export const siteDescription =
+  "Precision-machined components, sub-assemblies and attachments for construction, material handling, agriculture and rail OEMs. Four plants in India, exporting since 2010.";
+
 export const rfqHref = "/contact#rfq";
 
 /** Every indexable route, used by sitemap.ts and the verify harness. */

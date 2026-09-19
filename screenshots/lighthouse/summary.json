@@ -2,24 +2,24 @@
   {
     "route": "/",
     "form": "desktop",
-    "perf": 99,
+    "perf": 100,
     "a11y": 100,
     "bp": 100,
     "seo": 100,
-    "lcp": 0.87,
+    "lcp": 0.14,
     "cls": 0,
-    "tbt": 0
+    "tbt": 7
   },
   {
     "route": "/",
     "form": "mobile",
-    "perf": 92,
+    "perf": 95,
     "a11y": 100,
     "bp": 100,
     "seo": 100,
-    "lcp": 3.4,
+    "lcp": 1.61,
     "cls": 0,
-    "tbt": 37
+    "tbt": 241
   },
   {
     "route": "/products/attachments",
@@ -28,20 +28,20 @@
     "a11y": 100,
     "bp": 100,
     "seo": 100,
-    "lcp": 0.6,
+    "lcp": 0.09,
     "cls": 0,
     "tbt": 0
   },
   {
     "route": "/products/attachments",
     "form": "mobile",
-    "perf": 93,
+    "perf": 99,
     "a11y": 100,
     "bp": 100,
     "seo": 100,
-    "lcp": 3.24,
+    "lcp": 1.54,
     "cls": 0,
-    "tbt": 14
+    "tbt": 55
   },
   {
     "route": "/contact",
@@ -50,7 +50,7 @@
     "a11y": 100,
     "bp": 100,
     "seo": 100,
-    "lcp": 0.59,
+    "lcp": 0.09,
     "cls": 0,
     "tbt": 0
   },
@@ -61,8 +61,8 @@
     "a11y": 100,
     "bp": 100,
     "seo": 100,
-    "lcp": 2.11,
+    "lcp": 1.55,
     "cls": 0,
-    "tbt": 35
+    "tbt": 54
   }
 ]

@@ -8,6 +8,7 @@ import { TwoToneHeading } from "@/components/ui/TwoToneHeading";
 import { SectionShell } from "@/components/ui/SectionShell";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Button } from "@/components/ui/Button";
+import { rfqHrefFor } from "@/lib/rfq";
 import { ComponentStories } from "@/components/sections/ComponentStories";
 import { StakonBand } from "@/components/sections/StakonBand";
 import { JsonLd, breadcrumbSchema, productSchema } from "@/lib/jsonld";
@@ -67,6 +68,9 @@ export default function ProductsPage() {
                 </li>
               ))}
             </ul>
+            <Button href={rfqHrefFor("masts")} variant="ghost" className="mt-7">
+              Request a quote for masts
+            </Button>
           </div>
           <div className="relative mx-auto aspect-[3/4] w-full max-w-[20rem] bg-paper">
             <Image src={mastFamily.image} alt="Two-stage forklift mast assembly with carriage" fill sizes="(min-width: 1024px) 30vw, 70vw" className="object-contain p-6" />
@@ -92,6 +96,9 @@ export default function ProductsPage() {
                 </li>
               ))}
             </ul>
+            <Button href={rfqHrefFor("axles")} variant="ghost" className="mt-7">
+              Request a quote for axles
+            </Button>
           </div>
         </div>
       </SectionShell>
@@ -143,6 +150,9 @@ export default function ProductsPage() {
         <div className="relative mt-4 aspect-[16/9] w-full overflow-hidden sm:aspect-[3/1]">
           <Image src="/images/forged/forging-shop-panorama.jpg" alt="Forging shop with hooks and forks in process" fill sizes="100vw" className="object-cover object-[50%_45%]" />
         </div>
+        <Button href={rfqHrefFor("forged")} variant="ghost" className="mt-8">
+          Request a quote for forged products
+        </Button>
       </SectionShell>
 
       <StakonBand />

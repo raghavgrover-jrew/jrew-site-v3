@@ -7,7 +7,7 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { attachments, attachmentCategories, type MachineCategory } from "@/data/attachments";
-import { rfqHref } from "@/lib/site";
+import { rfqHrefFor } from "@/lib/rfq";
 import { cn } from "@/lib/utils";
 
 type Filter = MachineCategory | "all";
@@ -98,7 +98,7 @@ export function AttachmentCatalog() {
                 </div>
               </dl>
               <div className="mt-7 flex flex-wrap items-center gap-3">
-                <Link href={rfqHref} className="inline-flex min-h-[44px] items-center bg-ink px-5 text-[15px] font-semibold text-on-ink hover:bg-ink-panel-2">
+                <Link href={rfqHrefFor("attachments")} className="inline-flex min-h-[44px] items-center bg-ink px-5 text-[15px] font-semibold text-on-ink hover:bg-ink-panel-2">
                   Request a quote
                 </Link>
                 <button type="button" onClick={() => dialogRef.current?.close()} className="inline-flex min-h-[44px] items-center border border-ink px-5 text-[15px] font-semibold hover:bg-card-warm">

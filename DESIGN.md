@@ -113,3 +113,12 @@ Chrome: `Navbar`, `Footer`. Primitives: `TwoToneHeading`, `Eyebrow`, `SectionShe
 - **Photographs.** Component cut-outs sit on paper in 4:3 boxes; the forged hook, forks, the suspension bearing and the front axle are rendered from the print pages (the extracted separations were inverted, and the axle was unclipped). STAKON cut-outs are trimmed to their visible bounds and bottom-aligned. The hero photograph is served at full width and positioned at 82 percent so the signage reads.
 - **Favicon and social cards.** `src/app/icon.svg` is the wordmark's J in marigold on ink; every route has its own Open Graph image in Poppins 800 with its two-tone headline.
 - **Security headers.** CSP (self, inline scripts and styles only), HSTS without preload, COOP same-origin, `X-Frame-Options`, `nosniff`, one-day caching with a week of stale-while-revalidate on public assets, `no-store` on the form API.
+
+### Revision 2026-09-19, round 6
+
+- Sector line art sits in a frame with a stated height (`h-40 sm:h-48 lg:h-52`) rather than sizing
+  itself. Besides fixing the images that never loaded, it holds the row height before the art
+  arrives, so the section does not reflow.
+- A quote CTA inside a product section may name its family. The primary CTA stays the bare
+  "Request a quote"; only section-level ghost links take the qualifier, and the link preselects that
+  family in the RFQ so the label describes what happens.

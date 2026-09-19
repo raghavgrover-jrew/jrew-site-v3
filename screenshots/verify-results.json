@@ -1,6 +1,6 @@
 {
   "base": "http://localhost:3201",
-  "at": "2026-09-19T06:14:50.086Z",
+  "at": "2026-09-19T18:03:11.278Z",
   "results": [
     {
       "ok": true,
@@ -18,6 +18,12 @@
       "ok": true,
       "gate": "G7",
       "label": "alt attributes complete on /",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G5",
+      "label": "every image decodes on /",
       "detail": ""
     },
     {
@@ -96,7 +102,7 @@
       "ok": true,
       "gate": "G14",
       "label": "one quote CTA label on /",
-      "detail": "Request a quote"
+      "detail": "Request a quote | Request a quote for components"
     },
     {
       "ok": true,
@@ -120,6 +126,12 @@
       "ok": true,
       "gate": "G7",
       "label": "alt attributes complete on /products",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G5",
+      "label": "every image decodes on /products",
       "detail": ""
     },
     {
@@ -198,7 +210,7 @@
       "ok": true,
       "gate": "G14",
       "label": "one quote CTA label on /products",
-      "detail": "Request a quote"
+      "detail": "Request a quote | Request a quote for masts | Request a quote for axles | Request a quote for components | Request a quote for forged products"
     },
     {
       "ok": true,
@@ -222,6 +234,12 @@
       "ok": true,
       "gate": "G7",
       "label": "alt attributes complete on /products/attachments",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G5",
+      "label": "every image decodes on /products/attachments",
       "detail": ""
     },
     {
@@ -324,6 +342,12 @@
       "ok": true,
       "gate": "G7",
       "label": "alt attributes complete on /stakon",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G5",
+      "label": "every image decodes on /stakon",
       "detail": ""
     },
     {
@@ -436,6 +460,12 @@
     },
     {
       "ok": true,
+      "gate": "G5",
+      "label": "every image decodes on /capabilities",
+      "detail": ""
+    },
+    {
+      "ok": true,
       "gate": "G12",
       "label": "unique title on /capabilities",
       "detail": "Capabilities | JREW Engineering"
@@ -528,6 +558,12 @@
       "ok": true,
       "gate": "G7",
       "label": "alt attributes complete on /quality",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G5",
+      "label": "every image decodes on /quality",
       "detail": ""
     },
     {
@@ -628,6 +664,12 @@
     },
     {
       "ok": true,
+      "gate": "G5",
+      "label": "every image decodes on /facilities",
+      "detail": ""
+    },
+    {
+      "ok": true,
       "gate": "G12",
       "label": "unique title on /facilities",
       "detail": "Facilities | JREW Engineering"
@@ -720,6 +762,12 @@
       "ok": true,
       "gate": "G7",
       "label": "alt attributes complete on /about",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G5",
+      "label": "every image decodes on /about",
       "detail": ""
     },
     {
@@ -820,6 +868,12 @@
     },
     {
       "ok": true,
+      "gate": "G5",
+      "label": "every image decodes on /contact",
+      "detail": ""
+    },
+    {
+      "ok": true,
       "gate": "G12",
       "label": "unique title on /contact",
       "detail": "Contact | JREW Engineering"
@@ -916,6 +970,12 @@
     },
     {
       "ok": true,
+      "gate": "G5",
+      "label": "every image decodes on /careers",
+      "detail": ""
+    },
+    {
+      "ok": true,
       "gate": "G12",
       "label": "unique title on /careers",
       "detail": "Careers | JREW Engineering"
@@ -1008,6 +1068,12 @@
       "ok": true,
       "gate": "G7",
       "label": "alt attributes complete on /privacy",
+      "detail": ""
+    },
+    {
+      "ok": true,
+      "gate": "G5",
+      "label": "every image decodes on /privacy",
       "detail": ""
     },
     {
@@ -1182,6 +1248,36 @@
       "ok": true,
       "gate": "G11",
       "label": "internal link /contact",
+      "detail": 200
+    },
+    {
+      "ok": true,
+      "gate": "G11",
+      "label": "internal link /contact?enquiry=axles",
+      "detail": 200
+    },
+    {
+      "ok": true,
+      "gate": "G11",
+      "label": "internal link /contact?enquiry=components",
+      "detail": 200
+    },
+    {
+      "ok": true,
+      "gate": "G11",
+      "label": "internal link /contact?enquiry=forged",
+      "detail": 200
+    },
+    {
+      "ok": true,
+      "gate": "G11",
+      "label": "internal link /contact?enquiry=masts",
+      "detail": 200
+    },
+    {
+      "ok": true,
+      "gate": "G11",
+      "label": "internal link /contact?enquiry=stakon",
       "detail": 200
     },
     {
@@ -1578,7 +1674,7 @@
       "ok": true,
       "gate": "G10",
       "label": "RFQ submits (console fallback or SMTP)",
-      "detail": "{\"success\":true,\"delivered\":\"console\",\"reference\":\"JREW-20260919-CCZG2\"}"
+      "detail": "{\"success\":true,\"delivered\":\"console\",\"reference\":\"JREW-20260919-Y6V9K\"}"
     },
     {
       "ok": true,

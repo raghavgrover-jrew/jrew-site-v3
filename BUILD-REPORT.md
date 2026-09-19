@@ -202,3 +202,22 @@ Source: `~/Documents/Codex/2026-09-19/check-the-v3-build-on-jrew/outputs/JREW-V3
 
 Applied: marker stroke hugs the text; `@layer` fix so section padding overrides work on nine routes; nav band opaque over the hero; logo wall fits at 390 with two-column phones; association marks as paper-on-ink with the divider paths stripped; Escorts Kubota, Preet and TÜV re-rendered; favicon; footer duplicate removed; hero crop and full-width source; stat band rules; family grid without the orphan; component cut-outs on paper; forged hook, forks, bearing and the axle re-rendered from the print pages; STAKON renders un-swapped, trimmed, bottom-aligned, units lower case, headline two lines; capabilities partnership and case-study layouts re-flowed to the brochure's order with no dead columns; quality inspection layout re-flowed, TÜV umlaut; facilities cards 8/4 with the photo right, map limited to India with true-position labelled pins; about timeline centred and vertical under reduced motion, Godrej award photo attached, checkerboard order on phones, Caterpillar tiles readable at 390; contact RFQ card top-aligned, Direct card beside the enquiry form, review rows split, step indicator 2x2 on phones; careers photo at 4:3 with the office interior below, first invalid field focused; 404 title and links; attachment units (m³, ±, °), dialog two-column with a close button, count line, pill grammar. Line-art SVG weight and cut-out normalisation remain on the backlog.
 
+## 12. Backlog round and the missing-image defect (2026-09-19)
+
+Worked after section 10. Not from the Codex audit.
+
+| Area | Change | Files |
+|---|---|---|
+| Home page defect | Four sector illustrations had never rendered: `h-auto ... w-auto` gives an unloaded lazy image a 0x0 box, which never intersects the viewport, so it is never fetched. The frame now carries the height. | `src/components/sections/Sectors.tsx` |
+| Gate | G5 "every image decodes" per route, after the scroll sweep, failing on any `naturalWidth === 0` | `scripts/verify.mjs` |
+| Asset weight | Line art re-emitted: RDP at 0.08 user units, origin-translated, relative commands, 1dp. 1,724 KB to 486 KB on disk, 439 KB to 124 KB gzipped. Verified by rendering both at display size and comparing after a downsample: worst 2.68% of inked pixels differ at all. | `public/lineart/*.svg` |
+| RFQ | Family preselection from a product CTA: `/contact?enquiry=axles#rfq` answers step 1 and opens at Requirements, which states the family with a Change control. Derived from the URL through `useSyncExternalStore`, never written into state, so the contact page stays statically prerendered and there is no hydration mismatch. The entry point rides along in the mail's source line. | `src/lib/rfq.ts`, `src/components/ui/RfqFlow.tsx` |
+| CTAs | Quote links that name their family on masts, axles, components, forged, the STAKON band and the attachment dialog | `src/app/products/page.tsx`, `src/components/sections/ComponentStories.tsx`, `src/components/sections/StakonBand.tsx`, `src/components/ui/AttachmentCatalog.tsx` |
+| Favicon | `metadata.icons` overrode the `app/icon.svg` convention, so the round 5 mark never shipped and the head carried the full wordmark. Entry removed. | `src/app/layout.tsx` |
+| Metadata | `siteTitle` and `siteDescription` single-sourced; 32 assertions over the ten sub-routes (own title and description, length, distinctness, self-canonical, card matches the page) | `src/lib/site.ts`, `src/app/layout.tsx`, `src/app/__tests__/metadata.test.ts` |
+| Rail | G14 quote label accepts `Request a quote for <family>`; five identical labels to five different preselections would read badly in a link list | `scripts/verify.mjs` |
+
+Tests: 33 to 70.
+
+Backlog still open: landing pages for commercial searches; attachment thumbnails could carry a
+stated scale if Raghav wants one, which needs real dimensions rather than a visual guess.

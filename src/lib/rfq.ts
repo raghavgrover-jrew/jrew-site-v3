@@ -31,6 +31,36 @@ export const rfqQuantityBands = ["Prototype / under 50", "50-500 a year", "500-5
 export const rfqDrawingStatus = ["2D and 3D available", "2D drawings only", "Sample part only", "Co-development needed"] as const;
 export const rfqTimelines = ["Immediate requirement", "Within 3 months", "3-6 months", "Exploratory", "Not applicable"] as const;
 
+/**
+ * Slugs a product CTA can put in the URL so the RFQ opens with step 1 already answered:
+ * /contact?enquiry=axles#rfq. The first six match the ids in data/families.ts.
+ */
+export const rfqFamilySlugs = {
+  masts: "Forklift mast systems and carriage assemblies",
+  axles: "Axle and steering assemblies",
+  components: "Structural and precision components",
+  attachments: "Attachments and work tools",
+  forged: "Forged products and special steel profiles",
+  stakon: "STAKON material handling equipment",
+  codevelopment: "Co-development / new product introduction",
+  visit: "Plant visit or supplier audit",
+} as const satisfies Record<string, (typeof rfqFamilies)[number]>;
+
+export type RfqFamilySlug = keyof typeof rfqFamilySlugs;
+
+/** The family a URL slug names, or undefined for anything unrecognised. */
+export function familyFromSlug(slug?: string | null): (typeof rfqFamilies)[number] | undefined {
+  if (!slug) return undefined;
+  const key = slug.trim().toLowerCase();
+  // own-property only, so "constructor" and friends cannot resolve to a family
+  return Object.prototype.hasOwnProperty.call(rfqFamilySlugs, key) ? rfqFamilySlugs[key as RfqFamilySlug] : undefined;
+}
+
+/** Link to the RFQ with one family preselected. */
+export function rfqHrefFor(slug: RfqFamilySlug): string {
+  return `/contact?enquiry=${slug}#rfq`;
+}
+
 /** A plant visit, audit or co-development enquiry has no volume yet; step 2 becomes optional. */
 export function volumeOptionalFor(family?: string): boolean {
   return family === "Plant visit or supplier audit" || family === "Co-development / new product introduction";
