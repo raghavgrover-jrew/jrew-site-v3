@@ -60,7 +60,7 @@ export function Hero() {
             fill
             priority
             fetchPriority="high"
-            sizes="100vw"
+            sizes="(min-width: 1024px) 45vw, 100vw"
             className="object-cover object-[82%_50%]"
           />
         </div>

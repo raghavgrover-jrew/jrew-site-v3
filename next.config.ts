@@ -5,9 +5,13 @@ import type { NextConfig } from "next";
 // next/font plus Tailwind need it for styles. Everything else is locked to this origin; no remote
 // scripts, frames, objects or connections are permitted. HSTS carries no `preload` until the whole
 // jrew.co.in zone is confirmed HTTPS-only (see BUILD-REPORT, Needs approval).
+// React's development build uses eval() to rebuild call stacks for the error overlay. Without this
+// the overlay reports a CSP violation on every page in `next dev`. The production header is unchanged.
+const devEval = process.env.NODE_ENV === "production" ? "" : " 'unsafe-eval'";
+
 const csp = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline'",
+  `script-src 'self' 'unsafe-inline'${devEval}`,
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob:",
   "font-src 'self' data:",

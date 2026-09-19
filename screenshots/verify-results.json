@@ -1,6 +1,6 @@
 {
   "base": "http://localhost:3201",
-  "at": "2026-09-19T18:03:11.278Z",
+  "at": "2026-09-19T18:28:47.454Z",
   "results": [
     {
       "ok": true,
@@ -1674,7 +1674,7 @@
       "ok": true,
       "gate": "G10",
       "label": "RFQ submits (console fallback or SMTP)",
-      "detail": "{\"success\":true,\"delivered\":\"console\",\"reference\":\"JREW-20260919-Y6V9K\"}"
+      "detail": "{\"success\":true,\"delivered\":\"console\",\"reference\":\"JREW-20260919-5MSSJ\"}"
     },
     {
       "ok": true,

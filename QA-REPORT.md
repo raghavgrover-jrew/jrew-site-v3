@@ -388,6 +388,41 @@ look like. Normalising further would mean implying a size relationship the broch
   identical link labels pointing at five different preselections would read badly in a screen
   reader's link list; the rail still catches any other wording.
 
+### Console audit, every route (round 6b)
+
+Raghav reported errors in the preview pane. Swept all eleven routes plus a deliberate 404 at 1440,
+scrolling each end to end, collecting console errors and warnings, uncaught page errors, failed
+requests and any 4xx or 5xx response. Three real items, all fixed:
+
+| Item | Cause | Fix |
+|---|---|---|
+| CSP violation on every page in `next dev` | React's development build uses `eval()` to rebuild call stacks for its error overlay; the CSP has no `'unsafe-eval'` | `'unsafe-eval'` added for development only; the production header is byte-identical to before and carries no `'unsafe-eval'` |
+| Four customer marks reported a width/height mismatch | All 24 logos were declared to `next/image` as 140x56 while the files range from 60x58 to 800x461, so a clamped max-height left one axis matching the declaration and the other not | Each mark now declares its own size, read from the file; a data test asserts the two stay in step |
+| Hero over-fetched on desktop | `sizes="100vw"` on an image that occupies the 9fr column of an 11/9 grid from 1024px up | `sizes="(min-width: 1024px) 45vw, 100vw"` |
+
+After the fixes the sweep reports nothing on any route, on the dev server and the production build,
+apart from the 404 raised on purpose by the missing-page probe.
+
+Gates re-run on the production build after these fixes:
+
+```
+282/282 checks passed
+```
+
+```
+route | form | perf | a11y | best | seo | LCP s | CLS | TBT ms
+/ | desktop | 100 | 100 | 100 | 100 | 0.18 | 0 | 2
+/ | mobile | 93 | 100 | 100 | 100 | 1.66 | 0 | 276
+/products/attachments | desktop | 100 | 100 | 100 | 100 | 0.11 | 0 | 0
+/products/attachments | mobile | 99 | 100 | 100 | 100 | 1.57 | 0 | 67
+/contact | desktop | 100 | 100 | 100 | 100 | 0.09 | 0 | 0
+/contact | mobile | 99 | 100 | 100 | 100 | 1.57 | 0 | 57
+
+ALL LIGHTHOUSE TARGETS MET
+```
+
+Lint clean, 71 tests, build exit 0.
+
 ### Gates after round 6
 
 ```
@@ -419,7 +454,7 @@ Tests: 70 passed across four files.
 |---|---|
 | G1 build | exit 0, all routes prerendered |
 | G2 lint | 0 problems |
-| G3 tests | 70 passed |
+| G3 tests | 71 passed |
 | G4 to G12, G14 | 282 of 282 checks (round 6) |
 | G13 Lighthouse | Observed throttling: every target met (mobile LCP 1.54 to 1.67 s, desktop 0.08 to 0.10 s, CLS 0, a11y 100). Lantern simulation on the local HTTP/1.1 server: contact clears 2.5 s, home and attachments mobile 3.2 to 3.4 s (rounds 1, 3 and 5); to be re-measured on the Vercel preview |
 

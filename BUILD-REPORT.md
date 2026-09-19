@@ -141,11 +141,13 @@ Carried from PLAN.md, updated for what the build resolved.
 ## 8. Deploy checklist (Gate 2)
 
 1. Raghav confirms Gate 2.
-2. `npx vercel` from the repo root, answer "set up and deploy", **create a new project** (never link `prj_nX56I20mK34TOOyN9YZi73S22LZf`), accept the detected Next.js settings. Preview only: no `--prod`, no domain, no DNS.
-3. Set the six SMTP variables in the new project (preview environment) with values from Raghav, or leave unset for the console fallback and say so on the preview.
-4. Set `NEXT_PUBLIC_SITE_URL` to the preview URL for correct canonical and og:image on the preview (the production value will be `https://jrew.co.in` when that day comes).
-5. Verify the live URL: every route, images, forms (console fallback or SMTP receipt), `BASE=<preview> node scripts/verify.mjs`, `BASE=<preview> node scripts/lighthouse.mjs`.
-6. Record the project name and URL in `~/cowork-brain/memory/technical/jrew-site-v3-website.md` and in QA-REPORT.md.
+2. Sign in once: `npx vercel login` in a terminal (browser authentication; only Raghav can complete it), or export `VERCEL_TOKEN`.
+3. `scripts/deploy-preview.sh` from the repo root. It builds first, refuses `--prod`, refuses a link to `prj_nX56I20mK34TOOyN9YZi73S22LZf`, and prints the preview URL. Preview only: no domain, no DNS.
+   Attempted 2026-09-19: refused at step 2, the saved Vercel login has expired. Nothing was deployed.
+4. Set the six SMTP variables in the new project (preview environment) with values from Raghav. There is no fallback on Vercel: `ALLOW_CONSOLE_DELIVERY` is ignored there on purpose, so until SMTP is set both forms answer 500 and say on screen that the message was not sent.
+5. Set `NEXT_PUBLIC_SITE_URL` to the preview URL for correct canonical and og:image on the preview (the production value will be `https://jrew.co.in` when that day comes).
+6. Verify the live URL: every route, images, forms (console fallback or SMTP receipt), `BASE=<preview> node scripts/verify.mjs`, `BASE=<preview> node scripts/lighthouse.mjs`.
+7. Record the project name and URL in `~/cowork-brain/memory/technical/jrew-site-v3-website.md` and in QA-REPORT.md.
 
 ## 9. Repo map
 
@@ -221,3 +223,13 @@ Tests: 33 to 70.
 
 Backlog still open: landing pages for commercial searches; attachment thumbnails could carry a
 stated scale if Raghav wants one, which needs real dimensions rather than a visual guess.
+
+### Console audit (round 6b)
+
+| Area | Change | Files |
+|---|---|---|
+| CSP | `'unsafe-eval'` in development only, for React's error overlay; the production header is unchanged | `next.config.ts` |
+| Logo dimensions | Each customer mark declares its own intrinsic size instead of a shared 140x56, so `next/image` reserves the right box; guarded by a data test | `src/data/customers.ts`, `src/components/sections/Trusted.tsx`, `src/data/__tests__/integrity.test.ts` |
+| Hero | `sizes` matches the 9/20 column it occupies from 1024px up, rather than claiming the full viewport | `src/components/sections/Hero.tsx` |
+
+Console is clean on all eleven routes, dev and production, apart from the deliberate 404 probe.

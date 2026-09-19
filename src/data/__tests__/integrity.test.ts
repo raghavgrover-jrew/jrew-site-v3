@@ -98,3 +98,25 @@ describe("content rails", () => {
     expect(hits).toEqual([]);
   });
 });
+
+describe("logo dimensions", () => {
+  // next/image reserves the box from the declared width and height. A shared nominal size makes
+  // that box the wrong shape for most of the wall and, when a max-height then clamps one axis,
+  // next/image reports the mismatch on every page that renders the logo.
+  it("matches each file's own intrinsic size", () => {
+    const wrong: string[] = [];
+    for (const c of customers) {
+      const head = fs.readFileSync(path.join(ROOT, "public", c.logo), "utf8").slice(0, 800);
+      const w = head.match(/\swidth="([\d.]+)/);
+      const h = head.match(/\sheight="([\d.]+)/);
+      if (!w || !h) {
+        wrong.push(`${c.id}: file declares no width/height`);
+        continue;
+      }
+      if (Math.round(Number(w[1])) !== c.width || Math.round(Number(h[1])) !== c.height) {
+        wrong.push(`${c.id}: data ${c.width}x${c.height}, file ${w[1]}x${h[1]}`);
+      }
+    }
+    expect(wrong).toEqual([]);
+  });
+});
