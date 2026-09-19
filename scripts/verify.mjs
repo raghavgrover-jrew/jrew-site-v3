@@ -33,11 +33,18 @@ const SSR = {
   "/privacy": ["Who is responsible", "How long we keep it", "Your rights"],
 };
 
+// A Vercel preview sits behind deployment protection. PREVIEW_BYPASS carries the project's
+// automation bypass secret so the harness can drive the real deployment; it is never committed.
+const bypass = process.env.PREVIEW_BYPASS
+  ? { "x-vercel-protection-bypass": process.env.PREVIEW_BYPASS, "x-vercel-set-bypass-cookie": "true" }
+  : undefined;
+
 const browser = await chromium.launch();
+const newContext = (opts = {}) => browser.newContext(bypass ? { ...opts, extraHTTPHeaders: bypass } : opts);
 
 // ── Pass 1: desktop 1440, console, network, screenshots, axe, alt, SEO, rails ──────────────
 {
-  const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 });
+  const ctx = await newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 });
   const page = await ctx.newPage();
   const consoleIssues = [];
   const bad = [];
@@ -248,7 +255,7 @@ const browser = await chromium.launch();
 
 // ── Pass 2: 1920 fold screenshots ────────────────────────────────────────────
 {
-  const ctx = await browser.newContext({ viewport: { width: 1920, height: 1080 } });
+  const ctx = await newContext({ viewport: { width: 1920, height: 1080 } });
   const page = await ctx.newPage();
   for (const route of ROUTES) {
     await page.goto(BASE + route, { waitUntil: "networkidle" });
@@ -260,7 +267,7 @@ const browser = await chromium.launch();
 
 // ── Pass 3: reduced motion ────────────────────────────────────────────────────
 {
-  const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: "reduce" });
+  const ctx = await newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: "reduce" });
   const page = await ctx.newPage();
   await page.goto(BASE + "/", { waitUntil: "networkidle" });
   await page.waitForTimeout(700);
@@ -278,7 +285,7 @@ const browser = await chromium.launch();
 
 // ── Pass 4: 390 and 768 ───────────────────────────────────────────────────────
 for (const [w, h, mobile] of [[390, 844, true], [768, 1024, false]]) {
-  const ctx = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 2, isMobile: mobile, hasTouch: mobile });
+  const ctx = await newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 2, isMobile: mobile, hasTouch: mobile });
   const page = await ctx.newPage();
   for (const route of ROUTES) {
     await page.goto(BASE + route, { waitUntil: "networkidle" });
@@ -328,7 +335,7 @@ for (const [w, h, mobile] of [[390, 844, true], [768, 1024, false]]) {
 
 // ── Pass 5: forms ─────────────────────────────────────────────────────────────
 {
-  const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+  const ctx = await newContext({ viewport: { width: 1440, height: 900 } });
   const page = await ctx.newPage();
   await page.goto(BASE + "/contact", { waitUntil: "networkidle" });
   // validation: Continue without a choice

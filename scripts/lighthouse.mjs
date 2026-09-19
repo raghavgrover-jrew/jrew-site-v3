@@ -7,6 +7,11 @@ const BASE = process.env.BASE || "http://localhost:3201";
 // "simulate" (Lantern, the Lighthouse default) or "devtools" (observed metrics under real throttling). See QA-REPORT.md.
 const THROTTLING = process.env.LH_THROTTLING ?? "simulate";
 const ROUTES = ["/", "/products/attachments", "/contact"];
+// A Vercel preview sits behind deployment protection; PREVIEW_BYPASS carries the project's
+// automation bypass secret so Lighthouse can reach the real deployment. Never committed.
+const extraHeaders = process.env.PREVIEW_BYPASS
+  ? ` --extra-headers='${JSON.stringify({ "x-vercel-protection-bypass": process.env.PREVIEW_BYPASS, "x-vercel-set-bypass-cookie": "true" })}'`
+  : "";
 fs.mkdirSync("screenshots/lighthouse", { recursive: true });
 const rows = [];
 for (const route of ROUTES) {
@@ -16,7 +21,7 @@ for (const route of ROUTES) {
     // Lighthouse occasionally fails to record the navigation trace (NO_NAVSTART); one retry is enough.
     for (let attempt = 1; attempt <= 2; attempt++) {
       try {
-        execSync(`npx --yes lighthouse "${BASE}${route}" ${preset} --only-categories=performance,accessibility,best-practices,seo --throttling-method=${THROTTLING} --output=json --output-path="${out}" --chrome-flags="--headless=new --no-sandbox" --quiet`, { stdio: "inherit" });
+        execSync(`npx --yes lighthouse "${BASE}${route}" ${preset} --only-categories=performance,accessibility,best-practices,seo --throttling-method=${THROTTLING} --output=json --output-path="${out}" --chrome-flags="--headless=new --no-sandbox" --quiet${extraHeaders}`, { stdio: "inherit" });
         break;
       } catch (e) {
         if (attempt === 2) throw e;

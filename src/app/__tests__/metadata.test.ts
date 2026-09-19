@@ -4,7 +4,7 @@
 //
 // The home page is deliberately absent: it has no metadata export because the layout defaults
 // (siteTitle / siteDescription) are its own. Every other route must override them.
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import type { Metadata } from "next";
 import { routes, siteDescription, siteTitle } from "@/lib/site";
 
@@ -70,5 +70,37 @@ describe("route metadata", () => {
     expect(str(og!.description)).toBe(str(meta!.description));
     expect(str(tw!.description)).toBe(str(meta!.description));
     expect(str(og!.title)).toContain(str(meta!.title));
+  });
+});
+
+// The canonical host is the only one that may be indexed. Everywhere else this is a preview of
+// copy nobody has signed off: the claims register is unsigned and the privacy notice is a draft.
+describe("indexing posture", () => {
+  it("names one canonical origin and derives the flag from it", async () => {
+    const { CANONICAL_ORIGIN, SITE_URL, isCanonicalHost } = await import("@/lib/site");
+    expect(CANONICAL_ORIGIN).toBe("https://jrew.co.in");
+    expect(isCanonicalHost).toBe(SITE_URL === CANONICAL_ORIGIN);
+  });
+
+  it("offers nothing to crawlers when the site is not on that origin", async () => {
+    vi.resetModules();
+    vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://jrew-site-v3.vercel.app");
+    const robots = (await import("../robots")).default;
+    const rules = robots().rules;
+    expect(Array.isArray(rules) ? rules : [rules]).toEqual([{ userAgent: "*", disallow: "/" }]);
+    vi.unstubAllEnvs();
+    vi.resetModules();
+  });
+
+  it("allows crawling on the canonical origin", async () => {
+    vi.resetModules();
+    vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://jrew.co.in");
+    const robots = (await import("../robots")).default;
+    const r = robots();
+    const rules = Array.isArray(r.rules) ? r.rules : [r.rules];
+    expect(rules[0]).toMatchObject({ userAgent: "*", allow: "/" });
+    expect(r.sitemap).toBe("https://jrew.co.in/sitemap.xml");
+    vi.unstubAllEnvs();
+    vi.resetModules();
   });
 });

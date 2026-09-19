@@ -3,7 +3,7 @@ import { Poppins, Source_Sans_3 } from "next/font/google";
 import { Navbar } from "@/components/chrome/Navbar";
 import { Footer } from "@/components/chrome/Footer";
 import { organizationSchema, webSiteSchema } from "@/lib/jsonld";
-import { SITE_URL, siteTitle, siteDescription } from "@/lib/site";
+import { SITE_URL, isCanonicalHost, siteTitle, siteDescription } from "@/lib/site";
 import "./globals.css";
 
 const poppins = Poppins({ weight: ["700", "800"], subsets: ["latin"], variable: "--font-poppins", display: "swap" });
@@ -16,7 +16,11 @@ export const metadata: Metadata = {
   description: siteDescription,
   metadataBase: new URL(SITE_URL),
   alternates: { canonical: "/" },
-  robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-snippet": -1, "max-image-preview": "large", "max-video-preview": -1 } },
+  // A preview host carries noindex in the head as well as in robots.txt: a crawler that reached a
+  // URL before reading robots.txt still gets told not to keep it.
+  robots: isCanonicalHost
+    ? { index: true, follow: true, googleBot: { index: true, follow: true, "max-snippet": -1, "max-image-preview": "large", "max-video-preview": -1 } }
+    : { index: false, follow: false, googleBot: { index: false, follow: false } },
   openGraph: {
     type: "website",
     locale: "en_IN",

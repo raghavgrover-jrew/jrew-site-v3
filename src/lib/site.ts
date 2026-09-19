@@ -1,8 +1,17 @@
 // Site-wide constants: routes, nav, contact. Content that belongs to the brochure lives in src/data.
 
-const rawSiteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://jrew.co.in").trim();
+// An explicit NEXT_PUBLIC_SITE_URL wins; that is how the real domain is named at build time.
+// Otherwise a Vercel build canonicalises to its own host, so every preview is self-consistent and
+// none of them claims to be jrew.co.in. A local build falls back to the real domain so the sitemap
+// and JSON-LD read the way they will in production.
+const vercelHost = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "";
+const rawSiteUrl = (process.env.NEXT_PUBLIC_SITE_URL || vercelHost || "https://jrew.co.in").trim();
 /** Absolute origin without a trailing slash; a bare host gets https. */
 export const SITE_URL = (/^https?:\/\//.test(rawSiteUrl) ? rawSiteUrl : `https://${rawSiteUrl}`).replace(/\/+$/, "");
+
+/** The only host that may be indexed. Anything else is a preview or a staging copy. */
+export const CANONICAL_ORIGIN = "https://jrew.co.in";
+export const isCanonicalHost = SITE_URL === CANONICAL_ORIGIN;
 
 export const navLinks = [
   { label: "Products", href: "/products" },
