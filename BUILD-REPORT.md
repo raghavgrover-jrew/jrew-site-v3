@@ -256,7 +256,8 @@ Open, and needing Raghav rather than code:
    CSP, which is the one console error on the deployment. Allowing `vercel.live` in the preview CSP
    was rejected, so this needs the toggle if the message should go.
 3. Whether to inline critical CSS to pull mobile LCP under 2.5 s on Lighthouse's mobile profile.
-4. Whether this preview should become a shareable URL, which means promoting a build to the
-   project's production alias. Not done: production deployment was never authorised.
+4. Whether the link should also live at the short, stable `jrew-site-v3.vercel.app`. The current URL
+   is public and shareable but changes with every deployment; pinning the short one means promoting a
+   build to the project's production alias, which has not been authorised.
 
 Current public preview: https://jrew-site-v3-hciu8da33-raghavgrover-7025s-projects.vercel.app
