@@ -242,8 +242,8 @@ the v1 project, no custom domain, jrew.co.in and its DNS untouched.
 | Point | State |
 |---|---|
 | Deployment type | Preview only. Vercel assigned the project's first build to production regardless of flags; that deployment was removed, and the production alias now answers 404 |
-| Access | Behind Vercel's deployment protection, so it opens for Raghav while signed in. `verify.mjs` and `lighthouse.mjs` accept `PREVIEW_BYPASS` to drive it; the secret is not in the repo |
-| Indexing | `robots.txt` disallows everything and the head carries `noindex, nofollow` on any host that is not jrew.co.in |
+| Access | Public at Raghav's request: deployment protection is off, so the link opens for anyone. `verify.mjs` and `lighthouse.mjs` still accept `PREVIEW_BYPASS` for a protected deployment; the secret is not in the repo |
+| Indexing | `robots.txt` disallows everything and the head carries `noindex, nofollow` on any host that is not jrew.co.in. Confirmed on the public URL, so the link is shareable without being indexable |
 | Canonical | A Vercel build with no explicit `NEXT_PUBLIC_SITE_URL` canonicalises to its own host |
 | Forms | 500 with an on-screen refusal and the fallback address, until the six SMTP variables are set. No console fallback on Vercel, by design |
 | Gates on the deployment | 279 of 280. The one failure is Vercel's own preview toolbar script being blocked by our CSP |
@@ -252,8 +252,11 @@ the v1 project, no custom domain, jrew.co.in and its DNS untouched.
 Open, and needing Raghav rather than code:
 
 1. The six SMTP values, so the forms work.
-2. Vercel's preview toolbar: turn it off in project settings, or allow `vercel.live` in the preview
-   CSP. The second would stop the preview rehearsing the real policy.
+2. Vercel's preview toolbar: a dashboard toggle, with no CLI equivalent. Its script is blocked by our
+   CSP, which is the one console error on the deployment. Allowing `vercel.live` in the preview CSP
+   was rejected, so this needs the toggle if the message should go.
 3. Whether to inline critical CSS to pull mobile LCP under 2.5 s on Lighthouse's mobile profile.
 4. Whether this preview should become a shareable URL, which means promoting a build to the
    project's production alias. Not done: production deployment was never authorised.
+
+Current public preview: https://jrew-site-v3-hciu8da33-raghavgrover-7025s-projects.vercel.app

@@ -496,6 +496,35 @@ POST /api/contact -> 500
 Every route answers 200 over HTTPS, a missing page answers 404, and the social card renders
 (`/opengraph-image`, 200, image/png, 49,667 bytes).
 
+### Made public on request
+
+Deployment protection was switched off for the project (`ssoProtection: false`), so the preview
+opens for anyone with the link and no Vercel account:
+
+```
+/                200
+/products        200
+/contact         200
+/no-such-page    404
+```
+
+Plain requests, no bypass header and no cookie. The indexing posture holds on the public URL:
+`robots.txt` is `User-Agent: * / Disallow: /` and the head carries `noindex, nofollow`, so the link
+is shareable without a pre-approval copy of the site turning up in a search result.
+
+Two things follow from being public and are worth knowing:
+
+- The automation bypass secret that `vercel curl` created earlier still exists on the project. It is
+  inert while protection is off, but it would bypass protection if that were ever switched back on.
+  Removable with `vercel project protection disable jrew-site-v3 --protection-bypass`.
+- Vercel's preview feedback toolbar is injected into every route and our CSP blocks it, so anyone who
+  opens devtools sees one console error. It is Vercel's script, not ours, and it will not exist on
+  jrew.co.in. Clearing it means either turning the toolbar off in the project settings, which is a
+  dashboard toggle with no CLI equivalent, or allowing `vercel.live` in the preview CSP. The second
+  was rejected: it would stop the preview rehearsing the real policy, and a security control should
+  not be widened to silence a devtools message from a third-party script. A test now pins the
+  production policy to this origin only, with no remote host and no `unsafe-eval` anywhere in it.
+
 ### Lighthouse on the deployment, observed throttling
 
 ```
@@ -550,7 +579,7 @@ devices is what search actually uses.
 |---|---|
 | G1 build | exit 0, all routes prerendered |
 | G2 lint | 0 problems |
-| G3 tests | 74 passed |
+| G3 tests | 77 passed |
 | G4 to G12, G14 | 282 of 282 locally (round 6). On the deployment 279 of 280: the one failure is Vercel's injected preview toolbar being blocked by our CSP, and four submit checks need SMTP |
 | G13 Lighthouse | Observed throttling: every target met (mobile LCP 1.54 to 1.67 s, desktop 0.08 to 0.10 s, CLS 0, a11y 100). Lantern simulation on the local HTTP/1.1 server: contact clears 2.5 s, home and attachments mobile 3.2 to 3.4 s (rounds 1, 3 and 5); to be re-measured on the Vercel preview |
 
